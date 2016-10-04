@@ -1,0 +1,614 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Coding,iOS,AFNetworking3," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="AFNetworking一直是iOS和Mac OS X上最热门的网络库。之前一直用的是2.x版本，前不久更新了3才发现原来的代码一堆错。原来为了配合iOS7网络接口的调整，AFN3.x取消了AFHTTPRequestOperationManager及相关的类，取而代之的是AFURLSessionManager。如果为了兼容iOS 6、Mac OS X 10.8或更低版本，你仍然可以选择AFHTTP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AFNetworking3的基本使用">
+<meta property="og:url" content="http://rhetty.github.io/2016/09/20/AFNetworking3的基本使用/index.html">
+<meta property="og:site_name" content="正宫阁">
+<meta property="og:description" content="AFNetworking一直是iOS和Mac OS X上最热门的网络库。之前一直用的是2.x版本，前不久更新了3才发现原来的代码一堆错。原来为了配合iOS7网络接口的调整，AFN3.x取消了AFHTTPRequestOperationManager及相关的类，取而代之的是AFURLSessionManager。如果为了兼容iOS 6、Mac OS X 10.8或更低版本，你仍然可以选择AFHTTP">
+<meta property="og:updated_time" content="2016-10-04T14:22:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AFNetworking3的基本使用">
+<meta name="twitter:description" content="AFNetworking一直是iOS和Mac OS X上最热门的网络库。之前一直用的是2.x版本，前不久更新了3才发现原来的代码一堆错。原来为了配合iOS7网络接口的调整，AFN3.x取消了AFHTTPRequestOperationManager及相关的类，取而代之的是AFURLSessionManager。如果为了兼容iOS 6、Mac OS X 10.8或更低版本，你仍然可以选择AFHTTP">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://rhetty.github.io/2016/09/20/AFNetworking3的基本使用/"/>
+
+  <title> AFNetworking3的基本使用 | 正宫阁 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">正宫阁</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便BB</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                AFNetworking3的基本使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-20T11:03:26+08:00" content="2016-09-20">
+              2016-09-20
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/20/AFNetworking3的基本使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/20/AFNetworking3的基本使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>AFNetworking</strong>一直是iOS和Mac OS X上最热门的网络库。之前一直用的是2.x版本，前不久更新了3才发现原来的代码一堆错。原来为了配合iOS7网络接口的调整，AFN3.x取消了<strong><em>AFHTTPRequestOperationManager</em></strong>及相关的类，取而代之的是<strong><em>AFURLSessionManager</em></strong>。如果为了兼容iOS 6、Mac OS X 10.8或更低版本，你仍然可以选择AFHTTPRequestOperationManager。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>最方便的就是用<strong>CocoaPods</strong>了，在Podfile中加入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod &apos;AFNetworking&apos;, &apos;~&gt; 3.0&apos;</div></pre></td></tr></table></figure>
+<h1 id="创建manger"><a href="#创建manger" class="headerlink" title="创建manger"></a>创建manger</h1><p>苹果的文档中推荐开发者通过继承AFHTTPSessionManager来提供一些通用的配置，在整个应用中可以共享一个单例。这样就避免了在每次发送http请求时进行三次握手，一定程度上提高了效率。</p>
+<p>如果访问的服务器是同一个，可以用baseURL来初始化，这样发送请求时只需要相对url。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[<span class="built_in">NSURL</span> URLWithString:BASE_URL]];</div></pre></td></tr></table></figure>
+<p>也可以用配置对象来初始化</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSURLSessionConfiguration</span> *configuration = [<span class="built_in">NSURLSessionConfiguration</span> defaultSessionConfiguration];</div><div class="line">AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];</div></pre></td></tr></table></figure>
+<h1 id="配置Serializer"><a href="#配置Serializer" class="headerlink" title="配置Serializer"></a>配置Serializer</h1><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 设置请求数据格式</span></div><div class="line">manager.requestSerializer = [AFJSONRequestSerializer serializer];</div><div class="line"><span class="comment">// 设置请求超时时间</span></div><div class="line">manager.requestSerializer.timeoutInterval = <span class="number">15</span>;</div><div class="line"></div><div class="line"><span class="comment">// 设置相应数据格式</span></div><div class="line">manager.responseSerializer = [AFJSONResponseSerializer serializer];</div><div class="line"><span class="comment">// 如果得不到相应数据，可能是可接受的数据类型不匹配</span></div><div class="line">manager.responseSerializer.acceptableContentTypes = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"application/json"</span>, <span class="string">@"text/html"</span>, <span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<h1 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h1><ul>
+<li>GET</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[manager GET:<span class="string">@"url/string"</span> </div><div class="line">  parameters:@&#123;<span class="string">@"key"</span>:<span class="string">@"value"</span>&#125; </div><div class="line">    progress:^(<span class="built_in">NSProgress</span> * _Nonnull downloadProgress) &#123;</div><div class="line">		<span class="built_in">NSLog</span>(<span class="string">@"%f"</span>, uploadProgress.completedUnitCount / uploadProgress.totalUnitCount * <span class="number">1.0</span>);</div><div class="line">    &#125;</div><div class="line">     success:^(<span class="built_in">NSURLSessionDataTask</span> * _Nonnull task, <span class="keyword">id</span>  _Nullable responseObject) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, responseObject);</div><div class="line">&#125; </div><div class="line">     failure:^(<span class="built_in">NSURLSessionDataTask</span> * _Nullable task, <span class="built_in">NSError</span> * _Nonnull error) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, error);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<ul>
+<li>POST</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[manager POST:<span class="string">@"url/string"</span> </div><div class="line">  parameters:@&#123;<span class="string">@"key"</span>:<span class="string">@"value"</span>&#125; </div><div class="line">    progress:^(<span class="built_in">NSProgress</span> * _Nonnull downloadProgress) &#123;</div><div class="line">		<span class="built_in">NSLog</span>(<span class="string">@"%f"</span>, uploadProgress.completedUnitCount / uploadProgress.totalUnitCount * <span class="number">1.0</span>);</div><div class="line">    &#125;</div><div class="line">     success:^(<span class="built_in">NSURLSessionDataTask</span> * _Nonnull task, <span class="keyword">id</span>  _Nullable responseObject) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, responseObject);</div><div class="line">&#125; </div><div class="line">     failure:^(<span class="built_in">NSURLSessionDataTask</span> * _Nullable task, <span class="built_in">NSError</span> * _Nonnull error) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, error);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<ul>
+<li>下载</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSURL</span> *URL = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://example.com/download.zip"</span>];</div><div class="line"><span class="built_in">NSURLRequest</span> *request = [<span class="built_in">NSURLRequest</span> requestWithURL:URL];</div><div class="line"></div><div class="line"><span class="built_in">NSURLSessionDownloadTask</span> *downloadTask = [manager downloadTaskWithRequest:request progress:^(<span class="built_in">NSProgress</span> * _Nonnull downloadProgress) &#123;</div><div class="line">		<span class="built_in">NSLog</span>(<span class="string">@"%f"</span>, uploadProgress.completedUnitCount / uploadProgress.totalUnitCount * <span class="number">1.0</span>);</div><div class="line">    &#125; destination:^<span class="built_in">NSURL</span> *(<span class="built_in">NSURL</span> *targetPath, <span class="built_in">NSURLResponse</span> *response) &#123;</div><div class="line">    	<span class="keyword">return</span> [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"path/to/save/to"</span>];</div><div class="line">&#125; completionHandler:^(<span class="built_in">NSURLResponse</span> *response, <span class="built_in">NSURL</span> *filePath, <span class="built_in">NSError</span> *error) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"File downloaded to: %@"</span>, filePath);</div><div class="line">&#125;];</div><div class="line">[downloadTask resume];</div></pre></td></tr></table></figure>
+<ul>
+<li>上传</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[manager POST:<span class="string">@"url/string"</span> parameters:<span class="literal">nil</span> constructingBodyWithBlock:^(<span class="keyword">id</span>&lt;AFMultipartFormData&gt;  _Nonnull formData) &#123;</div><div class="line">    [formData appendPartWithFileURL:[<span class="built_in">NSURL</span> fileURLWithPath:<span class="string">@"file://path/to/image.jpg"</span>] name:<span class="string">@"file"</span> fileName:<span class="string">@"filename.jpg"</span> mimeType:<span class="string">@"image/jpeg"</span> error:<span class="literal">nil</span>];</div><div class="line">&#125; progress:^(<span class="built_in">NSProgress</span> * _Nonnull uploadProgress) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%f"</span>, uploadProgress.completedUnitCount / uploadProgress.totalUnitCount * <span class="number">1.0</span>);</div><div class="line">&#125; success:^(<span class="built_in">NSURLSessionDataTask</span> * _Nonnull task, <span class="keyword">id</span>  _Nullable responseObject) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, responseObject);</div><div class="line">&#125; failure:^(<span class="built_in">NSURLSessionDataTask</span> * _Nullable task, <span class="built_in">NSError</span> * _Nonnull error) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, error);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<p>也可以使用<strong>NSURLSessionUploadTask</strong>上传，它还支持后台上传：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSURL</span> *URL = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://example.com/upload"</span>];</div><div class="line"><span class="built_in">NSURLRequest</span> *request = [<span class="built_in">NSURLRequest</span> requestWithURL:URL];</div><div class="line"></div><div class="line"><span class="built_in">NSURL</span> *filePath = [<span class="built_in">NSURL</span> fileURLWithPath:<span class="string">@"file://path/to/image.png"</span>];</div><div class="line"><span class="built_in">NSURLSessionUploadTask</span> *uploadTask = [manager uploadTaskWithRequest:request fromFile:filePath progress:<span class="literal">nil</span> completionHandler:^(<span class="built_in">NSURLResponse</span> *response, <span class="keyword">id</span> responseObject, <span class="built_in">NSError</span> *error) &#123;</div><div class="line">    <span class="keyword">if</span> (error) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Error: %@"</span>, error);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Success: %@ %@"</span>, response, responseObject);</div><div class="line">    &#125;</div><div class="line">&#125;];</div><div class="line">[uploadTask resume];</div></pre></td></tr></table></figure>
+<h1 id="NetworkActivityIndicator"><a href="#NetworkActivityIndicator" class="headerlink" title="NetworkActivityIndicator"></a>NetworkActivityIndicator</h1><p>AFNetworking提供了在网络请求繁忙时，在状态栏显示小菊花的功能。这个功能默认是关闭的，需要手动打开：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[AFNetworkActivityIndicatorManager sharedManager].enabled = <span class="literal">YES</span>;</div></pre></td></tr></table></figure>
+<p>需要导入包：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"AFNetworkActivityIndicatorManager.h"</span></span></div></pre></td></tr></table></figure>
+<h1 id="监测网络状态"><a href="#监测网络状态" class="headerlink" title="监测网络状态"></a>监测网络状态</h1><p><strong>AFNetworkReachabilityManager</strong>提供了一个单例对象来监测网络，共有四种状态，分别是未知、没有网络连接、WWAN连接、WiFi连接：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, AFNetworkReachabilityStatus) &#123;</div><div class="line">    AFNetworkReachabilityStatusUnknown          = <span class="number">-1</span>,</div><div class="line">    AFNetworkReachabilityStatusNotReachable     = <span class="number">0</span>,</div><div class="line">    AFNetworkReachabilityStatusReachableViaWWAN = <span class="number">1</span>,</div><div class="line">    AFNetworkReachabilityStatusReachableViaWiFi = <span class="number">2</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Reachability: %@"</span>, AFStringFromNetworkReachabilityStatus(status));</div><div class="line">&#125;];</div><div class="line"></div><div class="line">[[AFNetworkReachabilityManager sharedManager] startMonitoring];</div></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>跟上一个版本相比，AFN3最大的变化就是<strong>AFHTTPRequestOperationManager</strong>没有了，换成了<strong>AFURLSessionManager</strong>。</p>
+<p>这些只是AFN3中最基本的用法，还有更多强大的功能，共同学习！</p>
+<p>最后附上AFN的<a href="https://github.com/AFNetworking/AFNetworking/" target="_blank" rel="external">GitHub地址</a>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Coding/" rel="tag">#Coding</a>
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+            <a href="/tags/AFNetworking3/" rel="tag">#AFNetworking3</a>
+          
+        </div>
+      
+
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/20/AFNetworking3的基本使用/"
+           data-title="AFNetworking3的基本使用" data-url="http://rhetty.github.io/2016/09/20/AFNetworking3的基本使用/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="黄嘉伟" />
+          <p class="site-author-name" itemprop="name">黄嘉伟</p>
+          <p class="site-description motion-element" itemprop="description">程序猿二三事</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建manger"><span class="nav-number">2.</span> <span class="nav-text">创建manger</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置Serializer"><span class="nav-number">3.</span> <span class="nav-text">配置Serializer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用方法"><span class="nav-number">4.</span> <span class="nav-text">常用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NetworkActivityIndicator"><span class="nav-number">5.</span> <span class="nav-text">NetworkActivityIndicator</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#监测网络状态"><span class="nav-number">6.</span> <span class="nav-text">监测网络状态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄嘉伟</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"huangjiawei"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
