@@ -11,7 +11,19 @@
 					<key>kind</key>
 					<string>software-package</string>
 					<key>url</key>
-					<string>http:/huga.coding.me/stuff/JWAffection.ipa</string>
+					<string>https://rhetty.github.io/stuff/JWAffection.ipa</string>
+				</dict>
+				<dict>
+					<key>kind</key>
+					<string>display-image</string>
+					<key>url</key>
+					<string>https://rhetty.github.io/stuff/57.png</string>
+				</dict>
+				<dict>
+					<key>kind</key>
+					<string>full-size-image</string>
+					<key>url</key>
+					<string>https://rhetty.github.io/stuff/512.png</string>
 				</dict>
 			</array>
 			<key>metadata</key>
@@ -23,7 +35,7 @@
 				<key>kind</key>
 				<string>software</string>
 				<key>title</key>
-				<string>JWAffection.ipa</string>
+				<string>ForSmy</string>
 			</dict>
 		</dict>
 	</array>
