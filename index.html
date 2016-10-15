@@ -232,6 +232,164 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/14/hexo使用记录/" itemprop="url">
+                  hexo使用记录
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-14T15:05:10+08:00" content="2016-10-14">
+              2016-10-14
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/14/hexo使用记录/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/14/hexo使用记录/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>Hexo</strong>是一个快速、简洁且高效的博客框架。Hexo使用<strong>Markdown</strong>（或其他渲染引擎）解析文章，它可以使用各种主题生成静态网页。可以用Hexo快速搭建博客，而不需要任何数据库和后台代码。一般会把Hexo部署在<strong>GitHub Pages</strong>上，如果想在国内更快的访问，可以搭建在<strong>Coding</strong>上，它同样提供了Pages服务。</p>
+<h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><p>Hexo基本的安装、配置等说明在它的<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">官方文档</a>里都有说明，在此不再赘述。</p>
+<h1 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h1><p>Hexo可以方便地更换<a href="https://hexo.io/themes/" target="_blank" rel="external">主题</a>。只需要将下载下来的主题放在hexo的<strong>themes</strong>文件夹内，并将根目录下的的<strong>_config.yml</strong>内的<strong>theme</strong>修改为对应的主题名称，即可切换主题。</p>
+<p>在Hexo中有两份主要的配置文件，其名称都是<strong>_config.yml</strong>。其中，一份位于站点根目录下，主要包含Hexo本身的配置；另一份则位于主题目录下，主要用于配置主题相关的选项。可以将前者称为<strong>站点配置文件</strong>，后者称为<strong>主题配置文件</strong>。</p>
+<h1 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h1><p><strong>添加评论</strong>是博客中常用的功能，在Hexo中通过集成第三方服务<a href="http://duoshuo.com/" target="_blank" rel="external"><strong>多说</strong></a>来添加评论。</p>
+<ul>
+<li>首先在多说登录后，在首页选择“我要安装”。</li>
+<li>创建站点，填写站点相关信息。</li>
+<li>完成后在<strong>站点配置文件</strong>中新增<strong><em>duoshuo_shortname</em></strong>字段，值设置为多说域名中填写的值。</li>
+</ul>
+<p>除了评论，还可以通过集成第三方服务，添加<strong>数据统计与分析</strong>、<strong>内容分享</strong>、<strong>搜索</strong>等服务。</p>
+<h1 id="搜索引擎收录"><a href="#搜索引擎收录" class="headerlink" title="搜索引擎收录"></a>搜索引擎收录</h1><p>写了几篇博客之后，会发现自己的文字并不能被搜索引擎搜索到。这下不能装逼了，没关系，只需要让搜索引擎收录你的网页即可。</p>
+<h2 id="网站验证"><a href="#网站验证" class="headerlink" title="网站验证"></a>网站验证</h2><p>百度和谷歌分别提供了<a href="http://zhanzhang.baidu.com/" target="_blank" rel="external">站长平台</a>和<a href="https://www.google.com/webmasters/tools/home?hl=zh-CN" target="_blank" rel="external"><strong>Google Search Console</strong></a>给用户管理自己的网站。</p>
+<p>首先需要验证你对网站的所有权，以百度为例。</p>
+<ul>
+<li>首先，需要提交你的链接地址。</li>
+<li><p>提交后，百度会要求验证，来证明你是该域名的拥有者，可以快捷批量添加子站点，查看所有子站的数据，无需再一一验证子站点。站长平台提供了三种验证方式：<strong>文件验证</strong>、<strong>html标签验证</strong>和<strong>CNAME验证</strong>。</p>
+<ul>
+<li>文件验证：下载验证文件，将其放置在域名根目录下，使其能被访问到。</li>
+<li>html标签验证：将<strong><em>html</em></strong>标签添加至网站首页<strong><em>html</em></strong>代码的<strong><em><head></head></em></strong>标签与<strong><em></em></strong>标签之间。</li>
+<li><p>CNAME验证：需要登录域名提供商或托管服务提供商的网站，添加新的DNS记录。</p>
+<p>一般采用文件验证的方式，如果你的博客搭建在GitHub Pages上，你会发现验证无法通过。。因为百度无法访问国外地址。所以，可以选择将博客同时构建在GitHub和Coding上。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="同时托管到GitHub和Coding"><a href="#同时托管到GitHub和Coding" class="headerlink" title="同时托管到GitHub和Coding"></a>同时托管到GitHub和Coding</h2><h3 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h3><p>首先修改站点配置文件<strong>_config.yml</strong>中的deploy属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">deploy</div><div class="line">	type: git</div><div class="line">	repo:</div><div class="line">		github: &lt;repository url&gt;, [branch]</div><div class="line">		coding: &lt;repository url&gt;, [branch]</div></pre></td></tr></table></figure>
+<p>这里要注意格式的缩进，否则会报错。提交方式用http和ssh都可，ssh避免了输入账号密码，它需要添加公钥，这方面的教程很多，就不多说了。。</p>
+<h3 id="在Coding上创建新项目"><a href="#在Coding上创建新项目" class="headerlink" title="在Coding上创建新项目"></a>在Coding上创建新项目</h3><p>默认你已经把Hexo托管到了GitHub上了。。那么现在就要把他同时托管到Coding。部署博客的方式有两种，第一种是Pages服务的方式，第二种演示方式可以绑定自定义域名。这里我们选择第一种方式。</p>
+<p>首先，在Coding上创建一个仓库，推荐名称和用户名一样，比如我的Coding用户名是huga，博客仓库名也是huga。这样访问<strong><em>huga.coding.me</em></strong>就能访问博客，否则需要带上项目名<strong><em>huga.coding.me/[项目名]</em></strong>。然后选择<strong>代码</strong>–<strong>Pages 服务</strong>，开启服务即可。</p>
+<p><img src="/imgs/1.png" alt="Coding Pages"></p>
+<p>接着，在博客<strong><em>source/</em></strong>目录下需要创建一个空白文件，名字必须是<strong><em>Staticfile</em></strong>。大概是因为Coding把这个文件作为静态部署的标志。</p>
+<p>然后就可以用Hexo进行部署了，注意分支要和站点配置文件中写的一致。</p>
+<p>至此，Coding和GitHub上托管的博客都可以访问了。</p>
+<p>所以，现在要把百度站长平台上的链接改为Coding Pages的地址，重新验证就可以通过了。</p>
+<h2 id="站点地图"><a href="#站点地图" class="headerlink" title="站点地图"></a>站点地图</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">站点地图，又称网站地图，它是一个网站所有链接的容器。站点地图可以方便搜索引擎蜘蛛抓取网站页面，来清晰了解网站的架构。</div></pre></td></tr></table></figure>
+<p>首先使用以下命令进行安装生成谷歌和百度站点地图的插件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-sitemap --save</div><div class="line">npm install hexo-generator-baidu-sitemap --save</div></pre></td></tr></table></figure>
+<p>然后生成你的博客</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo g</div></pre></td></tr></table></figure>
+<p>如果在<strong><em>public</em></strong>目录下生成了<strong><em>sitemap.xml</em></strong>和<strong><em>baidusitemap.xml</em></strong>，就说明成功了。<br>这时候可以打开这两个sitemap检查一下，如果<strong><em>baidusitemap.xml</em></strong>中的地址指向GitHub，那么需要把它改成Coding的博客地址，否则百度是爬取不到的。</p>
+<p>然后在百度站长地图中进入你的站点，选择<strong>网页抓取</strong>——<strong>连接提交</strong>——<strong>自动提交</strong>——<strong>sitemap</strong>，填写你的sitemap地址，提交即可。</p>
+<p><img src="/imgs/2.png" alt="百度提交站点地图"></p>
+<p>通过站点地图，搜索引擎会定期爬取你的网站内容，所以需要及时更新你的站点地图。</p>
+<p>除了站点地图，百度还提供了另外三种提交链接的方式：</p>
+<ul>
+<li>主动推送：将你的所有链接写入一个文本文件，然后通过curl、post等方式将这个文件推送给百度，能使新链接及时被百度收录。</li>
+<li>自动推送：将自动推送的js代码放在每个页面中，当这些页面被访问时，就会自动推送给百度了。</li>
+<li>手动提交：在站长平台页面上提交所有链接地址。</li>
+</ul>
+<h2 id="百度收录"><a href="#百度收录" class="headerlink" title="百度收录"></a>百度收录</h2><p>要被百度收录相对比较困难。。光提交站点地图可能很慢，所以可以选择上述主动提交的方式，参照站长平台上的说明。</p>
+<p><img src="/imgs/3.png" alt="百度自动提交"></p>
+<h2 id="谷歌收录"><a href="#谷歌收录" class="headerlink" title="谷歌收录"></a>谷歌收录</h2><p>谷歌比较方便，进入<a href="https://www.google.com/webmasters/tools/home?hl=zh-CN" target="_blank" rel="external"><strong><em>Google Search Console</em></strong></a>，添加站点，通过验证后进入站点，选择<strong>抓取</strong>——<strong>站点地图</strong>——<strong>添加/测试站点地图</strong>。</p>
+<p><img src="/imgs/4.png" alt="谷歌添加站点地图"></p>
+<p>提交过后一两天，谷歌就可以搜索到我的博客了，还是很快的。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Hexo搭建博客十分方便，还可以继承各种第三方服务，但是为了装逼，想被搜索引擎搜索到的话，就需要给百度、谷歌收录，还需要同时部署到GitHub和Coding上。另外，百度收录真的很慢。。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.jianshu.com/p/619dab2d3c08" target="_blank" rel="external">hexo干货系列：（六）hexo提交搜索引擎（百度+谷歌）</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/20/AFNetworking3的基本使用/" itemprop="url">
                   AFNetworking3的基本使用
                 </a>
@@ -389,7 +547,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -399,7 +557,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

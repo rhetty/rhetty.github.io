@@ -1,0 +1,656 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="hexo," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Hexo是一个快速、简洁且高效的博客框架。Hexo使用Markdown（或其他渲染引擎）解析文章，它可以使用各种主题生成静态网页。可以用Hexo快速搭建博客，而不需要任何数据库和后台代码。一般会把Hexo部署在GitHub Pages上，如果想在国内更快的访问，可以搭建在Coding上，它同样提供了Pages服务。
+开始使用Hexo基本的安装、配置等说明在它的官方文档里都有说明，在此不再赘述。
+主">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo使用记录">
+<meta property="og:url" content="http://rhetty.github.io/2016/10/14/hexo使用记录/index.html">
+<meta property="og:site_name" content="正宫阁">
+<meta property="og:description" content="Hexo是一个快速、简洁且高效的博客框架。Hexo使用Markdown（或其他渲染引擎）解析文章，它可以使用各种主题生成静态网页。可以用Hexo快速搭建博客，而不需要任何数据库和后台代码。一般会把Hexo部署在GitHub Pages上，如果想在国内更快的访问，可以搭建在Coding上，它同样提供了Pages服务。
+开始使用Hexo基本的安装、配置等说明在它的官方文档里都有说明，在此不再赘述。
+主">
+<meta property="og:image" content="http://rhetty.github.io/imgs/1.png">
+<meta property="og:image" content="http://rhetty.github.io/imgs/2.png">
+<meta property="og:image" content="http://rhetty.github.io/imgs/3.png">
+<meta property="og:image" content="http://rhetty.github.io/imgs/4.png">
+<meta property="og:updated_time" content="2016-10-15T08:58:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hexo使用记录">
+<meta name="twitter:description" content="Hexo是一个快速、简洁且高效的博客框架。Hexo使用Markdown（或其他渲染引擎）解析文章，它可以使用各种主题生成静态网页。可以用Hexo快速搭建博客，而不需要任何数据库和后台代码。一般会把Hexo部署在GitHub Pages上，如果想在国内更快的访问，可以搭建在Coding上，它同样提供了Pages服务。
+开始使用Hexo基本的安装、配置等说明在它的官方文档里都有说明，在此不再赘述。
+主">
+<meta name="twitter:image" content="http://rhetty.github.io/imgs/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://rhetty.github.io/2016/10/14/hexo使用记录/"/>
+
+  <title> hexo使用记录 | 正宫阁 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">正宫阁</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便BB</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                hexo使用记录
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-14T15:05:10+08:00" content="2016-10-14">
+              2016-10-14
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/14/hexo使用记录/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/14/hexo使用记录/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>Hexo</strong>是一个快速、简洁且高效的博客框架。Hexo使用<strong>Markdown</strong>（或其他渲染引擎）解析文章，它可以使用各种主题生成静态网页。可以用Hexo快速搭建博客，而不需要任何数据库和后台代码。一般会把Hexo部署在<strong>GitHub Pages</strong>上，如果想在国内更快的访问，可以搭建在<strong>Coding</strong>上，它同样提供了Pages服务。</p>
+<h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><p>Hexo基本的安装、配置等说明在它的<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">官方文档</a>里都有说明，在此不再赘述。</p>
+<h1 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h1><p>Hexo可以方便地更换<a href="https://hexo.io/themes/" target="_blank" rel="external">主题</a>。只需要将下载下来的主题放在hexo的<strong>themes</strong>文件夹内，并将根目录下的的<strong>_config.yml</strong>内的<strong>theme</strong>修改为对应的主题名称，即可切换主题。</p>
+<p>在Hexo中有两份主要的配置文件，其名称都是<strong>_config.yml</strong>。其中，一份位于站点根目录下，主要包含Hexo本身的配置；另一份则位于主题目录下，主要用于配置主题相关的选项。可以将前者称为<strong>站点配置文件</strong>，后者称为<strong>主题配置文件</strong>。</p>
+<h1 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h1><p><strong>添加评论</strong>是博客中常用的功能，在Hexo中通过集成第三方服务<a href="http://duoshuo.com/" target="_blank" rel="external"><strong>多说</strong></a>来添加评论。</p>
+<ul>
+<li>首先在多说登录后，在首页选择“我要安装”。</li>
+<li>创建站点，填写站点相关信息。</li>
+<li>完成后在<strong>站点配置文件</strong>中新增<strong><em>duoshuo_shortname</em></strong>字段，值设置为多说域名中填写的值。</li>
+</ul>
+<p>除了评论，还可以通过集成第三方服务，添加<strong>数据统计与分析</strong>、<strong>内容分享</strong>、<strong>搜索</strong>等服务。</p>
+<h1 id="搜索引擎收录"><a href="#搜索引擎收录" class="headerlink" title="搜索引擎收录"></a>搜索引擎收录</h1><p>写了几篇博客之后，会发现自己的文字并不能被搜索引擎搜索到。这下不能装逼了，没关系，只需要让搜索引擎收录你的网页即可。</p>
+<h2 id="网站验证"><a href="#网站验证" class="headerlink" title="网站验证"></a>网站验证</h2><p>百度和谷歌分别提供了<a href="http://zhanzhang.baidu.com/" target="_blank" rel="external">站长平台</a>和<a href="https://www.google.com/webmasters/tools/home?hl=zh-CN" target="_blank" rel="external"><strong>Google Search Console</strong></a>给用户管理自己的网站。</p>
+<p>首先需要验证你对网站的所有权，以百度为例。</p>
+<ul>
+<li>首先，需要提交你的链接地址。</li>
+<li><p>提交后，百度会要求验证，来证明你是该域名的拥有者，可以快捷批量添加子站点，查看所有子站的数据，无需再一一验证子站点。站长平台提供了三种验证方式：<strong>文件验证</strong>、<strong>html标签验证</strong>和<strong>CNAME验证</strong>。</p>
+<ul>
+<li>文件验证：下载验证文件，将其放置在域名根目录下，使其能被访问到。</li>
+<li>html标签验证：将<strong><em>html</em></strong>标签添加至网站首页<strong><em>html</em></strong>代码的<strong><em><head></head></em></strong>标签与<strong><em></em></strong>标签之间。</li>
+<li><p>CNAME验证：需要登录域名提供商或托管服务提供商的网站，添加新的DNS记录。</p>
+<p>一般采用文件验证的方式，如果你的博客搭建在GitHub Pages上，你会发现验证无法通过。。因为百度无法访问国外地址。所以，可以选择将博客同时构建在GitHub和Coding上。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="同时托管到GitHub和Coding"><a href="#同时托管到GitHub和Coding" class="headerlink" title="同时托管到GitHub和Coding"></a>同时托管到GitHub和Coding</h2><h3 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h3><p>首先修改站点配置文件<strong>_config.yml</strong>中的deploy属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">deploy</div><div class="line">	type: git</div><div class="line">	repo:</div><div class="line">		github: &lt;repository url&gt;, [branch]</div><div class="line">		coding: &lt;repository url&gt;, [branch]</div></pre></td></tr></table></figure>
+<p>这里要注意格式的缩进，否则会报错。提交方式用http和ssh都可，ssh避免了输入账号密码，它需要添加公钥，这方面的教程很多，就不多说了。。</p>
+<h3 id="在Coding上创建新项目"><a href="#在Coding上创建新项目" class="headerlink" title="在Coding上创建新项目"></a>在Coding上创建新项目</h3><p>默认你已经把Hexo托管到了GitHub上了。。那么现在就要把他同时托管到Coding。部署博客的方式有两种，第一种是Pages服务的方式，第二种演示方式可以绑定自定义域名。这里我们选择第一种方式。</p>
+<p>首先，在Coding上创建一个仓库，推荐名称和用户名一样，比如我的Coding用户名是huga，博客仓库名也是huga。这样访问<strong><em>huga.coding.me</em></strong>就能访问博客，否则需要带上项目名<strong><em>huga.coding.me/[项目名]</em></strong>。然后选择<strong>代码</strong>–<strong>Pages 服务</strong>，开启服务即可。</p>
+<p><img src="/imgs/1.png" alt="Coding Pages"></p>
+<p>接着，在博客<strong><em>source/</em></strong>目录下需要创建一个空白文件，名字必须是<strong><em>Staticfile</em></strong>。大概是因为Coding把这个文件作为静态部署的标志。</p>
+<p>然后就可以用Hexo进行部署了，注意分支要和站点配置文件中写的一致。</p>
+<p>至此，Coding和GitHub上托管的博客都可以访问了。</p>
+<p>所以，现在要把百度站长平台上的链接改为Coding Pages的地址，重新验证就可以通过了。</p>
+<h2 id="站点地图"><a href="#站点地图" class="headerlink" title="站点地图"></a>站点地图</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">站点地图，又称网站地图，它是一个网站所有链接的容器。站点地图可以方便搜索引擎蜘蛛抓取网站页面，来清晰了解网站的架构。</div></pre></td></tr></table></figure>
+<p>首先使用以下命令进行安装生成谷歌和百度站点地图的插件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-sitemap --save</div><div class="line">npm install hexo-generator-baidu-sitemap --save</div></pre></td></tr></table></figure>
+<p>然后生成你的博客</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo g</div></pre></td></tr></table></figure>
+<p>如果在<strong><em>public</em></strong>目录下生成了<strong><em>sitemap.xml</em></strong>和<strong><em>baidusitemap.xml</em></strong>，就说明成功了。<br>这时候可以打开这两个sitemap检查一下，如果<strong><em>baidusitemap.xml</em></strong>中的地址指向GitHub，那么需要把它改成Coding的博客地址，否则百度是爬取不到的。</p>
+<p>然后在百度站长地图中进入你的站点，选择<strong>网页抓取</strong>——<strong>连接提交</strong>——<strong>自动提交</strong>——<strong>sitemap</strong>，填写你的sitemap地址，提交即可。</p>
+<p><img src="/imgs/2.png" alt="百度提交站点地图"></p>
+<p>通过站点地图，搜索引擎会定期爬取你的网站内容，所以需要及时更新你的站点地图。</p>
+<p>除了站点地图，百度还提供了另外三种提交链接的方式：</p>
+<ul>
+<li>主动推送：将你的所有链接写入一个文本文件，然后通过curl、post等方式将这个文件推送给百度，能使新链接及时被百度收录。</li>
+<li>自动推送：将自动推送的js代码放在每个页面中，当这些页面被访问时，就会自动推送给百度了。</li>
+<li>手动提交：在站长平台页面上提交所有链接地址。</li>
+</ul>
+<h2 id="百度收录"><a href="#百度收录" class="headerlink" title="百度收录"></a>百度收录</h2><p>要被百度收录相对比较困难。。光提交站点地图可能很慢，所以可以选择上述主动提交的方式，参照站长平台上的说明。</p>
+<p><img src="/imgs/3.png" alt="百度自动提交"></p>
+<h2 id="谷歌收录"><a href="#谷歌收录" class="headerlink" title="谷歌收录"></a>谷歌收录</h2><p>谷歌比较方便，进入<a href="https://www.google.com/webmasters/tools/home?hl=zh-CN" target="_blank" rel="external"><strong><em>Google Search Console</em></strong></a>，添加站点，通过验证后进入站点，选择<strong>抓取</strong>——<strong>站点地图</strong>——<strong>添加/测试站点地图</strong>。</p>
+<p><img src="/imgs/4.png" alt="谷歌添加站点地图"></p>
+<p>提交过后一两天，谷歌就可以搜索到我的博客了，还是很快的。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Hexo搭建博客十分方便，还可以继承各种第三方服务，但是为了装逼，想被搜索引擎搜索到的话，就需要给百度、谷歌收录，还需要同时部署到GitHub和Coding上。另外，百度收录真的很慢。。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.jianshu.com/p/619dab2d3c08" target="_blank" rel="external">hexo干货系列：（六）hexo提交搜索引擎（百度+谷歌）</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hexo/" rel="tag">#hexo</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/20/AFNetworking3的基本使用/" rel="next" title="AFNetworking3的基本使用">
+                <i class="fa fa-chevron-left"></i> AFNetworking3的基本使用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/14/hexo使用记录/"
+           data-title="hexo使用记录" data-url="http://rhetty.github.io/2016/10/14/hexo使用记录/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="黄嘉伟" />
+          <p class="site-author-name" itemprop="name">黄嘉伟</p>
+          <p class="site-description motion-element" itemprop="description">程序猿二三事</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#开始使用"><span class="nav-number">1.</span> <span class="nav-text">开始使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主题"><span class="nav-number">2.</span> <span class="nav-text">主题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#评论"><span class="nav-number">3.</span> <span class="nav-text">评论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搜索引擎收录"><span class="nav-number">4.</span> <span class="nav-text">搜索引擎收录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网站验证"><span class="nav-number">4.1.</span> <span class="nav-text">网站验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同时托管到GitHub和Coding"><span class="nav-number">4.2.</span> <span class="nav-text">同时托管到GitHub和Coding</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改配置"><span class="nav-number">4.2.1.</span> <span class="nav-text">修改配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在Coding上创建新项目"><span class="nav-number">4.2.2.</span> <span class="nav-text">在Coding上创建新项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#站点地图"><span class="nav-number">4.3.</span> <span class="nav-text">站点地图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#百度收录"><span class="nav-number">4.4.</span> <span class="nav-text">百度收录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#谷歌收录"><span class="nav-number">4.5.</span> <span class="nav-text">谷歌收录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄嘉伟</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"huangjiawei"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
