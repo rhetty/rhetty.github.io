@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://rhetty.github.io/imgs/2.png">
 <meta property="og:image" content="http://rhetty.github.io/imgs/3.png">
 <meta property="og:image" content="http://rhetty.github.io/imgs/4.png">
-<meta property="og:updated_time" content="2016-10-15T08:58:03.000Z">
+<meta property="og:updated_time" content="2016-10-15T09:17:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo使用记录">
 <meta name="twitter:description" content="Hexo是一个快速、简洁且高效的博客框架。Hexo使用Markdown（或其他渲染引擎）解析文章，它可以使用各种主题生成静态网页。可以用Hexo快速搭建博客，而不需要任何数据库和后台代码。一般会把Hexo部署在GitHub Pages上，如果想在国内更快的访问，可以搭建在Coding上，它同样提供了Pages服务。
@@ -304,16 +304,14 @@
 <p>首先需要验证你对网站的所有权，以百度为例。</p>
 <ul>
 <li>首先，需要提交你的链接地址。</li>
-<li><p>提交后，百度会要求验证，来证明你是该域名的拥有者，可以快捷批量添加子站点，查看所有子站的数据，无需再一一验证子站点。站长平台提供了三种验证方式：<strong>文件验证</strong>、<strong>html标签验证</strong>和<strong>CNAME验证</strong>。</p>
-<ul>
+<li>提交后，百度会要求验证，来证明你是该域名的拥有者，可以快捷批量添加子站点，查看所有子站的数据，无需再一一验证子站点。站长平台提供了三种验证方式：<strong>文件验证</strong>、<strong>html标签验证</strong>和<strong>CNAME验证</strong>。<ul>
 <li>文件验证：下载验证文件，将其放置在域名根目录下，使其能被访问到。</li>
 <li>html标签验证：将<strong><em>html</em></strong>标签添加至网站首页<strong><em>html</em></strong>代码的<strong><em><head></head></em></strong>标签与<strong><em></em></strong>标签之间。</li>
-<li><p>CNAME验证：需要登录域名提供商或托管服务提供商的网站，添加新的DNS记录。</p>
+<li>CNAME验证：需要登录域名提供商或托管服务提供商的网站，添加新的DNS记录。</li>
+</ul>
+</li>
+</ul>
 <p>一般采用文件验证的方式，如果你的博客搭建在GitHub Pages上，你会发现验证无法通过。。因为百度无法访问国外地址。所以，可以选择将博客同时构建在GitHub和Coding上。</p>
-</li>
-</ul>
-</li>
-</ul>
 <h2 id="同时托管到GitHub和Coding"><a href="#同时托管到GitHub和Coding" class="headerlink" title="同时托管到GitHub和Coding"></a>同时托管到GitHub和Coding</h2><h3 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h3><p>首先修改站点配置文件<strong>_config.yml</strong>中的deploy属性：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">deploy</div><div class="line">	type: git</div><div class="line">	repo:</div><div class="line">		github: &lt;repository url&gt;, [branch]</div><div class="line">		coding: &lt;repository url&gt;, [branch]</div></pre></td></tr></table></figure>
 <p>这里要注意格式的缩进，否则会报错。提交方式用http和ssh都可，ssh避免了输入账号密码，它需要添加公钥，这方面的教程很多，就不多说了。。</p>
@@ -324,7 +322,7 @@
 <p>然后就可以用Hexo进行部署了，注意分支要和站点配置文件中写的一致。</p>
 <p>至此，Coding和GitHub上托管的博客都可以访问了。</p>
 <p>所以，现在要把百度站长平台上的链接改为Coding Pages的地址，重新验证就可以通过了。</p>
-<h2 id="站点地图"><a href="#站点地图" class="headerlink" title="站点地图"></a>站点地图</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">站点地图，又称网站地图，它是一个网站所有链接的容器。站点地图可以方便搜索引擎蜘蛛抓取网站页面，来清晰了解网站的架构。</div></pre></td></tr></table></figure>
+<h2 id="站点地图"><a href="#站点地图" class="headerlink" title="站点地图"></a>站点地图</h2><p>站点地图，又称网站地图，它是一个网站所有链接的容器。站点地图可以方便搜索引擎蜘蛛抓取网站页面，来清晰了解网站的架构。</p>
 <p>首先使用以下命令进行安装生成谷歌和百度站点地图的插件。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-sitemap --save</div><div class="line">npm install hexo-generator-baidu-sitemap --save</div></pre></td></tr></table></figure>
 <p>然后生成你的博客</p>
