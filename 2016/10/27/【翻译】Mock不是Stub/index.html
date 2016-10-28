@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="test," />
 
 
 
@@ -84,15 +84,19 @@
 
 
 
-<meta name="description" content="程序猿二三事">
-<meta property="og:type" content="website">
-<meta property="og:title" content="正宫阁">
-<meta property="og:url" content="http://rhetty.github.io/index.html">
+<meta name="description" content="在测试中，“mock对象”常被用来描述模仿真实对象的特殊对象。现在，大部分语言环境提供了便于创建mock对象的框架。然而常被忽视的是，mock对象不只是一种用来测试的特殊对象，它还代表了一种不同的测试风格。在本文中，我将解释mock是如何工作、它们如何进行基于行为验证的测试，以及相关社区如何开发出一种不同的测试风格。
+一年前，在极限编程（XP）社区里我第一次看到“mock”这个词。从此我越来越多的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【翻译】Mock不是Stub">
+<meta property="og:url" content="http://rhetty.github.io/2016/10/27/【翻译】Mock不是Stub/index.html">
 <meta property="og:site_name" content="正宫阁">
-<meta property="og:description" content="程序猿二三事">
+<meta property="og:description" content="在测试中，“mock对象”常被用来描述模仿真实对象的特殊对象。现在，大部分语言环境提供了便于创建mock对象的框架。然而常被忽视的是，mock对象不只是一种用来测试的特殊对象，它还代表了一种不同的测试风格。在本文中，我将解释mock是如何工作、它们如何进行基于行为验证的测试，以及相关社区如何开发出一种不同的测试风格。
+一年前，在极限编程（XP）社区里我第一次看到“mock”这个词。从此我越来越多的">
+<meta property="og:updated_time" content="2016-10-28T07:46:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="正宫阁">
-<meta name="twitter:description" content="程序猿二三事">
+<meta name="twitter:title" content="【翻译】Mock不是Stub">
+<meta name="twitter:description" content="在测试中，“mock对象”常被用来描述模仿真实对象的特殊对象。现在，大部分语言环境提供了便于创建mock对象的框架。然而常被忽视的是，mock对象不只是一种用来测试的特殊对象，它还代表了一种不同的测试风格。在本文中，我将解释mock是如何工作、它们如何进行基于行为验证的测试，以及相关社区如何开发出一种不同的测试风格。
+一年前，在极限编程（XP）社区里我第一次看到“mock”这个词。从此我越来越多的">
 
 
 
@@ -113,9 +117,9 @@
 
 
 
-  <link rel="canonical" href="http://rhetty.github.io/"/>
+  <link rel="canonical" href="http://rhetty.github.io/2016/10/27/【翻译】Mock不是Stub/"/>
 
-  <title> 正宫阁 </title>
+  <title> 【翻译】Mock不是Stub | 正宫阁 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -136,9 +140,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-right 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -209,9 +211,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -231,10 +233,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/10/27/【翻译】Mock不是Stub/" itemprop="url">
-                  【翻译】Mock不是Stub
-                </a>
+                【翻译】Mock不是Stub
               
             
           </h1>
@@ -281,9 +280,7 @@
       
 
       
-        
-          
-            <p>在测试中，“mock对象”常被用来描述模仿真实对象的特殊对象。现在，大部分语言环境提供了便于创建mock对象的框架。然而常被忽视的是，mock对象不只是一种用来测试的特殊对象，它还代表了一种不同的测试风格。在本文中，我将解释mock是如何工作、它们如何进行基于行为验证的测试，以及相关社区如何开发出一种不同的测试风格。</p>
+        <p>在测试中，“mock对象”常被用来描述模仿真实对象的特殊对象。现在，大部分语言环境提供了便于创建mock对象的框架。然而常被忽视的是，mock对象不只是一种用来测试的特殊对象，它还代表了一种不同的测试风格。在本文中，我将解释mock是如何工作、它们如何进行基于行为验证的测试，以及相关社区如何开发出一种不同的测试风格。</p>
 <p>一年前，在极限编程（XP）社区里我第一次看到“mock”这个词。从此我越来越多的看到关于mock的东西。部分原因是，mock对象的许多主要开发者变成了我在ThoughtWorks的同事；另一个原因是，我在XP测试相关的文献里看到越来越多这方面的内容。</p>
 <p>然而，我时常看到对mock的定义是很不充分的。尤其是我发现它经常与stub搞混——一种测试环境下常用的工具。我十分理解这种误解——有一段时间我也觉得它们很相似，但是与mock开发者交流之后，我对mock的理解逐渐明晰。</p>
 <p>它们主要有两点不同。<strong><em>一是测试结果验证方式的不同：状态验证与行为验证的区别；二是测试方式与设计整个测试理念的不同，我把它看作测试驱动开发（TDD）中一般的和mock式的两种测试风格。</em></strong></p>
@@ -324,329 +321,59 @@
 <p>之前一直不能完全理解stub和mock的不同，后来发现了这篇据说是权威解释的文章。于是把它的前半部分翻译了一下，帮助加深理解。文章后半部分中，作者针对传统测试与mock式测试进行比较与思考。</p>
 <p>原文地址：<a href="http://martinfowler.com/articles/mocksArentStubs.html" target="_blank" rel="external">Mocks Aren’t Stubs</a></p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/14/hexo使用记录/" itemprop="url">
-                  hexo使用记录
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-14T15:05:10+08:00" content="2016-10-14">
-              2016-10-14
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/14/hexo使用记录/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/14/hexo使用记录/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
+            <a href="/tags/test/" rel="tag">#test</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p><strong>Hexo</strong>是一个快速、简洁且高效的博客框架。Hexo使用<strong>Markdown</strong>（或其他渲染引擎）解析文章，它可以使用各种主题生成静态网页。可以用Hexo快速搭建博客，而不需要任何数据库和后台代码。一般会把Hexo部署在<strong>GitHub Pages</strong>上，如果想在国内更快的访问，可以搭建在<strong>Coding</strong>上，它同样提供了Pages服务。</p>
-<h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><p>Hexo基本的安装、配置等说明在它的<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">官方文档</a>里都有说明，在此不再赘述。</p>
-<h1 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h1><p>Hexo可以方便地更换<a href="https://hexo.io/themes/" target="_blank" rel="external">主题</a>。只需要将下载下来的主题放在hexo的<strong>themes</strong>文件夹内，并将根目录下的的<strong>_config.yml</strong>内的<strong>theme</strong>修改为对应的主题名称，即可切换主题。</p>
-<p>在Hexo中有两份主要的配置文件，其名称都是<strong>_config.yml</strong>。其中，一份位于站点根目录下，主要包含Hexo本身的配置；另一份则位于主题目录下，主要用于配置主题相关的选项。可以将前者称为<strong>站点配置文件</strong>，后者称为<strong>主题配置文件</strong>。</p>
-<h1 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h1><p><strong>添加评论</strong>是博客中常用的功能，在Hexo中通过集成第三方服务<a href="http://duoshuo.com/" target="_blank" rel="external"><strong>多说</strong></a>来添加评论。</p>
-<ul>
-<li>首先在多说登录后，在首页选择“我要安装”。</li>
-<li>创建站点，填写站点相关信息。</li>
-<li>完成后在<strong>站点配置文件</strong>中新增<strong><em>duoshuo_shortname</em></strong>字段，值设置为多说域名中填写的值。</li>
-</ul>
-<p>除了评论，还可以通过集成第三方服务，添加<strong>数据统计与分析</strong>、<strong>内容分享</strong>、<strong>搜索</strong>等服务。</p>
-<h1 id="搜索引擎收录"><a href="#搜索引擎收录" class="headerlink" title="搜索引擎收录"></a>搜索引擎收录</h1><p>写了几篇博客之后，会发现自己的文字并不能被搜索引擎搜索到。这下不能装逼了，没关系，只需要让搜索引擎收录你的网页即可。</p>
-<h2 id="网站验证"><a href="#网站验证" class="headerlink" title="网站验证"></a>网站验证</h2><p>百度和谷歌分别提供了<a href="http://zhanzhang.baidu.com/" target="_blank" rel="external">站长平台</a>和<a href="https://www.google.com/webmasters/tools/home?hl=zh-CN" target="_blank" rel="external"><strong>Google Search Console</strong></a>给用户管理自己的网站。</p>
-<p>首先需要验证你对网站的所有权，以百度为例。</p>
-<ul>
-<li>首先，需要提交你的链接地址。</li>
-<li>提交后，百度会要求验证，来证明你是该域名的拥有者，可以快捷批量添加子站点，查看所有子站的数据，无需再一一验证子站点。站长平台提供了三种验证方式：<strong>文件验证</strong>、<strong>html标签验证</strong>和<strong>CNAME验证</strong>。<ul>
-<li>文件验证：下载验证文件，将其放置在域名根目录下，使其能被访问到。</li>
-<li>html标签验证：将<strong><em>html</em></strong>标签添加至网站首页<strong><em>html</em></strong>代码的<strong><em><head></head></em></strong>标签与<strong><em></em></strong>标签之间。</li>
-<li>CNAME验证：需要登录域名提供商或托管服务提供商的网站，添加新的DNS记录。</li>
-</ul>
-</li>
-</ul>
-<p>一般采用文件验证的方式，如果你的博客搭建在GitHub Pages上，你会发现验证无法通过。。因为百度无法访问国外地址。所以，可以选择将博客同时构建在GitHub和Coding上。</p>
-<h2 id="同时托管到GitHub和Coding"><a href="#同时托管到GitHub和Coding" class="headerlink" title="同时托管到GitHub和Coding"></a>同时托管到GitHub和Coding</h2><h3 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h3><p>首先修改站点配置文件<strong>_config.yml</strong>中的deploy属性：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">deploy</div><div class="line">	type: git</div><div class="line">	repo:</div><div class="line">		github: &lt;repository url&gt;, [branch]</div><div class="line">		coding: &lt;repository url&gt;, [branch]</div></pre></td></tr></table></figure>
-<p>这里要注意格式的缩进，否则会报错。提交方式用http和ssh都可，ssh避免了输入账号密码，它需要添加公钥，这方面的教程很多，就不多说了。。</p>
-<h3 id="在Coding上创建新项目"><a href="#在Coding上创建新项目" class="headerlink" title="在Coding上创建新项目"></a>在Coding上创建新项目</h3><p>默认你已经把Hexo托管到了GitHub上了。。那么现在就要把他同时托管到Coding。部署博客的方式有两种，第一种是Pages服务的方式，第二种演示方式可以绑定自定义域名。这里我们选择第一种方式。</p>
-<p>首先，在Coding上创建一个仓库，推荐名称和用户名一样，比如我的Coding用户名是huga，博客仓库名也是huga。这样访问<strong><em>huga.coding.me</em></strong>就能访问博客，否则需要带上项目名<strong><em>huga.coding.me/[项目名]</em></strong>。然后选择<strong>代码</strong>–<strong>Pages 服务</strong>，开启服务即可。</p>
-<p><img src="/imgs/1.png" alt="Coding Pages"></p>
-<p>接着，在博客<strong><em>source/</em></strong>目录下需要创建一个空白文件，名字必须是<strong><em>Staticfile</em></strong>。大概是因为Coding把这个文件作为静态部署的标志。</p>
-<p>然后就可以用Hexo进行部署了，注意分支要和站点配置文件中写的一致。</p>
-<p>至此，Coding和GitHub上托管的博客都可以访问了。</p>
-<p>所以，现在要把百度站长平台上的链接改为Coding Pages的地址，重新验证就可以通过了。</p>
-<h2 id="站点地图"><a href="#站点地图" class="headerlink" title="站点地图"></a>站点地图</h2><p>站点地图，又称网站地图，它是一个网站所有链接的容器。站点地图可以方便搜索引擎蜘蛛抓取网站页面，来清晰了解网站的架构。</p>
-<p>首先使用以下命令进行安装生成谷歌和百度站点地图的插件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-sitemap --save</div><div class="line">npm install hexo-generator-baidu-sitemap --save</div></pre></td></tr></table></figure>
-<p>然后生成你的博客</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo g</div></pre></td></tr></table></figure>
-<p>如果在<strong><em>public</em></strong>目录下生成了<strong><em>sitemap.xml</em></strong>和<strong><em>baidusitemap.xml</em></strong>，就说明成功了。<br>这时候可以打开这两个sitemap检查一下，如果<strong><em>baidusitemap.xml</em></strong>中的地址指向GitHub，那么需要把它改成Coding的博客地址，否则百度是爬取不到的。</p>
-<p>然后在百度站长地图中进入你的站点，选择<strong>网页抓取</strong>——<strong>连接提交</strong>——<strong>自动提交</strong>——<strong>sitemap</strong>，填写你的sitemap地址，提交即可。</p>
-<p><img src="/imgs/2.png" alt="百度提交站点地图"></p>
-<p>通过站点地图，搜索引擎会定期爬取你的网站内容，所以需要及时更新你的站点地图。</p>
-<p>除了站点地图，百度还提供了另外三种提交链接的方式：</p>
-<ul>
-<li>主动推送：将你的所有链接写入一个文本文件，然后通过curl、post等方式将这个文件推送给百度，能使新链接及时被百度收录。</li>
-<li>自动推送：将自动推送的js代码放在每个页面中，当这些页面被访问时，就会自动推送给百度了。</li>
-<li>手动提交：在站长平台页面上提交所有链接地址。</li>
-</ul>
-<h2 id="百度收录"><a href="#百度收录" class="headerlink" title="百度收录"></a>百度收录</h2><p>要被百度收录相对比较困难。。光提交站点地图可能很慢，所以可以选择上述主动提交的方式，参照站长平台上的说明。</p>
-<p><img src="/imgs/3.png" alt="百度自动提交"></p>
-<h2 id="谷歌收录"><a href="#谷歌收录" class="headerlink" title="谷歌收录"></a>谷歌收录</h2><p>谷歌比较方便，进入<a href="https://www.google.com/webmasters/tools/home?hl=zh-CN" target="_blank" rel="external"><strong><em>Google Search Console</em></strong></a>，添加站点，通过验证后进入站点，选择<strong>抓取</strong>——<strong>站点地图</strong>——<strong>添加/测试站点地图</strong>。</p>
-<p><img src="/imgs/4.png" alt="谷歌添加站点地图"></p>
-<p>提交过后一两天，谷歌就可以搜索到我的博客了，还是很快的。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Hexo搭建博客十分方便，还可以继承各种第三方服务，但是为了装逼，想被搜索引擎搜索到的话，就需要给百度、谷歌收录，还需要同时部署到GitHub和Coding上。另外，百度收录真的很慢。。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.jianshu.com/p/619dab2d3c08" target="_blank" rel="external">hexo干货系列：（六）hexo提交搜索引擎（百度+谷歌）</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/10/14/hexo使用记录/" rel="next" title="hexo使用记录">
+                <i class="fa fa-chevron-left"></i> hexo使用记录
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/09/20/AFNetworking3的基本使用/" itemprop="url">
-                  AFNetworking3的基本使用
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-20T11:03:26+08:00" content="2016-09-20">
-              2016-09-20
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/20/AFNetworking3的基本使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/20/AFNetworking3的基本使用/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p><strong>AFNetworking</strong>一直是iOS和Mac OS X上最热门的网络库。之前一直用的是2.x版本，前不久更新了3才发现原来的代码一堆错。原来为了配合iOS7网络接口的调整，AFN3.x取消了<strong><em>AFHTTPRequestOperationManager</em></strong>及相关的类，取而代之的是<strong><em>AFURLSessionManager</em></strong>。如果为了兼容iOS 6、Mac OS X 10.8或更低版本，你仍然可以选择AFHTTPRequestOperationManager。</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>最方便的就是用<strong>CocoaPods</strong>了，在Podfile中加入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod &apos;AFNetworking&apos;, &apos;~&gt; 3.0&apos;</div></pre></td></tr></table></figure>
-<h1 id="创建manger"><a href="#创建manger" class="headerlink" title="创建manger"></a>创建manger</h1><p>苹果的文档中推荐开发者通过继承AFHTTPSessionManager来提供一些通用的配置，在整个应用中可以共享一个单例。这样就避免了在每次发送http请求时进行三次握手，一定程度上提高了效率。</p>
-<p>如果访问的服务器是同一个，可以用baseURL来初始化，这样发送请求时只需要相对url。</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[<span class="built_in">NSURL</span> URLWithString:BASE_URL]];</div></pre></td></tr></table></figure>
-<p>也可以用配置对象来初始化</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSURLSessionConfiguration</span> *configuration = [<span class="built_in">NSURLSessionConfiguration</span> defaultSessionConfiguration];</div><div class="line">AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];</div></pre></td></tr></table></figure>
-<h1 id="配置Serializer"><a href="#配置Serializer" class="headerlink" title="配置Serializer"></a>配置Serializer</h1><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 设置请求数据格式</span></div><div class="line">manager.requestSerializer = [AFJSONRequestSerializer serializer];</div><div class="line"><span class="comment">// 设置请求超时时间</span></div><div class="line">manager.requestSerializer.timeoutInterval = <span class="number">15</span>;</div><div class="line"></div><div class="line"><span class="comment">// 设置相应数据格式</span></div><div class="line">manager.responseSerializer = [AFJSONResponseSerializer serializer];</div><div class="line"><span class="comment">// 如果得不到相应数据，可能是可接受的数据类型不匹配</span></div><div class="line">manager.responseSerializer.acceptableContentTypes = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"application/json"</span>, <span class="string">@"text/html"</span>, <span class="literal">nil</span>];</div></pre></td></tr></table></figure>
-<h1 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h1><ul>
-<li>GET</li>
-</ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[manager GET:<span class="string">@"url/string"</span> </div><div class="line">  parameters:@&#123;<span class="string">@"key"</span>:<span class="string">@"value"</span>&#125; </div><div class="line">    progress:^(<span class="built_in">NSProgress</span> * _Nonnull downloadProgress) &#123;</div><div class="line">		<span class="built_in">NSLog</span>(<span class="string">@"%f"</span>, uploadProgress.completedUnitCount / uploadProgress.totalUnitCount * <span class="number">1.0</span>);</div><div class="line">    &#125;</div><div class="line">     success:^(<span class="built_in">NSURLSessionDataTask</span> * _Nonnull task, <span class="keyword">id</span>  _Nullable responseObject) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, responseObject);</div><div class="line">&#125; </div><div class="line">     failure:^(<span class="built_in">NSURLSessionDataTask</span> * _Nullable task, <span class="built_in">NSError</span> * _Nonnull error) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, error);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<ul>
-<li>POST</li>
-</ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[manager POST:<span class="string">@"url/string"</span> </div><div class="line">  parameters:@&#123;<span class="string">@"key"</span>:<span class="string">@"value"</span>&#125; </div><div class="line">    progress:^(<span class="built_in">NSProgress</span> * _Nonnull downloadProgress) &#123;</div><div class="line">		<span class="built_in">NSLog</span>(<span class="string">@"%f"</span>, uploadProgress.completedUnitCount / uploadProgress.totalUnitCount * <span class="number">1.0</span>);</div><div class="line">    &#125;</div><div class="line">     success:^(<span class="built_in">NSURLSessionDataTask</span> * _Nonnull task, <span class="keyword">id</span>  _Nullable responseObject) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, responseObject);</div><div class="line">&#125; </div><div class="line">     failure:^(<span class="built_in">NSURLSessionDataTask</span> * _Nullable task, <span class="built_in">NSError</span> * _Nonnull error) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, error);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<ul>
-<li>下载</li>
-</ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSURL</span> *URL = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://example.com/download.zip"</span>];</div><div class="line"><span class="built_in">NSURLRequest</span> *request = [<span class="built_in">NSURLRequest</span> requestWithURL:URL];</div><div class="line"></div><div class="line"><span class="built_in">NSURLSessionDownloadTask</span> *downloadTask = [manager downloadTaskWithRequest:request progress:^(<span class="built_in">NSProgress</span> * _Nonnull downloadProgress) &#123;</div><div class="line">		<span class="built_in">NSLog</span>(<span class="string">@"%f"</span>, uploadProgress.completedUnitCount / uploadProgress.totalUnitCount * <span class="number">1.0</span>);</div><div class="line">    &#125; destination:^<span class="built_in">NSURL</span> *(<span class="built_in">NSURL</span> *targetPath, <span class="built_in">NSURLResponse</span> *response) &#123;</div><div class="line">    	<span class="keyword">return</span> [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"path/to/save/to"</span>];</div><div class="line">&#125; completionHandler:^(<span class="built_in">NSURLResponse</span> *response, <span class="built_in">NSURL</span> *filePath, <span class="built_in">NSError</span> *error) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"File downloaded to: %@"</span>, filePath);</div><div class="line">&#125;];</div><div class="line">[downloadTask resume];</div></pre></td></tr></table></figure>
-<ul>
-<li>上传</li>
-</ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[manager POST:<span class="string">@"url/string"</span> parameters:<span class="literal">nil</span> constructingBodyWithBlock:^(<span class="keyword">id</span>&lt;AFMultipartFormData&gt;  _Nonnull formData) &#123;</div><div class="line">    [formData appendPartWithFileURL:[<span class="built_in">NSURL</span> fileURLWithPath:<span class="string">@"file://path/to/image.jpg"</span>] name:<span class="string">@"file"</span> fileName:<span class="string">@"filename.jpg"</span> mimeType:<span class="string">@"image/jpeg"</span> error:<span class="literal">nil</span>];</div><div class="line">&#125; progress:^(<span class="built_in">NSProgress</span> * _Nonnull uploadProgress) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%f"</span>, uploadProgress.completedUnitCount / uploadProgress.totalUnitCount * <span class="number">1.0</span>);</div><div class="line">&#125; success:^(<span class="built_in">NSURLSessionDataTask</span> * _Nonnull task, <span class="keyword">id</span>  _Nullable responseObject) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, responseObject);</div><div class="line">&#125; failure:^(<span class="built_in">NSURLSessionDataTask</span> * _Nullable task, <span class="built_in">NSError</span> * _Nonnull error) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, error);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<p>也可以使用<strong>NSURLSessionUploadTask</strong>上传，它还支持后台上传：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSURL</span> *URL = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://example.com/upload"</span>];</div><div class="line"><span class="built_in">NSURLRequest</span> *request = [<span class="built_in">NSURLRequest</span> requestWithURL:URL];</div><div class="line"></div><div class="line"><span class="built_in">NSURL</span> *filePath = [<span class="built_in">NSURL</span> fileURLWithPath:<span class="string">@"file://path/to/image.png"</span>];</div><div class="line"><span class="built_in">NSURLSessionUploadTask</span> *uploadTask = [manager uploadTaskWithRequest:request fromFile:filePath progress:<span class="literal">nil</span> completionHandler:^(<span class="built_in">NSURLResponse</span> *response, <span class="keyword">id</span> responseObject, <span class="built_in">NSError</span> *error) &#123;</div><div class="line">    <span class="keyword">if</span> (error) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Error: %@"</span>, error);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Success: %@ %@"</span>, response, responseObject);</div><div class="line">    &#125;</div><div class="line">&#125;];</div><div class="line">[uploadTask resume];</div></pre></td></tr></table></figure>
-<h1 id="NetworkActivityIndicator"><a href="#NetworkActivityIndicator" class="headerlink" title="NetworkActivityIndicator"></a>NetworkActivityIndicator</h1><p>AFNetworking提供了在网络请求繁忙时，在状态栏显示小菊花的功能。这个功能默认是关闭的，需要手动打开：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[AFNetworkActivityIndicatorManager sharedManager].enabled = <span class="literal">YES</span>;</div></pre></td></tr></table></figure>
-<p>需要导入包：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"AFNetworkActivityIndicatorManager.h"</span></span></div></pre></td></tr></table></figure>
-<h1 id="监测网络状态"><a href="#监测网络状态" class="headerlink" title="监测网络状态"></a>监测网络状态</h1><p><strong>AFNetworkReachabilityManager</strong>提供了一个单例对象来监测网络，共有四种状态，分别是未知、没有网络连接、WWAN连接、WiFi连接：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, AFNetworkReachabilityStatus) &#123;</div><div class="line">    AFNetworkReachabilityStatusUnknown          = <span class="number">-1</span>,</div><div class="line">    AFNetworkReachabilityStatusNotReachable     = <span class="number">0</span>,</div><div class="line">    AFNetworkReachabilityStatusReachableViaWWAN = <span class="number">1</span>,</div><div class="line">    AFNetworkReachabilityStatusReachableViaWiFi = <span class="number">2</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Reachability: %@"</span>, AFStringFromNetworkReachabilityStatus(status));</div><div class="line">&#125;];</div><div class="line"></div><div class="line">[[AFNetworkReachabilityManager sharedManager] startMonitoring];</div></pre></td></tr></table></figure>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>跟上一个版本相比，AFN3最大的变化就是<strong>AFHTTPRequestOperationManager</strong>没有了，换成了<strong>AFURLSessionManager</strong>。</p>
-<p>这些只是AFN3中最基本的用法，还有更多强大的功能，共同学习！</p>
-<p>最后附上AFN的<a href="https://github.com/AFNetworking/AFNetworking/" target="_blank" rel="external">GitHub地址</a>。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -654,6 +381,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/27/【翻译】Mock不是Stub/"
+           data-title="【翻译】Mock不是Stub" data-url="http://rhetty.github.io/2016/10/27/【翻译】Mock不是Stub/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -673,8 +408,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -717,6 +461,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#普通测试"><span class="nav-number">1.</span> <span class="nav-text">普通测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mock与Stub的不同"><span class="nav-number">2.</span> <span class="nav-text">Mock与Stub的不同</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -820,6 +575,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
