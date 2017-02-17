@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Algorithm," />
+  <meta name="keywords" content="iOS," />
 
 
 
@@ -84,22 +84,22 @@
 
 
 
-<meta name="description" content="最近想在LeetCode上刷题，又想学习一下Swift，就干脆用Swift来写算法。
-GitHub地址
-不断更新中。">
+<meta name="description" content="__strong 修饰符__strong修饰符是id类型和对象类型默认的所有权修饰符。id和对象类型在没有明确指定所有权修饰符时，默认为__strong修饰符。以下两行代码相同：
+12id obj = [[NSObject alloc] init];id __strong obj = [[NSObject alloc] init];
+__strong修饰符能对对象持有强引用，保证对象在声明周期结束">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode--Swift">
-<meta property="og:url" content="http://rhetty.github.io/2017/02/16/LeetCode-Swift/index.html">
+<meta property="og:title" content="objc中的修饰符">
+<meta property="og:url" content="http://rhetty.github.io/2017/02/17/objc中的修饰符/index.html">
 <meta property="og:site_name" content="正宫阁">
-<meta property="og:description" content="最近想在LeetCode上刷题，又想学习一下Swift，就干脆用Swift来写算法。
-GitHub地址
-不断更新中。">
-<meta property="og:updated_time" content="2017-02-16T15:34:34.000Z">
+<meta property="og:description" content="__strong 修饰符__strong修饰符是id类型和对象类型默认的所有权修饰符。id和对象类型在没有明确指定所有权修饰符时，默认为__strong修饰符。以下两行代码相同：
+12id obj = [[NSObject alloc] init];id __strong obj = [[NSObject alloc] init];
+__strong修饰符能对对象持有强引用，保证对象在声明周期结束">
+<meta property="og:updated_time" content="2017-02-17T16:24:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode--Swift">
-<meta name="twitter:description" content="最近想在LeetCode上刷题，又想学习一下Swift，就干脆用Swift来写算法。
-GitHub地址
-不断更新中。">
+<meta name="twitter:title" content="objc中的修饰符">
+<meta name="twitter:description" content="__strong 修饰符__strong修饰符是id类型和对象类型默认的所有权修饰符。id和对象类型在没有明确指定所有权修饰符时，默认为__strong修饰符。以下两行代码相同：
+12id obj = [[NSObject alloc] init];id __strong obj = [[NSObject alloc] init];
+__strong修饰符能对对象持有强引用，保证对象在声明周期结束">
 
 
 
@@ -120,9 +120,9 @@ GitHub地址
 
 
 
-  <link rel="canonical" href="http://rhetty.github.io/2017/02/16/LeetCode-Swift/"/>
+  <link rel="canonical" href="http://rhetty.github.io/2017/02/17/objc中的修饰符/"/>
 
-  <title> LeetCode--Swift | 正宫阁 </title>
+  <title> objc中的修饰符 | 正宫阁 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -236,7 +236,7 @@ GitHub地址
             
             
               
-                LeetCode--Swift
+                objc中的修饰符
               
             
           </h1>
@@ -248,8 +248,8 @@ GitHub地址
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-16T23:25:00+08:00" content="2017-02-16">
-              2017-02-16
+            <time itemprop="dateCreated" datetime="2017-02-17T23:29:14+08:00" content="2017-02-17">
+              2017-02-17
             </time>
           </span>
 
@@ -259,8 +259,8 @@ GitHub地址
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/16/LeetCode-Swift/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/16/LeetCode-Swift/" itemprop="commentsCount"></span>
+                <a href="/2017/02/17/objc中的修饰符/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/17/objc中的修饰符/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -283,9 +283,24 @@ GitHub地址
       
 
       
-        <p>最近想在LeetCode上刷题，又想学习一下Swift，就干脆用Swift来写算法。</p>
-<p><a href="https://github.com/rhetty/LeetCode" target="_blank" rel="external">GitHub地址</a></p>
-<p>不断更新中。</p>
+        <h1 id="strong-修饰符"><a href="#strong-修饰符" class="headerlink" title="__strong 修饰符"></a>__strong 修饰符</h1><p>__strong修饰符是id类型和对象类型默认的所有权修饰符。id和对象类型在没有明确指定所有权修饰符时，默认为__strong修饰符。以下两行代码相同：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">id</span> obj = [[<span class="built_in">NSObject</span> alloc] init];</div><div class="line"><span class="keyword">id</span> __<span class="keyword">strong</span> obj = [[<span class="built_in">NSObject</span> alloc] init];</div></pre></td></tr></table></figure>
+<p>__strong修饰符能对对象持有强引用，保证对象在声明周期结束前都不会被释放。而在变量超出其作用域时，强引用失效，因此自动释放对象。这样能够使ARC简单而有效。</p>
+<h1 id="weak-修饰符"><a href="#weak-修饰符" class="headerlink" title="__weak 修饰符"></a>__weak 修饰符</h1><p>可是，光有__strong修饰符会导致“循环引用”的问题，因此引发内存泄漏。__weak修饰符能够避免这样的问题。</p>
+<p>弱引用不能持有对象实例，如果编译以下代码，编译器会发出警告：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">id</span> __<span class="keyword">weak</span> obj = [[<span class="built_in">NSObject</span> alloc] init];</div></pre></td></tr></table></figure>
+<p>__weak修饰符有一个优点。在持有某对象的弱引用时，若该对象被废弃，则此弱引用将自动失效且处于nib被赋值的状态。</p>
+<p>__weak修饰符只能用于iOS5以上及OS X Lion以上版本的应用程序。在低版本的程序中可使用__unsafe_unretained修饰符来代替。</p>
+<h1 id="unsafe-unretained-修饰符"><a href="#unsafe-unretained-修饰符" class="headerlink" title="__unsafe_unretained 修饰符"></a>__unsafe_unretained 修饰符</h1><p>尽管ARC式的内存管理是编译器的工作，但附有__unsafe_unretained修饰符的变量不属于编译器的内存管理对象。</p>
+<p>同__weak修饰符一样，用__unsafe_unretained修饰的变量也不能持有对象。</p>
+<p>之所以叫做”unsafe”，是因为附有__unsafe_unretained修饰符的变量所指向的对象如果已经被废弃，这个变量并不会置nil，而变成了一个悬垂指针，如果访问它，程序就会崩溃。</p>
+<h1 id="autoreleasing-修饰符"><a href="#autoreleasing-修饰符" class="headerlink" title="__autoreleasing 修饰符"></a>__autoreleasing 修饰符</h1><p>在ARC有效时，将不能使用autorelease方法和NSAutoreleasePool类。但是，autorelease功能还是起作用的。</p>
+<p>ARC有效时，autorelease功能可以这样写：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@autoreleasepool</span> &#123;</div><div class="line">  <span class="keyword">id</span> __autorelease obj = [[<span class="built_in">NSObject</span> alloc] init];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以理解为，在ARC有效时，用@autoreleasepool块替代NSAutoreleasePool类，用附有__autorelease修饰符的变量替代autorelease方法。</p>
+<h1 id="block-修饰符"><a href="#block-修饰符" class="headerlink" title="__block 修饰符"></a>__block 修饰符</h1><p>在使用Block时，自动变量值截取只能保存执行Block语法瞬间的值。保存后就不能改写该值。若想在Block语法的表达式中将值赋给在Block语法外声明的自动变量，需要在该自动变量上附件__block修饰符。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">__block <span class="keyword">int</span> val = <span class="number">0</span>;</div><div class="line"><span class="keyword">void</span> (^blk)(<span class="keyword">void</span>) = ^&#123;val = <span class="number">1</span>;&#125;</div><div class="line">blk();</div><div class="line">printf(<span class="string">"val = %d\n"</span>, val);</div></pre></td></tr></table></figure>
+<p>该源代码的执行结果为：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">val = <span class="number">1</span></div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -308,7 +323,7 @@ GitHub地址
       
         <div class="post-tags">
           
-            <a href="/tags/Algorithm/" rel="tag">#Algorithm</a>
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
           
         </div>
       
@@ -317,17 +332,13 @@ GitHub地址
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/21/复习一下排序算法/" rel="next" title="复习一下排序算法">
-                <i class="fa fa-chevron-left"></i> 复习一下排序算法
+              <a href="/2017/02/16/LeetCode-Swift/" rel="next" title="LeetCode--Swift">
+                <i class="fa fa-chevron-left"></i> LeetCode--Swift
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/17/objc中的修饰符/" rel="prev" title="objc中的修饰符">
-                objc中的修饰符 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -353,8 +364,8 @@ GitHub地址
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/16/LeetCode-Swift/"
-           data-title="LeetCode--Swift" data-url="http://rhetty.github.io/2017/02/16/LeetCode-Swift/">
+      <div class="ds-thread" data-thread-key="2017/02/17/objc中的修饰符/"
+           data-title="objc中的修饰符" data-url="http://rhetty.github.io/2017/02/17/objc中的修饰符/">
       </div>
     
   </div>
@@ -438,7 +449,7 @@ GitHub地址
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#strong-修饰符"><span class="nav-number">1.</span> <span class="nav-text">__strong 修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#weak-修饰符"><span class="nav-number">2.</span> <span class="nav-text">__weak 修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#unsafe-unretained-修饰符"><span class="nav-number">3.</span> <span class="nav-text">__unsafe_unretained 修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#autoreleasing-修饰符"><span class="nav-number">4.</span> <span class="nav-text">__autoreleasing 修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#block-修饰符"><span class="nav-number">5.</span> <span class="nav-text">__block 修饰符</span></a></li></ol></div>
             
           </div>
         </section>
