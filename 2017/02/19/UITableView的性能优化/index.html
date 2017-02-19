@@ -84,22 +84,22 @@
 
 
 
-<meta name="description" content="__strong 修饰符__strong修饰符是id类型和对象类型默认的所有权修饰符。id和对象类型在没有明确指定所有权修饰符时，默认为__strong修饰符。以下两行代码相同：
-12id obj = [[NSObject alloc] init];id __strong obj = [[NSObject alloc] init];
-__strong修饰符能对对象持有强引用，保证对象在声明周期结束">
+<meta name="description" content="UITableView是最常用的控件，所以一个滑动流畅的tableview对于用户体验是多么重要。下面整理了一些针对UITableView的性能优化的方法。
+重用UITableViewCell这一点很多人都知道，就是要利用苹果提供的cell重用机制，不要每次都重新创建cell。在tableView:cellForRowAtIndexPath:要尽快返回cell。
+很多人习惯在tableView:c">
 <meta property="og:type" content="article">
-<meta property="og:title" content="objc中的修饰符">
-<meta property="og:url" content="http://rhetty.github.io/2017/02/17/objc中的修饰符/index.html">
+<meta property="og:title" content="UITableView的性能优化">
+<meta property="og:url" content="http://rhetty.github.io/2017/02/19/UITableView的性能优化/index.html">
 <meta property="og:site_name" content="正宫阁">
-<meta property="og:description" content="__strong 修饰符__strong修饰符是id类型和对象类型默认的所有权修饰符。id和对象类型在没有明确指定所有权修饰符时，默认为__strong修饰符。以下两行代码相同：
-12id obj = [[NSObject alloc] init];id __strong obj = [[NSObject alloc] init];
-__strong修饰符能对对象持有强引用，保证对象在声明周期结束">
-<meta property="og:updated_time" content="2017-02-17T16:24:28.000Z">
+<meta property="og:description" content="UITableView是最常用的控件，所以一个滑动流畅的tableview对于用户体验是多么重要。下面整理了一些针对UITableView的性能优化的方法。
+重用UITableViewCell这一点很多人都知道，就是要利用苹果提供的cell重用机制，不要每次都重新创建cell。在tableView:cellForRowAtIndexPath:要尽快返回cell。
+很多人习惯在tableView:c">
+<meta property="og:updated_time" content="2017-02-19T05:42:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="objc中的修饰符">
-<meta name="twitter:description" content="__strong 修饰符__strong修饰符是id类型和对象类型默认的所有权修饰符。id和对象类型在没有明确指定所有权修饰符时，默认为__strong修饰符。以下两行代码相同：
-12id obj = [[NSObject alloc] init];id __strong obj = [[NSObject alloc] init];
-__strong修饰符能对对象持有强引用，保证对象在声明周期结束">
+<meta name="twitter:title" content="UITableView的性能优化">
+<meta name="twitter:description" content="UITableView是最常用的控件，所以一个滑动流畅的tableview对于用户体验是多么重要。下面整理了一些针对UITableView的性能优化的方法。
+重用UITableViewCell这一点很多人都知道，就是要利用苹果提供的cell重用机制，不要每次都重新创建cell。在tableView:cellForRowAtIndexPath:要尽快返回cell。
+很多人习惯在tableView:c">
 
 
 
@@ -120,9 +120,9 @@ __strong修饰符能对对象持有强引用，保证对象在声明周期结束
 
 
 
-  <link rel="canonical" href="http://rhetty.github.io/2017/02/17/objc中的修饰符/"/>
+  <link rel="canonical" href="http://rhetty.github.io/2017/02/19/UITableView的性能优化/"/>
 
-  <title> objc中的修饰符 | 正宫阁 </title>
+  <title> UITableView的性能优化 | 正宫阁 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -236,7 +236,7 @@ __strong修饰符能对对象持有强引用，保证对象在声明周期结束
             
             
               
-                objc中的修饰符
+                UITableView的性能优化
               
             
           </h1>
@@ -248,8 +248,8 @@ __strong修饰符能对对象持有强引用，保证对象在声明周期结束
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-17T23:29:14+08:00" content="2017-02-17">
-              2017-02-17
+            <time itemprop="dateCreated" datetime="2017-02-19T11:02:15+08:00" content="2017-02-19">
+              2017-02-19
             </time>
           </span>
 
@@ -259,8 +259,8 @@ __strong修饰符能对对象持有强引用，保证对象在声明周期结束
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/17/objc中的修饰符/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/17/objc中的修饰符/" itemprop="commentsCount"></span>
+                <a href="/2017/02/19/UITableView的性能优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/19/UITableView的性能优化/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -283,24 +283,29 @@ __strong修饰符能对对象持有强引用，保证对象在声明周期结束
       
 
       
-        <h1 id="strong-修饰符"><a href="#strong-修饰符" class="headerlink" title="__strong 修饰符"></a>__strong 修饰符</h1><p>__strong修饰符是id类型和对象类型默认的所有权修饰符。id和对象类型在没有明确指定所有权修饰符时，默认为__strong修饰符。以下两行代码相同：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">id</span> obj = [[<span class="built_in">NSObject</span> alloc] init];</div><div class="line"><span class="keyword">id</span> __<span class="keyword">strong</span> obj = [[<span class="built_in">NSObject</span> alloc] init];</div></pre></td></tr></table></figure>
-<p>__strong修饰符能对对象持有强引用，保证对象在声明周期结束前都不会被释放。而在变量超出其作用域时，强引用失效，因此自动释放对象。这样能够使ARC简单而有效。</p>
-<h1 id="weak-修饰符"><a href="#weak-修饰符" class="headerlink" title="__weak 修饰符"></a>__weak 修饰符</h1><p>可是，光有__strong修饰符会导致“循环引用”的问题，因此引发内存泄漏。__weak修饰符能够避免这样的问题。</p>
-<p>弱引用不能持有对象实例，如果编译以下代码，编译器会发出警告：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">id</span> __<span class="keyword">weak</span> obj = [[<span class="built_in">NSObject</span> alloc] init];</div></pre></td></tr></table></figure>
-<p>__weak修饰符有一个优点。在持有某对象的弱引用时，若该对象被废弃，则此弱引用将自动失效且处于nib被赋值的状态。</p>
-<p>__weak修饰符只能用于iOS5以上及OS X Lion以上版本的应用程序。在低版本的程序中可使用__unsafe_unretained修饰符来代替。</p>
-<h1 id="unsafe-unretained-修饰符"><a href="#unsafe-unretained-修饰符" class="headerlink" title="__unsafe_unretained 修饰符"></a>__unsafe_unretained 修饰符</h1><p>尽管ARC式的内存管理是编译器的工作，但附有__unsafe_unretained修饰符的变量不属于编译器的内存管理对象。</p>
-<p>同__weak修饰符一样，用__unsafe_unretained修饰的变量也不能持有对象。</p>
-<p>之所以叫做”unsafe”，是因为附有__unsafe_unretained修饰符的变量所指向的对象如果已经被废弃，这个变量并不会置nil，而变成了一个悬垂指针，如果访问它，程序就会崩溃。</p>
-<h1 id="autoreleasing-修饰符"><a href="#autoreleasing-修饰符" class="headerlink" title="__autoreleasing 修饰符"></a>__autoreleasing 修饰符</h1><p>在ARC有效时，将不能使用autorelease方法和NSAutoreleasePool类。但是，autorelease功能还是起作用的。</p>
-<p>ARC有效时，autorelease功能可以这样写：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@autoreleasepool</span> &#123;</div><div class="line">  <span class="keyword">id</span> __autorelease obj = [[<span class="built_in">NSObject</span> alloc] init];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以理解为，在ARC有效时，用@autoreleasepool块替代NSAutoreleasePool类，用附有__autorelease修饰符的变量替代autorelease方法。</p>
-<h1 id="block-修饰符"><a href="#block-修饰符" class="headerlink" title="__block 修饰符"></a>__block 修饰符</h1><p>在使用Block时，自动变量值截取只能保存执行Block语法瞬间的值。保存后就不能改写该值。若想在Block语法的表达式中将值赋给在Block语法外声明的自动变量，需要在该自动变量上附件__block修饰符。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">__block <span class="keyword">int</span> val = <span class="number">0</span>;</div><div class="line"><span class="keyword">void</span> (^blk)(<span class="keyword">void</span>) = ^&#123;val = <span class="number">1</span>;&#125;</div><div class="line">blk();</div><div class="line">printf(<span class="string">"val = %d\n"</span>, val);</div></pre></td></tr></table></figure>
-<p>该源代码的执行结果为：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">val = <span class="number">1</span></div></pre></td></tr></table></figure></p>
+        <p><strong>UITableView</strong>是最常用的控件，所以一个滑动流畅的tableview对于用户体验是多么重要。下面整理了一些针对UITableView的性能优化的方法。</p>
+<h1 id="重用UITableViewCell"><a href="#重用UITableViewCell" class="headerlink" title="重用UITableViewCell"></a>重用UITableViewCell</h1><p>这一点很多人都知道，就是要利用苹果提供的cell重用机制，不要每次都重新创建cell。在<code>tableView:cellForRowAtIndexPath:</code>要尽快返回cell。</p>
+<p>很多人习惯在<code>tableView:cellForRowAtIndexPath:</code>方法中对cell进行数据绑定，但这有待改进。因为<code>tableView:cellForRowAtIndexPath:</code>执行时cell还没有展示出来。下面是苹果原文：</p>
+<blockquote>
+<p>Don’t bind data at cellForRowAtIndexPath: method ‘cause at this time cell is not displayed yet. Instead use tableView:willDisplayCell:forRowAtIndexPath: method in the delegate of UITableView.</p>
+</blockquote>
+<p>正确的做法是在<code>tableView:willDisplayCell:forRowAtIndexPath:</code>中进行数据绑定。</p>
+<h1 id="Cell的高度计算"><a href="#Cell的高度计算" class="headerlink" title="Cell的高度计算"></a>Cell的高度计算</h1><p>对于cell高度静态的UITableView来说，这一点无关紧要。但是动态高度的cell一般有两种实现方式：</p>
+<ol>
+<li>通过autolayout来自动计算高度</li>
+<li>手动实现<code>tableView:heightForRowAtIndexPath:</code>方法来动态计算高度</li>
+</ol>
+<p>其中，通过autolayout需要计算cell的约束，这么做的效率会比较低，在约束较多时可能引起tableview滚动的卡顿。所以最好的方式是手动计算cell的高度，<code>tableView:heightForRowAtIndexPath:</code>这个方法要尽快返回。必要时，还可以缓存cell的高度，或者进行高度预计算。</p>
+<h1 id="避免混合操作"><a href="#避免混合操作" class="headerlink" title="避免混合操作"></a>避免混合操作</h1><p>在图像渲染中最慢的操作之一就是混合（blending）。所以，要尽可能避免cell中各种透明控件，将它们的<code>opaque</code>属性都置为<code>YES</code>。</p>
+<p>layer的圆角设置其实也是执行了混合操作，所以可以将layer的<code>shouldRasterize</code>设为<code>YES</code>，这样layer会被渲染成一个bitmap，并缓存起来，等下次使用时就不用重新渲染了。</p>
+<p>对layer的缓存处理实际上叫做光栅化，光栅化对于阴影的渲染同样能够优化。对于经常改动的，不要采用光栅化，会造成性能消耗，而对于相对静态的、复杂的界面，最好采用光栅化。</p>
+<h1 id="图片的加载与缓存"><a href="#图片的加载与缓存" class="headerlink" title="图片的加载与缓存"></a>图片的加载与缓存</h1><p>cell中的图片一定要采用<strong>异步加载</strong>的方式，否则势必造成滑动卡顿。使用<code>UIImageView+AFNetworking.h</code>中的方法就能很方便的进行异步加载，当加载失败时，会显示缺省图片。同时，AFNetworking实现了对图片的内存缓存和请求缓存，如果请求或图片已缓存，就不会重新请求图片，提升了图片加载的速度。</p>
+<h1 id="扁平化"><a href="#扁平化" class="headerlink" title="扁平化"></a>扁平化</h1><p>由于渲染复杂的View非常耗时，所以一种思路是，通过Core Graphics进行重绘，将所有subViews绘制成一张图片，通过消除view的层级来提高效率，这对于一些复杂的界面效果很明显。但缺点就是重绘比较复杂，对于一些简单界面没有必要这么做。</p>
+<h1 id="异步渲染"><a href="#异步渲染" class="headerlink" title="异步渲染"></a>异步渲染</h1><p>因为更新界面的操作一定要放在主线程当中，所以可以将一些渲染工作放到其他线程来做，最后再回到主线程更新界面。Facebook开源的框架<a href="https://github.com/facebook/AsyncDisplayKit" target="_blank" rel="external">AsyncDisplayKit</a>应用类似这样的思路。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="http://www.jianshu.com/p/ce43518aa3d8" target="_blank" rel="external">UITableViewCell性能优化</a></li>
+<li><a href="http://www.jianshu.com/p/93085c0de4c9" target="_blank" rel="external">UITableView的优化</a></li>
+</ul>
 
       
     </div>
@@ -332,17 +337,13 @@ __strong修饰符能对对象持有强引用，保证对象在声明周期结束
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/16/LeetCode-Swift/" rel="next" title="LeetCode--Swift">
-                <i class="fa fa-chevron-left"></i> LeetCode--Swift
+              <a href="/2017/02/17/objc中的修饰符/" rel="next" title="objc中的修饰符">
+                <i class="fa fa-chevron-left"></i> objc中的修饰符
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/19/UITableView的性能优化/" rel="prev" title="UITableView的性能优化">
-                UITableView的性能优化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -368,8 +369,8 @@ __strong修饰符能对对象持有强引用，保证对象在声明周期结束
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/17/objc中的修饰符/"
-           data-title="objc中的修饰符" data-url="http://rhetty.github.io/2017/02/17/objc中的修饰符/">
+      <div class="ds-thread" data-thread-key="2017/02/19/UITableView的性能优化/"
+           data-title="UITableView的性能优化" data-url="http://rhetty.github.io/2017/02/19/UITableView的性能优化/">
       </div>
     
   </div>
@@ -453,7 +454,7 @@ __strong修饰符能对对象持有强引用，保证对象在声明周期结束
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#strong-修饰符"><span class="nav-number">1.</span> <span class="nav-text">__strong 修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#weak-修饰符"><span class="nav-number">2.</span> <span class="nav-text">__weak 修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#unsafe-unretained-修饰符"><span class="nav-number">3.</span> <span class="nav-text">__unsafe_unretained 修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#autoreleasing-修饰符"><span class="nav-number">4.</span> <span class="nav-text">__autoreleasing 修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#block-修饰符"><span class="nav-number">5.</span> <span class="nav-text">__block 修饰符</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#重用UITableViewCell"><span class="nav-number">1.</span> <span class="nav-text">重用UITableViewCell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cell的高度计算"><span class="nav-number">2.</span> <span class="nav-text">Cell的高度计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#避免混合操作"><span class="nav-number">3.</span> <span class="nav-text">避免混合操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图片的加载与缓存"><span class="nav-number">4.</span> <span class="nav-text">图片的加载与缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扁平化"><span class="nav-number">5.</span> <span class="nav-text">扁平化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异步渲染"><span class="nav-number">6.</span> <span class="nav-text">异步渲染</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
         </section>
