@@ -1,0 +1,768 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="内存模型对象本质是 c 中的结构体，Objective-C 中对对象的定义为struct objc_object，其中isa是它唯一的私有成员变量。在内存模型中，每个对象除了isa指针，还包括从顶级父类到直接父类，以及自己的所有成员变量。
+类对象isa指针指向的是对象的类，对象的类本质上也是对象，称为类对象。类对象描述了对象的数据：对象占用的内存大小、成员变量的类型和布局等，而且也描述了对象的行为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Objective-C对象的整理与思考">
+<meta property="og:url" content="http://rhetty.github.io/2017/03/18/Objective-C对象的整理与思考/index.html">
+<meta property="og:site_name" content="正宫阁">
+<meta property="og:description" content="内存模型对象本质是 c 中的结构体，Objective-C 中对对象的定义为struct objc_object，其中isa是它唯一的私有成员变量。在内存模型中，每个对象除了isa指针，还包括从顶级父类到直接父类，以及自己的所有成员变量。
+类对象isa指针指向的是对象的类，对象的类本质上也是对象，称为类对象。类对象描述了对象的数据：对象占用的内存大小、成员变量的类型和布局等，而且也描述了对象的行为">
+<meta property="og:updated_time" content="2017-03-18T08:20:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Objective-C对象的整理与思考">
+<meta name="twitter:description" content="内存模型对象本质是 c 中的结构体，Objective-C 中对对象的定义为struct objc_object，其中isa是它唯一的私有成员变量。在内存模型中，每个对象除了isa指针，还包括从顶级父类到直接父类，以及自己的所有成员变量。
+类对象isa指针指向的是对象的类，对象的类本质上也是对象，称为类对象。类对象描述了对象的数据：对象占用的内存大小、成员变量的类型和布局等，而且也描述了对象的行为">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://rhetty.github.io/2017/03/18/Objective-C对象的整理与思考/"/>
+
+  <title> Objective-C对象的整理与思考 | 正宫阁 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">正宫阁</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">扯</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Objective-C对象的整理与思考
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-18T16:13:53+08:00" content="2017-03-18">
+              2017-03-18
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/18/Objective-C对象的整理与思考/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/18/Objective-C对象的整理与思考/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h1><p>对象本质是 c 中的结构体，Objective-C 中对对象的定义为<code>struct objc_object</code>，其中<code>isa</code>是它唯一的私有成员变量。在内存模型中，每个对象除了<code>isa</code>指针，还包括从顶级父类到直接父类，以及自己的所有成员变量。</p>
+<h2 id="类对象"><a href="#类对象" class="headerlink" title="类对象"></a>类对象</h2><p><code>isa</code>指针指向的是对象的类，对象的类本质上也是对象，称为类对象。类对象描述了对象的数据：对象占用的内存大小、成员变量的类型和布局等，而且也描述了对象的行为：对象能够响应的消息、实现的实例方法等：</p>
+<ul>
+<li>对象的方法列表（对象能够接收的消息列表，保存在它所对应的类对象中）</li>
+<li>成员变量列表</li>
+<li>属性列表</li>
+</ul>
+<p>因此，当我们调用<code>[receiver message]</code>时，首先通过<code>isa</code>在类对象中查找<code>message</code>，找到则执行，否则沿着继承链继续在 superclass 中找。类对象中保存着类的继承关系，类对象中有一个<code>superclass</code>指针，指向它的父类对象。大部分对象都继承自<code>NSObject</code>，另一个根类是<code>NSProxy</code>。根类的<code>superclass</code>指针指向<code>nil</code>。</p>
+<p>既然类对象是一个对象，那么它也是其他类的实例，这个类叫做元类(metaclass)。其实，每个类对象都是元类的一个单例。</p>
+<h2 id="元类"><a href="#元类" class="headerlink" title="元类"></a>元类</h2><p>元类其实也是对象，它保存着类的数据与类方法列表。与类对象不同的是，所有的元类都是根元类的实例，即<code>isa</code>指针都指向根元类，而根元类的<code>isa</code>指针指向自己。根元类也继承自根类。</p>
+<p>比如在调用类方法时，<code>[NSObject new]</code>，类对象是否能相应这个消息是通过<code>isa</code>到元类中查找才能知道。</p>
+<p>理论上我们也可以给元类发送消息，但是 Objective-C 倾向于隐藏元类，不想让大家知道元类的存在。元类是为了保持 Objective-C 对象模型在设计上的完整性而引入的，比如用来保存类方法等，它主要是用来给编译器使用的。</p>
+<h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><p>属性用<code>@property</code>定义，那么属性的本质是什么？</p>
+<blockquote>
+<p>@property = ivar + getter + setter;</p>
+</blockquote>
+<p>下面解释下：</p>
+<blockquote>
+<p>属性(property)有两大概念：ivar(实例变量)、存取方法（access method = getter + setter）</p>
+</blockquote>
+<p>也就是说，定义一个属性后，编译器会自动帮你定义一个与之对应的实例变量，并生成对该实例变量的存取方法。</p>
+<p>property 在 runtime 中为<code>objc_property_t</code>：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_property *objc_property_t;</div></pre></td></tr></table></figure>
+<p>而<code>objc_property</code>是一个结构体，定义如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> property_t &#123;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *attributes;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>而attributes本质是<code>objc_property_attribute_t</code>，定义了property的一些属性，定义如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// Defines a property attribute</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name;           <span class="comment">/**&lt; The name of the attribute */</span></div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *value;          <span class="comment">/**&lt; The value of the attribute (usually empty) */</span></div><div class="line">&#125; objc_property_attribute_t;</div></pre></td></tr></table></figure>
+<p>而attributes的具体内容是什么呢？其实，包括：类型，原子性，内存语义和对应的实例变量。</p>
+<p>例如：我们定义一个string的property<code>@property (nonatomic, copy) NSString *string;</code>，通过 property_getAttributes(property)获取到attributes并打印出来之后的结果为<code>T@&quot;NSString&quot;,C,N,V_string</code></p>
+<p>其中T就代表类型，可参阅<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1" target="_blank" rel="external">Type Encodings</a>，C就代表Copy，N代表nonatomic，V就代表对于的实例变量。</p>
+<h2 id="自动合成（autosynthesis）"><a href="#自动合成（autosynthesis）" class="headerlink" title="自动合成（autosynthesis）"></a>自动合成（autosynthesis）</h2><p>编译器为属性自动添加存取方法的过程叫做<strong>自动合成</strong>。这个过程是编译器在编译器进行的，以编辑器里看不到这些“合成方法”(synthesized method)的源代码。</p>
+<p>编译器自动添加的实例变量的名称默认是属性名前再加个下划线。如属性<code>firstName</code>对应的默认实例变量为<code>_firstName</code>。也可以通过<code>synthesize</code>来手动指定实例变量名：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></div><div class="line"><span class="keyword">@synthesize</span> firstName = _myFirstName;</div><div class="line"><span class="keyword">@synthesize</span> lastName = _myLastName;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>定义属性大致会生成五个东西：</p>
+<ul>
+<li><code>OBJC_IVAR_$类名$属性名称</code> ：该属性的“偏移量” (offset)，这个偏移量是“硬编码” (hardcode)，表示该变量距离存放对象的内存区域的起始地址有多远。</li>
+<li><code>setter</code> 与 <code>getter</code> 方法对应的实现函数</li>
+<li><code>ivar_list</code> ：成员变量列表</li>
+<li><code>method_list</code> ：方法列表</li>
+<li><code>prop_list</code> ：属性列表</li>
+</ul>
+<p>也就是说我们每次在增加一个属性,系统都会在<code>ivar_list</code>中添加一个成员变量的描述,在 <code>method_list</code>中增加 setter 与 getter 方法的描述,在属性列表中增加一个属性的描述,然后计算该属性在对象中的偏移量,然后给出 setter 与 getter 方法对应的实现,在 setter 方法中从偏移量的位置开始赋值,在 getter 方法中从偏移量开始取值,为了能够读取正确字节数,系统对象偏移量的指针类型进行了类型强转.</p>
+<h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><p>属性的修饰符由四部分组成，举个例子：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readwrite</span>, <span class="keyword">getter</span>=isGood, <span class="keyword">assign</span>) <span class="built_in">BOOL</span> good;</div></pre></td></tr></table></figure>
+<ul>
+<li>原子性：有<code>atomic</code>、<code>nonatomic</code>两种，<code>atomic</code>使属性具有原子性，一定程度上是线程安全的，而<code>nonatomic</code>则不支持。在 iOS 开发当中，绝大部分情况下使用<code>nonatomic</code></li>
+<li>读写规则：有<code>readwrite</code>、<code>readonly</code>两种，分别支持读写和只读</li>
+<li>存取方法名：通过<code>getter=</code>、<code>setter=</code>可以指定属性的存取方法名</li>
+<li>内存管理：有<code>assign</code>、<code>strong</code>、<code>copy</code>等修饰符，具体作用在内存管理中解释</li>
+</ul>
+<p>属性默认的修饰符为：</p>
+<ul>
+<li>atomic</li>
+<li>readwrite</li>
+<li>getter=$prop$, setter=set$Prop$</li>
+<li>基本数据类型为 assign，对象为 strong</li>
+</ul>
+<h2 id="synthesize"><a href="#synthesize" class="headerlink" title="@synthesize"></a>@synthesize</h2><p><code>@synthesize</code>一般有两个作用：</p>
+<ol>
+<li>指定属性对应的实例变量名，不写的话默认为<code>@synthesize var = _var</code>，一般不推荐改写实例变量名</li>
+<li>当自动合成失效时，进行手动合成。</li>
+</ol>
+<p>自动合成失效，即编译器不帮你生成实例变量。有以下情况会时自动合成失效：</p>
+<ul>
+<li>手动实现了 getter 和 setter 方法（或实现了 readonly 属性的 getter），这时编译器会认为你想自己管理实例变量，所以不会帮你生成</li>
+<li>通过<code>@dynamic</code>指定了属性的动态性，详见下节</li>
+</ul>
+<h2 id="dynamic"><a href="#dynamic" class="headerlink" title="@dynamic"></a>@dynamic</h2><p><code>@dynamic</code>告诉编译器：属性的 setter 和 getter 方法由用户自己实现，不用自动生成。假如一个属性被声明为<code>@dynamic var</code>，然后你没有提供 setter 方法和 getter 方法，编译的时候没问题，但是当程序运行到<code>`instance.var = someVar</code>，由于缺 setter 方法会导致程序崩溃；或者当运行到 someVar = var 时，由于缺 getter 方法同样会导致崩溃。编译时没问题，运行时才执行相应的方法，这就是所谓的动态绑定。</p>
+<h1 id="拷贝"><a href="#拷贝" class="headerlink" title="拷贝"></a>拷贝</h1><h2 id="系统对象"><a href="#系统对象" class="headerlink" title="系统对象"></a>系统对象</h2><p>一般在定义<code>NSString</code>、<code>NSArray</code>、<code>NSDictionary</code>这些对象时，通常会使用<code>copy</code>关键字，因为它们有对应的可变类型：<code>NSMutableString</code>、<code>NSMutableArray</code>、<code>NSMutableDictionary</code>。用<code>copy</code>修饰的对象在被赋值时会自动调用它的 copy 方法，即被赋值的指针会指向拷贝对象。</p>
+<p>对于上述具有可变和不可变两种形式的对象而言，调用 copy 方法产生的都是不可变的拷贝对象，对应的可变拷贝方法为<code>mutableCopy</code>。拷贝还存在深拷贝和浅拷贝两种形式，对应如下：</p>
+<ul>
+<li>[immutableObject copy] // 浅复制</li>
+<li>[immutableObject mutableCopy] //深复制</li>
+<li>[mutableObject copy] //深复制</li>
+<li>[mutableObject mutableCopy] //深复制</li>
+</ul>
+<p>这个也比较好理解，对于不可变对象进行 copy，因为被拷贝对象与拷贝对象都不可变，所以只需进行指针复制即可；如果有一个对象是可变的，那就需要进行内容复制。对于容器对象而言，内容复制只是对于容器本身的复制，容器中的对象仍是指针复制。</p>
+<p>因此，对于不可变对象的申明，最好使用 copy 修饰，防止对象在外部被修改。对于可变对象，使用 strong，保持对象的可变性。如：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span> ,<span class="keyword">readwrite</span>, <span class="keyword">strong</span>) <span class="built_in">NSArray</span> *array;</div></pre></td></tr></table></figure>
+<p>如果 array 持有的是一个外部可变对象，那么 array 会随着外部对象的改变而改变，因为它们指向的是同一块内存，而 array 的申明却是不可变对象<code>NSArray</code>。又如：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span> ,<span class="keyword">readwrite</span>, <span class="keyword">copy</span>) <span class="built_in">NSMutableArray</span> *mutableArray;</div></pre></td></tr></table></figure>
+<p>如果对 mutableArray 进行元素的增删，编译时不会报错，但是运行时会崩溃。因为用了 copy 修饰符，所以它本质上是一个不可变数组，因此运行时找不到对应的增删元素的方法。申明的可变只能骗过编译器。</p>
+<p>block 也经常使用 copy 关键字，这是历史遗留问题。在 MRC 中,方法内部的 block 是在栈区的,使用 copy 可以把它放到堆区.在 ARC 中写不写都行：对于 block 使用 copy 还是 strong 效果是一样的，但写上 copy 也无伤大雅，还能时刻提醒我们：编译器自动对 block 进行了 copy 操作。如果不写 copy ，该类的调用者有可能会忘记或者根本不知道“编译器会自动对 block 进行了 copy 操作”，他们有可能会在调用之前自行拷贝属性值。这种操作多余而低效。</p>
+<h2 id="自定义对象"><a href="#自定义对象" class="headerlink" title="自定义对象"></a>自定义对象</h2><p>如果要让自定义的对象能够实现 copy 方法，首先需要实现<code>&lt;NSCopying&gt;</code>协议（mutableCopy 则需要实现<code>&lt;NSMutableCopying&gt;</code>协议）。</p>
+<p>已 NSCopying 协议为例，该协议只有一个方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">id</span>)copyWithZone:(<span class="built_in">NSZone</span> *)zone;</div></pre></td></tr></table></figure>
+<p>要实现 copy，就要实现这个方法，而不是 copy 方法。比如可以这样写：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">id</span>)copyWithZone:(<span class="built_in">NSZone</span> *)zone &#123;</div><div class="line">    SomeThing *<span class="keyword">copy</span> = [[[<span class="keyword">self</span> <span class="keyword">class</span>] allocWithZone:zone] init];</div><div class="line">    <span class="keyword">copy</span>-&gt;_var = [_var coppy];</div><div class="line">    <span class="keyword">copy</span>-&gt;_set = [[<span class="built_in">NSMutableSet</span> alloc] initWithSet:_set</div><div class="line">                                         copyItems:<span class="literal">YES</span>];</div><div class="line">    <span class="keyword">return</span> <span class="keyword">copy</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意，对象的实例变量如果需要拷贝，还需要手动实现。如果缩写的对象需要深拷贝，那么可考虑新增一个专门执行深拷贝的方法。</p>
+<p>如果需要重写带 copy 修饰符的 setter，不要忘了手动 copy：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)setName:(<span class="built_in">NSString</span> *)name &#123;</div><div class="line">    _name = [name <span class="keyword">copy</span>];</div><div class="line">    <span class="comment">// maybe do something</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="等同性"><a href="#等同性" class="headerlink" title="等同性"></a>等同性</h1><p>首先看一段代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *foo = <span class="string">@"Badger 123"</span>;</div><div class="line"><span class="built_in">NSString</span> *bar = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"Badger %i"</span>, <span class="number">123</span>];</div><div class="line"><span class="built_in">BOOL</span> equalA = (foo == bar); <span class="comment">// NO</span></div><div class="line"><span class="built_in">BOOL</span> equalB = (foo isEqual:bar); <span class="comment">// YES</span></div><div class="line"><span class="built_in">BOOL</span> equalC = (foo isEqualToString:bar); <span class="comment">// YES</span></div></pre></td></tr></table></figure>
+<p>在比较两个对象时，==操作符比较的是两个指针所指向的地址，equalA 比较两个不同的对象，因此返回 NO。<code>isEqualToString:</code>方法是 NSString 的特有方法，只比较字符串是否相等，上面两个字符串是一样的，因此返回 YES。<code>isEqual：</code>方法是定义在 NSObject 协议中的方法，它的默认实现是：当且仅当其内存地址完全相等时，两个对象才相等，这与==操作符的比较方式相同。但是在 NSString 中，<code>isEqual:</code>方法得到了覆写，它首先比较两个对象类型是否相同，若相等，则调用<code>isEqualToString:</code>，否则再执行原有的<code>isEqual:</code>。因此，equalB 的结果与 equalC 相同。但是第三个调用比第二个调用快。</p>
+<p><code>isEqualToString:</code>这类方法是特定类所具有的等同性判定方法，除 NSString 之外，NSArray 与 NSDictionary 类也具有特殊的等同性判定方法，分别为<code>isEqualToArray</code>与<code>isEqualToDictionary</code>。一般对于自定义类也可编写此类比较方法。</p>
+<p>NSObject 协议中有两个用于判断等同性的关键方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)isEqual:(<span class="keyword">id</span>)object;</div><div class="line">- (<span class="built_in">NSUInteger</span>)hash;</div></pre></td></tr></table></figure>
+<p>如果要比较自定义的类需要覆写<code>isEqual:</code>方法，同时也需要覆写<code>hash</code>。在覆写<code>isEqual:</code>方法时，可以首先==操作符比较，若相等则直接返回 YES，接着比较对象类型，若不同则直接返回 NO，然后再比较能够判定对象等同性的关键属性即可。</p>
+<p>接着实现<code>hash</code>方法，根据等同性约定：若两对象相等，则其哈希码也相等，但是两个哈希码相同的对象却未必相等。对于哈希码计算的要求是：</p>
+<ul>
+<li>计算速度快</li>
+<li>对于相等的对象，其哈希值必须相等</li>
+<li>尽量减少不等对象的哈希码碰撞</li>
+</ul>
+<p>有一种做法是：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSUInteger</span>)hash &#123;</div><div class="line">    <span class="keyword">return</span> var1 ^ var2 ^ var3;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种做法既能保持较高效率，又能使生成的哈希码至少位于一定范围之内，而不会过于频繁。如果哈希码碰撞率过高，在 collection 中使用这类对象就会产生性能问题。</p>
+<p>对于容器中可变类的等同性，有一种情况要注意，就是在容器中放入可变类对象后，就不应再改变其哈希码了。如果某对象在放入“箱子”之后哈希码又变了，那么其现在所处的这个箱子对它来说就是“错误”的。要想解决这个问题，需要确保哈希码不是根据对象的“可变部分”计算出来的，或是保证放入 collection 之后就不再改变对象内容了。</p>
+<h1 id="Core-Fundation-对象"><a href="#Core-Fundation-对象" class="headerlink" title="Core Fundation 对象"></a>Core Fundation 对象</h1><p>Core Fundation 框架是一组 C 语言接口，它与 Fundation 框架紧密相关，CF 对象与 OC 对象也可以相互转换，因为 ARC 的内存管理只针对 OC 对象有效，所以对象的转换主要涉及对象所有权的处理：</p>
+<ul>
+<li><code>__bridge</code>：只作类型转换，不涉及所有权的转移。如：</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">CFStringRef</span> cfString = (__bridge <span class="built_in">CFStringRef</span>)string;</div></pre></td></tr></table></figure>
+<p>这里 string 对象会由 ARC 管理内存，所以不用手动释放 cfString。</p>
+<ul>
+<li><code>__bridge_retained</code>：会让 CF 对象得到对象所有权，即 CF 和 OC 都持有对象所有权。</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">CFStringRef</span> cfString = (__bridge_retained <span class="built_in">CFStringRef</span>)string;</div></pre></td></tr></table></figure>
+<p>string 释放后，cfString 仍然可以使用，但是它需要手动被释放：<code>CFRelease(cfString);</code>。<code>__bridge_retained</code>可以用<code>CFBridgingRetain()</code>代替。</p>
+<ul>
+<li><code>__bridge_transfer</code>：对象所有权转移：CF -&gt; OC</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *string = (__bridge_transfer <span class="built_in">NSString</span> *)cfString;</div></pre></td></tr></table></figure>
+<p>cfString 的所有权已经被转移，所以不需要手动释放。可以用<code>CFBridgingRelease()</code>代替。</p>
+<h1 id="load-amp-initialize"><a href="#load-amp-initialize" class="headerlink" title="+load &amp; +initialize"></a>+load &amp; +initialize</h1><h2 id="load"><a href="#load" class="headerlink" title="+load"></a>+load</h2><p>+load 方法是当类或分类被添加到 Objective-C runtime 时被调用的，实现这个方法可以让我们在类加载的时候执行一些类相关的行为。子类的 +load 方法会在它的所有父类的 +load 方法之后执行，而分类的 +load 方法会在它的主类的 +load 方法之后执行。但是不同的类之间的 +load 方法的调用顺序是不确定的。</p>
+<p>load 方法并不遵从那套继承规则。如果某个类本身没实现 load 方法，那么不管其各级超类是否实现此方法，系统都不会调用。此外，在分类和其所属的类里，都可能出现 load 方法。此时两种实现代码都会调用。</p>
+<p>+load 方法的执行先于 main 函数。</p>
+<p>load 方法务必实现的精简一些，也就是要尽量减少其所执行的操作，其真正用途仅在于调试程序。</p>
+<h2 id="initialize"><a href="#initialize" class="headerlink" title="+initialize"></a>+initialize</h2><p>+initialize 方法是在类或它的子类收到第一条消息之前被调用的，这里所指的消息包括实例方法和类方法的调用。也就是说 +initialize 方法是以懒加载的方式被调用的，如果程序一直没有给某个类或它的子类发送消息，那么这个类的 +initialize 方法是永远不会被调用的。</p>
+<p>initialize 方法与其他消息一样，如果某个类未实现它，而其超类实现了，那么就会运行超类的实现代码。因此父类的实现可能会被执行多次的。有时候，这可能是你想要的；但如果我们想确保自己的 +initialize 方法只执行一次，避免多次执行可能带来的副作用时，我们可以使用下面的代码来实现：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">+ (<span class="keyword">void</span>)initialize &#123;</div><div class="line">  <span class="keyword">if</span> (<span class="keyword">self</span> == [ClassName <span class="keyword">class</span>]) &#123;</div><div class="line">    <span class="comment">// ... do the initialization ...</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>+load</th>
+<th>+initialize</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>调用时机</td>
+<td>被添加到 runtime 时</td>
+<td>收到第一条消息前，可能永远不调用</td>
+</tr>
+<tr>
+<td>调用顺序</td>
+<td>父类-&gt;子类-&gt;分类</td>
+<td>父类-&gt;子类</td>
+</tr>
+<tr>
+<td>调用次数</td>
+<td>1次</td>
+<td>多次</td>
+</tr>
+<tr>
+<td>是否需要显式调用父类实现</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>是否沿用父类的实现</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>分类中的实现</td>
+<td>类和分类都执行</td>
+<td>覆盖类中的方法，只执行分类的实现</td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="http://blog.leichunfeng.com/blog/2015/04/25/objective-c-object-model/" target="_blank" rel="external">Objective-C 对象模型</a></li>
+<li><a href="https://github.com/ChenYilong/iOSInterviewQuestions" target="_blank" rel="external">招聘一个靠谱的iOS–参考答案</a></li>
+<li>《Effective Objective-C 2.0》</li>
+<li><a href="http://blog.leichunfeng.com/blog/2015/05/02/objective-c-plus-load-vs-plus-initialize/" target="_blank" rel="external">Objective-C +load vs +initialize</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/19/UITableView的性能优化/" rel="next" title="UITableView的性能优化">
+                <i class="fa fa-chevron-left"></i> UITableView的性能优化
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/18/Objective-C对象的整理与思考/"
+           data-title="Objective-C对象的整理与思考" data-url="http://rhetty.github.io/2017/03/18/Objective-C对象的整理与思考/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="黄嘉伟" />
+          <p class="site-author-name" itemprop="name">黄嘉伟</p>
+          <p class="site-description motion-element" itemprop="description">https://github.com/rhetty</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内存模型"><span class="nav-number">1.</span> <span class="nav-text">内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#类对象"><span class="nav-number">1.1.</span> <span class="nav-text">类对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元类"><span class="nav-number">1.2.</span> <span class="nav-text">元类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#属性"><span class="nav-number">2.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自动合成（autosynthesis）"><span class="nav-number">2.1.</span> <span class="nav-text">自动合成（autosynthesis）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修饰符"><span class="nav-number">2.2.</span> <span class="nav-text">修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synthesize"><span class="nav-number">2.3.</span> <span class="nav-text">@synthesize</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dynamic"><span class="nav-number">2.4.</span> <span class="nav-text">@dynamic</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拷贝"><span class="nav-number">3.</span> <span class="nav-text">拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统对象"><span class="nav-number">3.1.</span> <span class="nav-text">系统对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义对象"><span class="nav-number">3.2.</span> <span class="nav-text">自定义对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#等同性"><span class="nav-number">4.</span> <span class="nav-text">等同性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Core-Fundation-对象"><span class="nav-number">5.</span> <span class="nav-text">Core Fundation 对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#load-amp-initialize"><span class="nav-number">6.</span> <span class="nav-text">+load & +initialize</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#load"><span class="nav-number">6.1.</span> <span class="nav-text">+load</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#initialize"><span class="nav-number">6.2.</span> <span class="nav-text">+initialize</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄嘉伟</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"huangjiawei"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
