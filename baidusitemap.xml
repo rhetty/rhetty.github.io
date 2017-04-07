@@ -4,6 +4,63 @@
 
     
   <url>
+    <loc>http://huga.coding.me/2017/04/07/%E6%B7%B7%E7%94%A8swift%E5%92%8Cobjc-%E4%B8%8Eobjc-APIs%E4%BA%A4%E4%BA%92/</loc>
+    <lastmod>2017-04-07T11:19:42.000Z</lastmod>
+    <data>
+        <display>
+        <title>混用swift和objc - 与objc APIs交互</title>
+        <pubTime>2017-04-07T05:57:56.000Z</pubTime>
+        
+        <tag>iOS</tag>
+         
+        <tag>objc</tag>
+         
+        <tag>swift</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huga.coding.me/2017/03/26/Objective-C-runtime%E6%95%B4%E7%90%86/</loc>
+    <lastmod>2017-04-02T02:48:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>Objective-C--runtime整理</title>
+        <pubTime>2017-03-26T03:01:13.000Z</pubTime>
+        
+        <tag>iOS</tag>
+         
+        <tag>objc</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huga.coding.me/2017/03/20/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
+    <lastmod>2017-03-23T12:45:08.000Z</lastmod>
+    <data>
+        <display>
+        <title>iOS多线程</title>
+        <pubTime>2017-03-20T13:02:58.000Z</pubTime>
+        
+        <tag>iOS</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://huga.coding.me/2017/03/18/iOS%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</loc>
     <lastmod>2017-03-18T15:26:19.000Z</lastmod>
     <data>
