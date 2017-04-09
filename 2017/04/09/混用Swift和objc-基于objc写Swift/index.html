@@ -1,0 +1,632 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,objc,Swift," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Swift 与 objc 的互操作性让你可以基于 objc 创建类和协议，这些类和协议就可以用强大的 Swift 来编写。
+继承 objc 类要在 Swift 中继承 objc 的类，只要在 Swift 类名后写上:，并跟上要继承的 objc 的类名：
+1234import UIKitclass MySwiftViewController: UIViewController &amp;#123;    /">
+<meta property="og:type" content="article">
+<meta property="og:title" content="混用Swift和objc - 基于objc写Swift">
+<meta property="og:url" content="http://rhetty.github.io/2017/04/09/混用Swift和objc-基于objc写Swift/index.html">
+<meta property="og:site_name" content="正宫阁">
+<meta property="og:description" content="Swift 与 objc 的互操作性让你可以基于 objc 创建类和协议，这些类和协议就可以用强大的 Swift 来编写。
+继承 objc 类要在 Swift 中继承 objc 的类，只要在 Swift 类名后写上:，并跟上要继承的 objc 的类名：
+1234import UIKitclass MySwiftViewController: UIViewController &amp;#123;    /">
+<meta property="og:updated_time" content="2017-04-09T07:00:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="混用Swift和objc - 基于objc写Swift">
+<meta name="twitter:description" content="Swift 与 objc 的互操作性让你可以基于 objc 创建类和协议，这些类和协议就可以用强大的 Swift 来编写。
+继承 objc 类要在 Swift 中继承 objc 的类，只要在 Swift 类名后写上:，并跟上要继承的 objc 的类名：
+1234import UIKitclass MySwiftViewController: UIViewController &amp;#123;    /">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://rhetty.github.io/2017/04/09/混用Swift和objc-基于objc写Swift/"/>
+
+  <title> 混用Swift和objc - 基于objc写Swift | 正宫阁 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">正宫阁</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">扯</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                混用Swift和objc - 基于objc写Swift
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-09T11:03:33+08:00" content="2017-04-09">
+              2017-04-09
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/09/混用Swift和objc-基于objc写Swift/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/09/混用Swift和objc-基于objc写Swift/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Swift 与 objc 的互操作性让你可以基于 objc 创建类和协议，这些类和协议就可以用强大的 Swift 来编写。</p>
+<h1 id="继承-objc-类"><a href="#继承-objc-类" class="headerlink" title="继承 objc 类"></a>继承 objc 类</h1><p>要在 Swift 中继承 objc 的类，只要在 Swift 类名后写上<code>:</code>，并跟上要继承的 objc 的类名：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySwiftViewController</span>: <span class="title">UIViewController</span> </span>&#123;</div><div class="line">    <span class="comment">// define the class</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>要重写父类方法时，使用<code>override</code>修饰符。</p>
+<h2 id="NSCoding"><a href="#NSCoding" class="headerlink" title="NSCoding"></a>NSCoding</h2><p><code>NSCoding</code>协议要求实现必须的初始器<code>init(coder:)</code>和<code>encode(with:)</code>，实现这个协议的类的子类如果有自定义的初始器或没有初始值的属性时，也必须实现这个方法。</p>
+<p>对于从 Storyboard 加载的、用<code>NSUserDefaults</code>或<code>NSKeyedArchiver</code>类归档到磁盘的对象，必须要提供这类初始器的实现。对于不能以这种方式初始化的类型，就不必须实现初始器。</p>
+<h1 id="使用协议"><a href="#使用协议" class="headerlink" title="使用协议"></a>使用协议</h1><p>协议跟在父类，用<code>,</code>分隔。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySwiftViewController</span>: <span class="title">UIViewController</span>, <span class="title">UITableViewDelegate</span>, <span class="title">UITableViewDataSource</span> </span>&#123;</div><div class="line">    <span class="comment">// define the class</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对比于 objc 中声明遵从协议的类型：<code>id&lt;SomeProtocol&gt;</code>、<code>id&lt;SomeProtocol, AnotherProtocol&gt;</code>，在 Swift 中：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> textFieldDelegate: <span class="type">UITextFieldDelegate</span></div><div class="line"><span class="keyword">var</span> tableViewController: <span class="type">UITableViewDataSource</span> &amp; <span class="type">UITableViewDelegate</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>由于在 Swift 中，类和协议的命名空间是统一的，objc 中的<code>NSObject</code>协议对应于 Swift 中的<code>NSObjectProtocol</code>协议。</p>
+</blockquote>
+<h1 id="编写构造器和析构器"><a href="#编写构造器和析构器" class="headerlink" title="编写构造器和析构器"></a>编写构造器和析构器</h1><p>Swift 的编译器保证构造器让所有属性都初始化。</p>
+<p>如果想在对象回收前做些清理工作，可以实现析构器。父类的析构器将在子类析构器之后执行。</p>
+<h1 id="通过-objc-APIs-使用-Swift-的类名"><a href="#通过-objc-APIs-使用-Swift-的类名" class="headerlink" title="通过 objc APIs 使用 Swift 的类名"></a>通过 objc APIs 使用 Swift 的类名</h1><p>Swift 类的命名空间是基于它们编译所在的模块，所以可以通过模块来区分相同名字的类。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> myPersonClass: <span class="type">AnyClass</span>? = <span class="type">NSClassFromString</span>(<span class="string">"MyGreatApp.Person"</span>)</div></pre></td></tr></table></figure>
+<h1 id="与-Interface-Builder-集成"><a href="#与-Interface-Builder-集成" class="headerlink" title="与 Interface Builder 集成"></a>与 Interface Builder 集成</h1><h2 id="使用-Outlets-和-Actions"><a href="#使用-Outlets-和-Actions" class="headerlink" title="使用 Outlets 和 Actions"></a>使用 Outlets 和 Actions</h2><p>在 Swift 中，通过<code>@IBOutlet</code>和<code>@IBAction</code>来使用 outlets 和 actions。</p>
+<p>Swift 中的 outlet 需要定义为隐式解包可选类型，这样就可以让 storyboard 在初始化后，在运行时连接 outlets。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyViewController</span>: <span class="title">UIViewController</span> </span>&#123;</div><div class="line">    <span class="meta">@IBOutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> button: <span class="type">UIButton</span>!</div><div class="line">    <span class="meta">@IBOutlet</span> <span class="keyword">var</span> textFields: [<span class="type">UITextField</span>]!</div><div class="line">    <span class="meta">@IBAction</span> <span class="function"><span class="keyword">func</span> <span class="title">buttonTapped</span><span class="params">(sender: AnyObject)</span></span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"button tapped!"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="实时渲染"><a href="#实时渲染" class="headerlink" title="实时渲染"></a>实时渲染</h2><p>为了在 IB 中使用实时的、交互式的自定义视图设计，可以用两个不同的属性——<code>@IBDesignable</code>和<code>@IBInspectable</code>。创建继承自<code>UIView</code>的自定义 view 时，可以在类定义之前添加<code>@IBDesignable</code>，这样，把自定义 view 添加到 IB 中时，IB 会渲染你的 view。</p>
+<p>可以在属性前添加<code>@IBInspectable</code>，使之与 user defined runtime 属性兼容。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@IBDesignable</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyCustomView</span>: <span class="title">UIView</span> </span>&#123;</div><div class="line">    <span class="meta">@IBInspectable</span> <span class="keyword">var</span> textColor: <span class="type">UIColor</span></div><div class="line">    <span class="meta">@IBInspectable</span> <span class="keyword">var</span> iconHeight: <span class="type">CGFloat</span></div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="指定-property-的属性"><a href="#指定-property-的属性" class="headerlink" title="指定 property 的属性"></a>指定 property 的属性</h1><h2 id="Strong-与-Weak"><a href="#Strong-与-Weak" class="headerlink" title="Strong 与 Weak"></a>Strong 与 Weak</h2><p>Swift 中使用<code>weak</code>关键字来声明弱引用，只能用在可选类型的 property。</p>
+<h2 id="读写与只读"><a href="#读写与只读" class="headerlink" title="读写与只读"></a>读写与只读</h2><p>Swift 中没有<code>readwrite</code>和<code>readonly</code>属性，而是使用<code>let</code>和<code>var</code>来对应只读和读写的存储变量。对于计算性变量，只提供 getter 使它只读，提供 getter 和 setter 使之可以读写。</p>
+<h2 id="拷贝语义"><a href="#拷贝语义" class="headerlink" title="拷贝语义"></a>拷贝语义</h2><p>在 Swift 中，objc 的<code>copy</code>属性翻译成<code>@NSCopying</code>，这个类型必须实现<code>NSCopying</code>协议。</p>
+<h1 id="实现-Core-Data-Managed-Object-的子类"><a href="#实现-Core-Data-Managed-Object-的子类" class="headerlink" title="实现 Core Data Managed Object 的子类"></a>实现 Core Data Managed Object 的子类</h1><p>在 managed object 的子类的属性前添加<code>@NSManaged</code>告诉 Swift 编译器，Core Data 会在运行时提供其实现和存储。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Person+CoreDataClass.swift</span></div><div class="line"><span class="keyword">import</span> CoreData</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>: <span class="title">NSManagedObject</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="comment">// Insert code here to add functionality to your managed object subclass</span></div><div class="line">    </div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="comment">// Person+CoreDataProperties.swift</span></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="meta">@NSManaged</span> <span class="keyword">var</span> name: <span class="type">String</span></div><div class="line">    <span class="meta">@NSManaged</span> <span class="keyword">var</span> friends: <span class="type">NSSet</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="声明协议"><a href="#声明协议" class="headerlink" title="声明协议"></a>声明协议</h1><p>要创建可以被 objc 使用的 Swift 协议，使用<code>@objc</code>标记<code>protocol</code>的声明。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"><span class="meta">@objc</span> <span class="class"><span class="keyword">protocol</span> <span class="title">MyCustomProtocol</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> people: [<span class="type">Person</span>] &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(<span class="number">_</span> tableView: UITableView, configure cell: UITableViewCell, forPerson person: Person)</span></span></div><div class="line">    </div><div class="line">    <span class="meta">@objc</span> <span class="keyword">optional</span> <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(<span class="number">_</span> tableView: UITableView, willDisplay cell: UITableViewCell, forPerson person: Person)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可选的协议要标记为<code>@objc</code>和<code>optional</code>。objc 类实现 Swift 定义的协议和实现 objc 的协议是一样的。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MyCustomController</span>: <span class="title">UIViewController</span> &lt;<span class="title">MyCustomProtocol</span>&gt;</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSArray</span>&lt;Person *&gt; *people;</div><div class="line"><span class="keyword">@end</span></div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">MyCustomController</span></span></div><div class="line"><span class="keyword">@synthesize</span> people;</div><div class="line"> </div><div class="line">- (<span class="keyword">void</span>)tableView:(<span class="built_in">UITableView</span> *)tableView</div><div class="line">        configure:(<span class="built_in">UITableViewCell</span> *)cell</div><div class="line">        forPerson:(Person *)person</div><div class="line">&#123;</div><div class="line">   <span class="comment">// Configure cell</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216-CH2-ID0" target="_blank" rel="external">Using Swift with Cocoa and Objective-C (Swift 3.1)</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+            <a href="/tags/objc/" rel="tag">#objc</a>
+          
+            <a href="/tags/Swift/" rel="tag">#Swift</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/07/混用swift和objc-与objc-APIs交互/" rel="next" title="混用swift和objc - 与objc APIs交互">
+                <i class="fa fa-chevron-left"></i> 混用swift和objc - 与objc APIs交互
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/09/混用Swift和objc-基于objc写Swift/"
+           data-title="混用Swift和objc - 基于objc写Swift" data-url="http://rhetty.github.io/2017/04/09/混用Swift和objc-基于objc写Swift/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="黄嘉伟" />
+          <p class="site-author-name" itemprop="name">黄嘉伟</p>
+          <p class="site-description motion-element" itemprop="description">https://github.com/rhetty</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#继承-objc-类"><span class="nav-number">1.</span> <span class="nav-text">继承 objc 类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NSCoding"><span class="nav-number">1.1.</span> <span class="nav-text">NSCoding</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用协议"><span class="nav-number">2.</span> <span class="nav-text">使用协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编写构造器和析构器"><span class="nav-number">3.</span> <span class="nav-text">编写构造器和析构器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过-objc-APIs-使用-Swift-的类名"><span class="nav-number">4.</span> <span class="nav-text">通过 objc APIs 使用 Swift 的类名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#与-Interface-Builder-集成"><span class="nav-number">5.</span> <span class="nav-text">与 Interface Builder 集成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Outlets-和-Actions"><span class="nav-number">5.1.</span> <span class="nav-text">使用 Outlets 和 Actions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实时渲染"><span class="nav-number">5.2.</span> <span class="nav-text">实时渲染</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指定-property-的属性"><span class="nav-number">6.</span> <span class="nav-text">指定 property 的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Strong-与-Weak"><span class="nav-number">6.1.</span> <span class="nav-text">Strong 与 Weak</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读写与只读"><span class="nav-number">6.2.</span> <span class="nav-text">读写与只读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拷贝语义"><span class="nav-number">6.3.</span> <span class="nav-text">拷贝语义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现-Core-Data-Managed-Object-的子类"><span class="nav-number">7.</span> <span class="nav-text">实现 Core Data Managed Object 的子类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#声明协议"><span class="nav-number">8.</span> <span class="nav-text">声明协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄嘉伟</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"huangjiawei"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
