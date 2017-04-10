@@ -1,0 +1,680 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,objc,Swift," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="能够在 objc 和 Swift 之间相互转换的类型称作bridged类型，比如 Swift 中的String可以作为NSString传给 objc。
+FoundationFoundation 框架为程序提供了基础的功能。
+Bridged 类型详见表格
+这些类型和它们对应的类型功能一样，在 Swift 中，可变性用var和let控制，所以不用两种类型。objc 的引用类型与它们所对应的 Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="混用Swift和objc - 使用Cocoa">
+<meta property="og:url" content="http://rhetty.github.io/2017/04/10/混用Swift和objc-使用Cocoa/index.html">
+<meta property="og:site_name" content="正宫阁">
+<meta property="og:description" content="能够在 objc 和 Swift 之间相互转换的类型称作bridged类型，比如 Swift 中的String可以作为NSString传给 objc。
+FoundationFoundation 框架为程序提供了基础的功能。
+Bridged 类型详见表格
+这些类型和它们对应的类型功能一样，在 Swift 中，可变性用var和let控制，所以不用两种类型。objc 的引用类型与它们所对应的 Swift">
+<meta property="og:updated_time" content="2017-04-10T04:23:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="混用Swift和objc - 使用Cocoa">
+<meta name="twitter:description" content="能够在 objc 和 Swift 之间相互转换的类型称作bridged类型，比如 Swift 中的String可以作为NSString传给 objc。
+FoundationFoundation 框架为程序提供了基础的功能。
+Bridged 类型详见表格
+这些类型和它们对应的类型功能一样，在 Swift 中，可变性用var和let控制，所以不用两种类型。objc 的引用类型与它们所对应的 Swift">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://rhetty.github.io/2017/04/10/混用Swift和objc-使用Cocoa/"/>
+
+  <title> 混用Swift和objc - 使用Cocoa | 正宫阁 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">正宫阁</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">扯</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                混用Swift和objc - 使用Cocoa
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-10T10:07:45+08:00" content="2017-04-10">
+              2017-04-10
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/10/混用Swift和objc-使用Cocoa/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/10/混用Swift和objc-使用Cocoa/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>能够在 objc 和 Swift 之间相互转换的类型称作<code>bridged</code>类型，比如 Swift 中的<code>String</code>可以作为<code>NSString</code>传给 objc。</p>
+<h1 id="Foundation"><a href="#Foundation" class="headerlink" title="Foundation"></a>Foundation</h1><p>Foundation 框架为程序提供了基础的功能。</p>
+<h2 id="Bridged-类型"><a href="#Bridged-类型" class="headerlink" title="Bridged 类型"></a><a name="bridged-types"></a>Bridged 类型</h2><p>详见<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6-ID61" target="_blank" rel="external">表格</a></p>
+<p>这些类型和它们对应的类型功能一样，在 Swift 中，可变性用<code>var</code>和<code>let</code>控制，所以不用两种类型。objc 的引用类型与它们所对应的 Swift 的值类型基本上相差<code>NS</code>前缀。</p>
+<p>在 Swift 与 objc 相互导入时，导入器会替换相关的 bridged 类型。</p>
+<h2 id="Renamed-类型"><a href="#Renamed-类型" class="headerlink" title="Renamed 类型"></a>Renamed 类型</h2><p>Swift 的 Foundation 重命名了一些类和协议，包括相关的枚举类型和常量。</p>
+<p>一般，类都去掉了<code>NS</code>前缀，也有一些特例：</p>
+<ul>
+<li>objc 特有的类或与 objc runtime 相关的类：<code>NSObject</code>, <code>NSAutoreleasePool</code>, <code>NSException</code>, <code>NSProxy</code></li>
+<li>平台特有的类：<code>NSBackgroundActivity</code>, <code>NSUserNotification</code>, <code>NSXPCConnection</code></li>
+<li>有等价值类型的类，如 <a href="#bridged-types">Bridged 类型</a>所述：<code>NSString</code>, <code>NSDictionary</code>, <code>NSURL</code></li>
+<li>没有等价类型的类，但在不久的将来会有的：<code>NSAttributedString</code>, <code>NSRegularExpression</code>, <code>NSPredicate</code></li>
+</ul>
+<p>Foundation 框架中有很多枚举和常量，当 Swift 导入这些类型时，会把它们作为相关类的嵌套类型。如<code>NSJSONReadingOptions</code>会导入为<code>JSONSerialization.ReadingOptions</code>。</p>
+<h3 id="Strings"><a href="#Strings" class="headerlink" title="Strings"></a>Strings</h3><p>在 Swift 中要创建<code>NSString</code>，可以用<code>as</code>转型<code>String</code>，也可以用字符串常量来创建。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"><span class="keyword">let</span> string: <span class="type">String</span> = <span class="string">"abc"</span></div><div class="line"><span class="keyword">let</span> bridgedString: <span class="type">NSString</span> = string <span class="keyword">as</span> <span class="type">NSString</span></div><div class="line"> </div><div class="line"><span class="keyword">let</span> stringLiteral: <span class="type">NSString</span> = <span class="string">"123"</span></div><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> integerValue = <span class="type">Int</span>(stringLiteral <span class="keyword">as</span> <span class="type">String</span>) &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"\(stringLiteral) is the integer \(integerValue)"</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">// Prints "123 is the integer 123"</span></div></pre></td></tr></table></figure>
+<h3 id="Numbers"><a href="#Numbers" class="headerlink" title="Numbers"></a>Numbers</h3><p><code>NSNumber</code>可以桥接 Swift 的数值类型，包括<code>Int</code>, <code>Double</code>, <code>Bool</code>。</p>
+<p>把数值类型转型为<code>NSNumber</code>时，要用<code>as?</code>操作符。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"><span class="keyword">let</span> number = <span class="number">42</span></div><div class="line"><span class="keyword">let</span> bridgedNumber: <span class="type">NSNumber</span> = number <span class="keyword">as</span> <span class="type">NSNumber</span></div><div class="line"> </div><div class="line"><span class="keyword">let</span> integerLiteral: <span class="type">NSNumber</span> = <span class="number">5</span></div><div class="line"><span class="keyword">let</span> floatLiteral: <span class="type">NSNumber</span> = <span class="number">3.14159</span></div><div class="line"><span class="keyword">let</span> booleanLiteral: <span class="type">NSNumber</span> = <span class="literal">true</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>objc 平台相关的整形类型，如<code>NSUInteger</code>、<code>NSInteger</code>，都与<code>Int</code>对应。</p>
+</blockquote>
+<h3 id="Arrays"><a href="#Arrays" class="headerlink" title="Arrays"></a>Arrays</h3><p>当桥接一个参数化的<code>NSArray</code>对象时，其中的元素也会被桥接。如果没有参数化，就会桥接为类型<code>[Any]</code>的数组。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> <span class="built_in">NSArray</span> *objects;</div><div class="line"><span class="keyword">@property</span> <span class="built_in">NSArray</span>&lt;<span class="built_in">NSDate</span> *&gt; *dates;</div><div class="line">- (<span class="built_in">NSArray</span>&lt;<span class="built_in">NSDate</span> *&gt; *)datesBeforeDate:(<span class="built_in">NSDate</span> *)date;</div><div class="line">- (<span class="keyword">void</span>)addDatesParsedFromTimestamps:(<span class="built_in">NSArray</span>&lt;<span class="built_in">NSString</span> *&gt; *)timestamps;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> objects: [<span class="type">Any</span>]</div><div class="line"><span class="keyword">var</span> dates: [<span class="type">Date</span>]</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">datesBeforeDate</span><span class="params">(date: Date)</span></span> -&gt; [<span class="type">Date</span>] &#123;&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">addDatesParsedFromTimestamps</span><span class="params">(timestamps: [String])</span></span> &#123;&#125;</div></pre></td></tr></table></figure>
+<p>可以直接用字面值定义一个<code>NSArray</code>对象：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> schoolSupplies: <span class="type">NSArray</span> = [<span class="string">"Pencil"</span>, <span class="string">"Eraser"</span>, <span class="string">"Notebook"</span>]</div><div class="line"><span class="comment">// schoolSupplies is an NSArray object containing three values</span></div></pre></td></tr></table></figure>
+<h3 id="Sets"><a href="#Sets" class="headerlink" title="Sets"></a>Sets</h3><p>集合的桥接与数组类似，如果<code>NSSet</code>没有明确参数化类型，就会桥接为<code>Set&lt;AnyHashable&gt;</code>。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> <span class="built_in">NSSet</span> *objects;</div><div class="line"><span class="keyword">@property</span> <span class="built_in">NSSet</span>&lt;<span class="built_in">NSString</span> *&gt; *words;</div><div class="line">- (<span class="built_in">NSSet</span>&lt;<span class="built_in">NSString</span> *&gt; *)wordsMatchingPredicate:(<span class="built_in">NSPredicate</span> *)predicate;</div><div class="line">- (<span class="keyword">void</span>)removeWords:(<span class="built_in">NSSet</span>&lt;<span class="built_in">NSString</span> *&gt; *)words;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> objects: <span class="type">Set</span>&lt;<span class="type">AnyHashable</span>&gt;</div><div class="line"><span class="keyword">var</span> words: <span class="type">Set</span>&lt;<span class="type">String</span>&gt;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">wordsMatchingPredicate</span><span class="params">(predicate: NSPredicate)</span></span> -&gt; <span class="type">Set</span>&lt;<span class="type">String</span>&gt; &#123;&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">removeWords</span><span class="params">(words: Set&lt;String&gt;)</span></span> &#123;&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> amenities: <span class="type">NSSet</span> = [<span class="string">"Sauna"</span>, <span class="string">"Steam Room"</span>, <span class="string">"Jacuzzi"</span>]</div><div class="line"><span class="comment">// amenities is an NSSet object containing three values</span></div></pre></td></tr></table></figure>
+<h3 id="Dictionaries"><a href="#Dictionaries" class="headerlink" title="Dictionaries"></a>Dictionaries</h3><p>为定义参数化类型的<code>NSDictionary</code>桥接为<code>[AnyHashable: Any]</code>。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> <span class="built_in">NSDictionary</span> *keyedObjects;</div><div class="line"><span class="keyword">@property</span> <span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSURL</span> *, <span class="built_in">NSData</span> *&gt; *cachedData;</div><div class="line">- (<span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSURL</span> *, <span class="built_in">NSNumber</span> *&gt; *)fileSizesForURLsWithSuffix:(<span class="built_in">NSString</span> *)suffix;</div><div class="line">- (<span class="keyword">void</span>)setCacheExpirations:(<span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSURL</span> *, <span class="built_in">NSDate</span> *&gt; *)expirations;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> keyedObjects: [<span class="type">AnyHashable</span>: <span class="type">Any</span>]</div><div class="line"><span class="keyword">var</span> cachedData: [<span class="type">URL</span>: <span class="type">Data</span>]</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">fileSizesForURLsWithSuffix</span><span class="params">(suffix: String)</span></span> -&gt; [<span class="type">URL</span>: <span class="type">NSNumber</span>] &#123;&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">setCacheExpirations</span><span class="params">(expirations: [URL: NSDate])</span></span> &#123;&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> medalRankings: <span class="type">NSDictionary</span> = [<span class="string">"Gold"</span>: <span class="string">"1st Place"</span>, <span class="string">"Silver"</span>: <span class="string">"2nd Place"</span>, <span class="string">"Bronze"</span>: <span class="string">"3rd Place"</span>]</div><div class="line"><span class="comment">// medalRankings is an NSDictionary object containing three key-value pairs</span></div></pre></td></tr></table></figure>
+<h1 id="Core-Foundation"><a href="#Core-Foundation" class="headerlink" title="Core Foundation"></a>Core Foundation</h1><p>CF 类型会被导入为 Swift 类。还会提供内存管理注解，这样 Swift 就能自动管理 CF 对象的内存，包括你自己实例化的 CF 对象。In Swift, you can use each pair of toll-free bridged Foundation and Core Foundation types interchangeably. You can also bridge some toll-free bridged Core Foundation types to Swift standard library types if you cast to a bridging Foundation type first.</p>
+<h2 id="Remapped-Types"><a href="#Remapped-Types" class="headerlink" title="Remapped Types"></a>Remapped Types</h2><p>Swift 导入 CF 类型时，编译器会重新映射这些类型的名字。从每个类型名最后移除<code>Ref</code>，因为所有 Swift 类都是引用类型。</p>
+<p><code>CFTypeRed</code>类型会重新映射为<code>AnyObject</code>类型。</p>
+<h2 id="Memory-Managed-Objects"><a href="#Memory-Managed-Objects" class="headerlink" title="Memory Managed Objects"></a>Memory Managed Objects</h2><p>从注解过的API中返回的 CF 对象会被 Swift 自动管理内存，不需要自己调用<code>CFRetain</code>, <code>CFRelease</code>, <code>CFAutorelease</code>。</p>
+<p>如果你想要在你自己的 C 方法或 objc 方法中返回 CF 对象，可以用<code>CF_RETURNS_RETAINED</code>、<code>CF_RETURNS_NOT_RETAINED</code>宏来注解，就能自动插入内存管理语句。也可以用<code>CF_IMPLICIT_BRIDGING_ENABLED</code>、<code>CF_IMPLICIT_BRIDGING_DISABLED</code>宏，来包裹 C 方法声明，遵循 CF 所有权策略和命名策略，从而根据命名推断出内存管理。</p>
+<h2 id="Unmanaged-Objects"><a href="#Unmanaged-Objects" class="headerlink" title="Unmanaged Objects"></a>Unmanaged Objects</h2><p>当 Swift 导入的 API 没有注解，就不能自动管理返回的 CF 对象的内存。Swift 会将返回的 CF 对象包裹在<code>Unmanaged&lt;Instance&gt;</code>结构中。所有间接返回的 CF 对象也是 unmanaged。如下是未注解的 C 方法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function">CFStringRef <span class="title">StringByAddingTwoStrings</span><span class="params">(CFStringRef s1, CFStringRef s2)</span></span></div></pre></td></tr></table></figure>
+<p>Swift 这么导入：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">StringByAddingTwoStrings</span><span class="params">(<span class="number">_</span>: CFString!, <span class="number">_</span>: CFString!)</span></span> -&gt; <span class="type">Unmanaged</span>&lt;<span class="type">CFString</span>&gt;! &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当你从一个未注解的 API 收到一个非托管的对象时，要马上把它转化成一个内存管理对象。<code>Unmanaged&lt;Instance&gt;</code>结构体提供两个方法来转化成内存管理对象——<code>takeUnretainedValue()</code>和<code>takeRetainedValue()</code>。这两个方法都返回原始的、解包的对象类型。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> memoryManagedResult = <span class="type">StringByAddingTwoStrings</span>(str1, str2).takeUnretainedValue()</div><div class="line"><span class="comment">// memoryManagedResult is a memory managed CFString</span></div></pre></td></tr></table></figure>
+<p>当然也可以用<code>retain()</code>、<code>release()</code>、<code>autorelease()</code>方法来管理非托管对象，但这些方法不推荐。</p>
+<h1 id="Unified-Logging"><a href="#Unified-Logging" class="headerlink" title="Unified Logging"></a>Unified Logging</h1><p>标准日志系统提供 API 来替代<code>NSLog</code>方法。</p>
+<p>Swift 中，可以用顶级的<code>os_log(_:dso:log:type:_:)</code>方法与标准日志系统交互，在模块 os 的子模块 log 中。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os.log</div><div class="line"> </div><div class="line">os_log(<span class="string">"This is a log message."</span>)</div></pre></td></tr></table></figure>
+<p>用<code>NSString</code>或<code>printf</code>格式的字符串来格式化日志消息。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> fileSize = <span class="number">1234567890</span></div><div class="line">os_log(<span class="string">"Finished downloading file. Size: %&#123;iec-bytes&#125;d"</span>, fileSize)</div></pre></td></tr></table></figure>
+<p>也可以明确日志的层级，如 Info、Debug、Error。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">os_log(<span class="string">"This is additional info that may be helpful for troubleshooting."</span>, type: .info)</div></pre></td></tr></table></figure>
+<p>要对特定的子系统记录日志，可以创建<code>OSLog</code>对象，明确子系统和分类，作为参数传给<code>os_log</code>方法。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> customLog = <span class="type">OSLog</span>(<span class="string">"com.your_company.your_subsystem_name.plist"</span>, <span class="string">"your_category_name"</span>)</div><div class="line">os_log(<span class="string">"This is info that may be helpful during development or debugging."</span>, log: customLog, type: .debug)</div></pre></td></tr></table></figure>
+<h1 id="Cocoa-Structures"><a href="#Cocoa-Structures" class="headerlink" title="Cocoa Structures"></a>Cocoa Structures</h1><p>把 Swift 代码转换回 objc 代码时，Cocoa 和 Foundation 中内置的结构体会转换为<code>NSValue</code>实例。As a result, you can use an Objective-C structure from Swift in Cocoa APIs that accept only instances of reference types. This is true even though the instance’s defining type is bridged to Swift as a structure type.</p>
+<p>下面的结构体会桥接为<code>NSValue</code>：</p>
+<ul>
+<li>CATransform3D</li>
+<li>CLLocationCoordinate2D</li>
+<li>CGAffineTransform</li>
+<li>CGPoint</li>
+<li>CGRect</li>
+<li>CGSize</li>
+<li>CGVector</li>
+<li>CMTimeMapping</li>
+<li>CMTimeRange</li>
+<li>CMTime</li>
+<li>MKCoordinateSpan</li>
+<li>NSRange</li>
+<li>SCNMatrix4</li>
+<li>SCNVector3</li>
+<li>SCNVector4</li>
+<li>UIEdgeInsets</li>
+<li>UIOffset</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216-CH2-ID0" target="_blank" rel="external">Using Swift with Cocoa and Objective-C (Swift 3.1)</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+            <a href="/tags/objc/" rel="tag">#objc</a>
+          
+            <a href="/tags/Swift/" rel="tag">#Swift</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/09/混用Swift和objc-基于objc写Swift/" rel="next" title="混用Swift和objc - 基于objc写Swift">
+                <i class="fa fa-chevron-left"></i> 混用Swift和objc - 基于objc写Swift
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/10/混用Swift和objc-使用Cocoa/"
+           data-title="混用Swift和objc - 使用Cocoa" data-url="http://rhetty.github.io/2017/04/10/混用Swift和objc-使用Cocoa/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="黄嘉伟" />
+          <p class="site-author-name" itemprop="name">黄嘉伟</p>
+          <p class="site-description motion-element" itemprop="description">https://github.com/rhetty</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Foundation"><span class="nav-number">1.</span> <span class="nav-text">Foundation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bridged-类型"><span class="nav-number">1.1.</span> <span class="nav-text">Bridged 类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Renamed-类型"><span class="nav-number">1.2.</span> <span class="nav-text">Renamed 类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Strings"><span class="nav-number">1.2.1.</span> <span class="nav-text">Strings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Numbers"><span class="nav-number">1.2.2.</span> <span class="nav-text">Numbers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Arrays"><span class="nav-number">1.2.3.</span> <span class="nav-text">Arrays</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sets"><span class="nav-number">1.2.4.</span> <span class="nav-text">Sets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dictionaries"><span class="nav-number">1.2.5.</span> <span class="nav-text">Dictionaries</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Core-Foundation"><span class="nav-number">2.</span> <span class="nav-text">Core Foundation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Remapped-Types"><span class="nav-number">2.1.</span> <span class="nav-text">Remapped Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-Managed-Objects"><span class="nav-number">2.2.</span> <span class="nav-text">Memory Managed Objects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unmanaged-Objects"><span class="nav-number">2.3.</span> <span class="nav-text">Unmanaged Objects</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unified-Logging"><span class="nav-number">3.</span> <span class="nav-text">Unified Logging</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cocoa-Structures"><span class="nav-number">4.</span> <span class="nav-text">Cocoa Structures</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄嘉伟</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"huangjiawei"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
