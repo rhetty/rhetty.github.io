@@ -1,0 +1,702 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,objc,Swift," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Cocoa 中已有的设计模式很有用，但这些模式很多依赖于 objc 的类。由于 objc 与 Swift 有着互操作性，所以也可以在 Swift 中使用这些通用的模式。
+DelegationSwift 使用代理的步骤：
+
+检查myDelegate不为nil
+检查myDelegate实现了方法window:willUseFullScreenContentSize:
+如果 1 和 2 都为 ture，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="混用Swift和objc - 使用Cocoa设计模式">
+<meta property="og:url" content="http://rhetty.github.io/2017/04/11/混用Swift和objc-使用Cocoa设计模式/index.html">
+<meta property="og:site_name" content="正宫阁">
+<meta property="og:description" content="Cocoa 中已有的设计模式很有用，但这些模式很多依赖于 objc 的类。由于 objc 与 Swift 有着互操作性，所以也可以在 Swift 中使用这些通用的模式。
+DelegationSwift 使用代理的步骤：
+
+检查myDelegate不为nil
+检查myDelegate实现了方法window:willUseFullScreenContentSize:
+如果 1 和 2 都为 ture，">
+<meta property="og:updated_time" content="2017-04-11T09:13:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="混用Swift和objc - 使用Cocoa设计模式">
+<meta name="twitter:description" content="Cocoa 中已有的设计模式很有用，但这些模式很多依赖于 objc 的类。由于 objc 与 Swift 有着互操作性，所以也可以在 Swift 中使用这些通用的模式。
+DelegationSwift 使用代理的步骤：
+
+检查myDelegate不为nil
+检查myDelegate实现了方法window:willUseFullScreenContentSize:
+如果 1 和 2 都为 ture，">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://rhetty.github.io/2017/04/11/混用Swift和objc-使用Cocoa设计模式/"/>
+
+  <title> 混用Swift和objc - 使用Cocoa设计模式 | 正宫阁 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">正宫阁</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">扯</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                混用Swift和objc - 使用Cocoa设计模式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-11T13:57:00+08:00" content="2017-04-11">
+              2017-04-11
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/11/混用Swift和objc-使用Cocoa设计模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/11/混用Swift和objc-使用Cocoa设计模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Cocoa 中已有的设计模式很有用，但这些模式很多依赖于 objc 的类。由于 objc 与 Swift 有着互操作性，所以也可以在 Swift 中使用这些通用的模式。</p>
+<h1 id="Delegation"><a href="#Delegation" class="headerlink" title="Delegation"></a>Delegation</h1><p>Swift 使用代理的步骤：</p>
+<ol>
+<li>检查<code>myDelegate</code>不为<code>nil</code></li>
+<li>检查<code>myDelegate</code>实现了方法<code>window:willUseFullScreenContentSize:</code></li>
+<li>如果 1 和 2 都为 ture，就调用方法，并把结果赋给<code>fullScreenSize</code></li>
+<li>打印返回值</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyDelegate</span>: <span class="title">NSObject</span>, <span class="title">NSWindowDelegate</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">window</span><span class="params">(<span class="number">_</span> window: NSWindow, willUseFullScreenContentSize proposedSize: NSSize)</span></span> -&gt; <span class="type">NSSize</span> &#123;</div><div class="line">        <span class="keyword">return</span> proposedSize</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">myWindow.delegate = <span class="type">MyDelegate</span>()</div><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> fullScreenSize = myWindow.delegate?.window(myWindow, willUseFullScreenContentSize: mySize) &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="type">NSStringFromSize</span>(fullScreenSize))</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="Lazy-Initialization"><a href="#Lazy-Initialization" class="headerlink" title="Lazy Initialization"></a>Lazy Initialization</h1><p>在 objc 中的延迟初始化：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> <span class="built_in">NSXMLDocument</span> *XML;</div><div class="line"> </div><div class="line">- (<span class="built_in">NSXMLDocument</span> *)XML &#123;</div><div class="line">    <span class="keyword">if</span> (_XML == <span class="literal">nil</span>) &#123;</div><div class="line">        _XML = [[<span class="built_in">NSXMLDocument</span> alloc] initWithContentsOfURL:[[Bundle mainBundle] URLForResource:<span class="string">@"/path/to/resource"</span> withExtension:<span class="string">@"xml"</span>] options:<span class="number">0</span> error:<span class="literal">nil</span>];</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="keyword">return</span> _XML;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Swift 中对于存储型变量的延迟初始化可以用<code>lazy</code>修饰：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">lazy</span> <span class="keyword">var</span> <span class="type">XML</span>: <span class="type">XMLDocument</span> = <span class="keyword">try</span>! <span class="type">XMLDocument</span>(contentsOf: <span class="type">Bundle</span>.main.url(forResource: <span class="string">"document"</span>, withExtension: <span class="string">"xml"</span>)!, options: <span class="number">0</span>)</div></pre></td></tr></table></figure>
+<p>由于在访问一个完全初始化的实例时，延迟属性才会计算，它可能在它的初始化表达式中访问常量或变量属性：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> pattern: <span class="type">String</span></div><div class="line"><span class="built_in">lazy</span> <span class="keyword">var</span> regex: <span class="type">NSRegularExpression</span> = <span class="keyword">try</span>! <span class="type">NSRegularExpression</span>(pattern: <span class="keyword">self</span>.pattern, options: [])</div></pre></td></tr></table></figure>
+<p>对于需要初始化之外的其他额外工作的值，可以将一个返回初始化值的闭包赋值给这个变量。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">lazy</span> <span class="keyword">var</span> currencyFormatter: <span class="type">NumberFormatter</span> = &#123;</div><div class="line">    <span class="keyword">let</span> formatter = <span class="type">NumberFormatter</span>()</div><div class="line">    formatter.numberStyle = .currency</div><div class="line">    formatter.currencySymbol = <span class="string">"¤"</span></div><div class="line">    <span class="keyword">return</span> formatter</div><div class="line">&#125;()</div></pre></td></tr></table></figure>
+<blockquote>
+<p>如果一个延迟属性还未初始化，并且同时被多个线程访问，那么不能保证它只被初始化一次。</p>
+</blockquote>
+<h1 id="Error-Handling"><a href="#Error-Handling" class="headerlink" title="Error Handling"></a>Error Handling</h1><p>在 objc 中，访问通过传递 NSError 指针值来获取错误信息。Swift 会将其自动转化为原生的错误处理方式。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)removeItemAtURL:(<span class="built_in">NSURL</span> *)URL</div><div class="line">                  error:(<span class="built_in">NSError</span> **)error;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">removeItem</span><span class="params">(at: URL)</span></span> <span class="keyword">throws</span> &#123;&#125;</div></pre></td></tr></table></figure>
+<h2 id="Catching-and-Handling-an-Error"><a href="#Catching-and-Handling-an-Error" class="headerlink" title="Catching and Handling an Error"></a>Catching and Handling an Error</h2><p>objc 中这么处理错误：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSFileManager</span> *fileManager = [<span class="built_in">NSFileManager</span> defaultManager];</div><div class="line"><span class="built_in">NSURL</span> *fromURL = [<span class="built_in">NSURL</span> fileURLWithPath:<span class="string">@"/path/to/old"</span>];</div><div class="line"><span class="built_in">NSURL</span> *toURL = [<span class="built_in">NSURL</span> fileURLWithPath:<span class="string">@"/path/to/new"</span>];</div><div class="line"><span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</div><div class="line"><span class="built_in">BOOL</span> success = [fileManager moveItemAtURL:fromURL toURL:toURL error:&amp;error];</div><div class="line"><span class="keyword">if</span> (!success) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Error: %@"</span>, error.domain);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Swift 中等价的代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> fileManager = <span class="type">FileManager</span>.<span class="keyword">default</span></div><div class="line"><span class="keyword">let</span> fromURL = <span class="type">URL</span>(fileURLWithPath: <span class="string">"/path/to/old"</span>)</div><div class="line"><span class="keyword">let</span> toURL = <span class="type">URL</span>(fileURLWithPath: <span class="string">"/path/to/new"</span>)</div><div class="line"><span class="keyword">do</span> &#123;</div><div class="line">    <span class="keyword">try</span> fileManager.moveItem(at: fromURL, to: toURL)</div><div class="line">&#125; <span class="keyword">catch</span> <span class="keyword">let</span> error <span class="keyword">as</span> <span class="type">NSError</span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"Error: \(error.domain)"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以用<code>catch</code>子句来匹配具体的错误：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">do</span> &#123;</div><div class="line">    <span class="keyword">try</span> fileManager.moveItem(at: fromURL, to: toURL)</div><div class="line">&#125; <span class="keyword">catch</span> <span class="type">CocoaError</span>.fileNoSuchFile &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"Error: no such file exists"</span>)</div><div class="line">&#125; <span class="keyword">catch</span> <span class="type">CocoaError</span>.fileReadUnsupportedScheme &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"Error: unsupported scheme (should be 'file://')"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Converting-Errors-to-Optional-Values"><a href="#Converting-Errors-to-Optional-Values" class="headerlink" title="Converting Errors to Optional Values"></a>Converting Errors to Optional Values</h2><p>Swift 中，用<code>try?</code>将抛出方法变为返回一个可选值，然后检查值是否为<code>nil</code>。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSFileManager</span> *fileManager = [<span class="built_in">NSFileManager</span> defaultManager];</div><div class="line"> </div><div class="line"><span class="built_in">NSURL</span> *tmpURL = [fileManager URLForDirectory:<span class="built_in">NSCachesDirectory</span></div><div class="line">                                    inDomain:<span class="built_in">NSUserDomainMask</span></div><div class="line">                           appropriateForURL:<span class="literal">nil</span></div><div class="line">                                      create:<span class="literal">YES</span></div><div class="line">                                       error:<span class="literal">nil</span>];</div><div class="line"> </div><div class="line"><span class="keyword">if</span> (tmpURL != <span class="literal">nil</span>) &#123;</div><div class="line">   <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> fileManager = <span class="type">FileManager</span>.<span class="keyword">default</span></div><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> tmpURL = <span class="keyword">try</span>? fileManager.url(<span class="keyword">for</span>: .cachesDirectory, <span class="keyword">in</span>: .userDomainMask, appropriateFor: <span class="literal">nil</span>, create: <span class="literal">true</span>) &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Throwing-an-Error"><a href="#Throwing-an-Error" class="headerlink" title="Throwing an Error"></a>Throwing an Error</h2><p>发生错误时，objc 与 Swift 的做法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// an error occurred</span></div><div class="line"><span class="keyword">if</span> (errorPtr) &#123;</div><div class="line">   *errorPtr = [<span class="built_in">NSError</span> errorWithDomain:<span class="built_in">NSURLErrorDomain</span></div><div class="line">                                   code:<span class="built_in">NSURLErrorCannotOpenFile</span></div><div class="line">                               userInfo:<span class="literal">nil</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// an error occurred</span></div><div class="line"><span class="keyword">throw</span> <span class="type">NSError</span>(domain: <span class="type">NSURLErrorDomain</span>, code: <span class="type">NSURLErrorCannotOpenFile</span>, userInfo: <span class="literal">nil</span>)</div></pre></td></tr></table></figure>
+<p>如果 objc 调用了一个抛出错误的 Swift 方法，这个错误会自动变为 objc 方法中的错误指针参数。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SerializedDocument</span>: <span class="title">NSDocument</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">let</span> <span class="type">ErrorDomain</span> = <span class="string">"com.example.error.serialized-document"</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> representedObject: [<span class="type">String</span>: <span class="type">Any</span>] = [:]</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">read</span><span class="params">(from fileWrapper: FileWrapper, ofType typeName: String)</span></span> <span class="keyword">throws</span> &#123;</div><div class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> data = fileWrapper.regularFileContents <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="type">NSError</span>(domain: <span class="type">NSURLErrorDomain</span>, code: <span class="type">NSURLErrorCannotOpenFile</span>, userInfo: <span class="literal">nil</span>)</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> <span class="keyword">case</span> <span class="keyword">let</span> <span class="type">JSON</span> <span class="keyword">as</span> [<span class="type">String</span>: <span class="type">Any</span>] = <span class="keyword">try</span> <span class="type">JSONSerialization</span>.jsonObject(with: data, options: []) &#123;</div><div class="line">            <span class="keyword">self</span>.representedObject = <span class="type">JSON</span></div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="type">NSError</span>(domain: <span class="type">SerializedDocument</span>.<span class="type">ErrorDomain</span>, code: -<span class="number">1</span>, userInfo: <span class="literal">nil</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果这个方法抛出了错误，Swift 调用的话，错误会转移到调用方作用域；objc 调用的话，错误会变成指针参数。</p>
+<p>objc 中如果不提供错误指针，错误就会被忽略，而 Swift 中调用抛出方法需要有显示的错误处理。</p>
+<blockquote>
+<p>如果 objc 方法发生错误，Swift 无法处理，会触发一个运行时错误。所以 objc 中的错误必须在 objc 中处理。</p>
+</blockquote>
+<h1 id="Key-Value-Observing"><a href="#Key-Value-Observing" class="headerlink" title="Key-Value Observing"></a>Key-Value Observing</h1><p>Swift 要使用 KVO，类必须继承 NSObject。步骤如下：</p>
+<ol>
+<li>对于要观察的变量，使用<code>dynamic</code>修饰：</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyObjectToObserve</span>: <span class="title">NSObject</span> </span>&#123;</div><div class="line">    <span class="keyword">dynamic</span> <span class="keyword">var</span> myDate = <span class="type">NSDate</span>()</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">updateDate</span><span class="params">()</span></span> &#123;</div><div class="line">        myDate = <span class="type">NSDate</span>()</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>创建一个全局上下文变量：</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">var</span> myContext = <span class="number">0</span></div></pre></td></tr></table></figure>
+<ol>
+<li>添加一个观察者，重写<code>observeValue(for:of:change:context:)</code>方法，并且在<code>deinit</code>中移除观察者：</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyObserver</span>: <span class="title">NSObject</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> objectToObserve = <span class="type">MyObjectToObserve</span>()</div><div class="line">    <span class="keyword">override</span> <span class="keyword">init</span>() &#123;</div><div class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>()</div><div class="line">        objectToObserve.addObserver(<span class="keyword">self</span>, forKeyPath: #keyPath(<span class="type">MyObjectToObserve</span>.myDate), options: .new, context: &amp;myContext)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">observeValue</span><span class="params">(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?)</span></span> &#123;</div><div class="line">        <span class="keyword">if</span> context == &amp;myContext &#123;</div><div class="line">            <span class="keyword">if</span> <span class="keyword">let</span> newValue = change?[.newKey] &#123;</div><div class="line">                <span class="built_in">print</span>(<span class="string">"Date changed: \(newValue)"</span>)</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">super</span>.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">deinit</span> &#123;</div><div class="line">        objectToObserve.removeObserver(<span class="keyword">self</span>, forKeyPath: #keyPath(<span class="type">MyObjectToObserve</span>.myDate), context: &amp;myContext)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="Undo"><a href="#Undo" class="headerlink" title="Undo"></a>Undo</h1><p>在 app 的事件响应链中，<code>UIResponder</code>的子类有一个只读属性<code>undoManager</code>，<code>NSUndoManager</code>维护着 app 的撤销栈。</p>
+<p><code>NSUndoManager</code>提供两种方式来注册撤销操作：一种“简单撤销”，调用一个带有一个对象参数的选择子；另一个是“基于调用的撤销”，用一个<code>NSInvocation</code>对象来接收任意的参数。</p>
+<p>有一个<code>Task</code>模型，<code>ToDoListController</code>用它来展示任务列表：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Task</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> text: <span class="type">String</span></div><div class="line">    <span class="keyword">var</span> completed: <span class="type">Bool</span> = <span class="literal">false</span></div><div class="line">    </div><div class="line">    <span class="keyword">init</span>(text: <span class="type">String</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.text = text</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ToDoListController</span>: <span class="title">NSViewController</span>, <span class="title">NSTableViewDataSource</span>, <span class="title">NSTableViewDelegate</span> </span>&#123;</div><div class="line">    <span class="meta">@IBOutlet</span> <span class="keyword">var</span> tableView: <span class="type">NSTableView</span>!</div><div class="line">    <span class="keyword">var</span> tasks: [<span class="type">Task</span>] = []</div><div class="line">    </div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于接收多个参数的方法，可以用<code>NSInvocation</code>来创建一个撤销操作。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@IBOutlet</span> <span class="keyword">var</span> remainingLabel: <span class="type">NSTextView</span>!</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">mark</span><span class="params">(task: Task, asCompleted completed: Bool)</span></span> &#123;</div><div class="line">    <span class="keyword">if</span> <span class="keyword">let</span> target = undoManager?.prepare(withInvocationTarget: <span class="keyword">self</span>) <span class="keyword">as</span>? <span class="type">ToDoListController</span> &#123;</div><div class="line">        target.mark(task: task, asCompleted: !completed)</div><div class="line">        undoManager?.setActionName(<span class="type">NSLocalizedString</span>(<span class="string">"todo.task.mark"</span>, comment: <span class="string">"Mark As Completed"</span>))</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    task.completed = completed</div><div class="line">    tableView.reloadData()</div><div class="line">    </div><div class="line">    <span class="keyword">let</span> numberRemaining = tasks.<span class="built_in">filter</span>&#123; $<span class="number">0</span>.completed &#125;.<span class="built_in">count</span></div><div class="line">    remainingLabel.string = <span class="type">String</span>(format: <span class="type">NSLocalizedString</span>(<span class="string">"todo.task.remaining"</span>, comment: <span class="string">"Tasks Remaining: %d"</span>), numberRemaining)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>prepare(withInvocationTarget:)</code>方法对于特定的<code>target</code>返回一个代理。通过转换<code>ToDoListController</code>，返回值可以直接进行对应的调用<code>mark(task:asCompleted:)</code>。</p>
+<h1 id="Singleton"><a href="#Singleton" class="headerlink" title="Singleton"></a>Singleton</h1><p>在 objc 中创建单例：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">+ (<span class="keyword">instancetype</span>)sharedInstance &#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">id</span> _sharedInstance = <span class="literal">nil</span>;</div><div class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</div><div class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</div><div class="line">        _sharedInstance = [[<span class="keyword">self</span> alloc] init];</div><div class="line">    &#125;);</div><div class="line"> </div><div class="line">    <span class="keyword">return</span> _sharedInstance;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在 Swift 中，可以简单的用一个 static 类型的变量，它保证仅进行一次的延迟初始化，即使在多个线程中同时访问。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">let</span> sharedInstance = <span class="type">Singleton</span>()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果想要执行除了初始化的额外步骤，可以将闭包的执行结果复制给全局常量：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">let</span> sharedInstance: <span class="type">Singleton</span> = &#123;</div><div class="line">        <span class="keyword">let</span> instance = <span class="type">Singleton</span>()</div><div class="line">        <span class="comment">// setup code</span></div><div class="line">        <span class="keyword">return</span> instance</div><div class="line">    &#125;()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="Introspection"><a href="#Introspection" class="headerlink" title="Introspection"></a>Introspection</h1><p>Swift 中用<code>is</code>操作符检查对象类型，<code>as?</code>用来向下转换类型。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">if</span> object <span class="keyword">is</span> <span class="type">UIButton</span> &#123;</div><div class="line">    <span class="comment">// object is of type UIButton</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// object is not of type UIButton</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> button = object <span class="keyword">as</span>? <span class="type">UIButton</span> &#123;</div><div class="line">    <span class="comment">// object is successfully cast to type UIButton and bound to button</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// object could not be cast to type UIButton</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>检查是否遵循或转换为某个协议的方法与类型的检查和转换相同：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> dataSource = object <span class="keyword">as</span>? <span class="type">UITableViewDataSource</span> &#123;</div><div class="line">    <span class="comment">// object conforms to UITableViewDataSource and is bound to dataSource</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// object not conform to UITableViewDataSource</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="Serializing"><a href="#Serializing" class="headerlink" title="Serializing"></a>Serializing</h1><p>objc 中，可以用 Foundation 框架中的类<code>NSJSONSerialiation</code>和<code>NSPropertyListSerialization</code>从 JSON 或列表型的序列化值——通常是<code>NSDictionary&lt;NSString *, id&gt;</code>中初始化对象。在 Swift 中相同，但它需要额外的类型转换。</p>
+<p>如转换<code>Venue</code>结构：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"><span class="keyword">import</span> CoreLocation</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Venue</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">Category</span>: <span class="title">String</span> </span>&#123;</div><div class="line">        <span class="keyword">case</span> entertainment</div><div class="line">        <span class="keyword">case</span> food</div><div class="line">        <span class="keyword">case</span> nightlife</div><div class="line">        <span class="keyword">case</span> shopping</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> name: <span class="type">String</span></div><div class="line">    <span class="keyword">var</span> coordinates: <span class="type">CLLocationCoordinate2D</span></div><div class="line">    <span class="keyword">var</span> category: <span class="type">Category</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>收到的 JSON 消息可能是这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">   &quot;name&quot;: &quot;Caffè Macs&quot;,</div><div class="line">   &quot;coordinates&quot;: &#123;</div><div class="line">      &quot;lat&quot;: 37.330576,</div><div class="line">      &quot;lng&quot;: -122.029739</div><div class="line">   &#125;,</div><div class="line">   &quot;category&quot;: &quot;food&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>待填坑…</p>
+</blockquote>
+<h1 id="Localization"><a href="#Localization" class="headerlink" title="Localization"></a>Localization</h1><blockquote>
+<p>待填坑…</p>
+</blockquote>
+<h1 id="Autorelease-Pool"><a href="#Autorelease-Pool" class="headerlink" title="Autorelease Pool"></a>Autorelease Pool</h1><p>objc 中，autorelease pool 块用<code>@autoreleasepool</code>标记。Swift 中，可以使用<code>autoreleasepool(_:)</code>函数，在一个 autorelease pool 块中执行一个闭包。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"> </div><div class="line">autoreleasepool &#123;</div><div class="line">    <span class="comment">// code that creates autoreleased objects.</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="API-Availability"><a href="#API-Availability" class="headerlink" title="API Availability"></a>API Availability</h1><blockquote>
+<p>待填坑…</p>
+</blockquote>
+<h1 id="Processing-Command-Line-Arguments"><a href="#Processing-Command-Line-Arguments" class="headerlink" title="Processing Command-Line Arguments"></a>Processing Command-Line Arguments</h1><p>通过访问<code>CommandLine.arguments</code>，可以得到启动时命令行参数列表。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ /path/to/app --argumentName value</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> argument <span class="keyword">in</span> <span class="type">CommandLine</span>.arguments &#123;</div><div class="line">    <span class="built_in">print</span>(argument)</div><div class="line">&#125;</div><div class="line"><span class="comment">// prints "/path/to/app"</span></div><div class="line"><span class="comment">// prints "--argumentName"</span></div><div class="line"><span class="comment">// prints "value"</span></div></pre></td></tr></table></figure>
+<p><code>CommandLine.arguments</code>的第一个元素是可执行文件的路径，在启动时定义的命令行参数从<code>CommandLine.arguments[1]</code>开始。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216-CH2-ID0" target="_blank" rel="external">Using Swift with Cocoa and Objective-C (Swift 3.1)</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+            <a href="/tags/objc/" rel="tag">#objc</a>
+          
+            <a href="/tags/Swift/" rel="tag">#Swift</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/10/混用Swift和objc-使用Cocoa/" rel="next" title="混用Swift和objc - 使用Cocoa">
+                <i class="fa fa-chevron-left"></i> 混用Swift和objc - 使用Cocoa
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/11/混用Swift和objc-使用Cocoa设计模式/"
+           data-title="混用Swift和objc - 使用Cocoa设计模式" data-url="http://rhetty.github.io/2017/04/11/混用Swift和objc-使用Cocoa设计模式/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="黄嘉伟" />
+          <p class="site-author-name" itemprop="name">黄嘉伟</p>
+          <p class="site-description motion-element" itemprop="description">https://github.com/rhetty</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Delegation"><span class="nav-number">1.</span> <span class="nav-text">Delegation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lazy-Initialization"><span class="nav-number">2.</span> <span class="nav-text">Lazy Initialization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Error-Handling"><span class="nav-number">3.</span> <span class="nav-text">Error Handling</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Catching-and-Handling-an-Error"><span class="nav-number">3.1.</span> <span class="nav-text">Catching and Handling an Error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Converting-Errors-to-Optional-Values"><span class="nav-number">3.2.</span> <span class="nav-text">Converting Errors to Optional Values</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Throwing-an-Error"><span class="nav-number">3.3.</span> <span class="nav-text">Throwing an Error</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Key-Value-Observing"><span class="nav-number">4.</span> <span class="nav-text">Key-Value Observing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Undo"><span class="nav-number">5.</span> <span class="nav-text">Undo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Singleton"><span class="nav-number">6.</span> <span class="nav-text">Singleton</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introspection"><span class="nav-number">7.</span> <span class="nav-text">Introspection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Serializing"><span class="nav-number">8.</span> <span class="nav-text">Serializing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Localization"><span class="nav-number">9.</span> <span class="nav-text">Localization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Autorelease-Pool"><span class="nav-number">10.</span> <span class="nav-text">Autorelease Pool</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API-Availability"><span class="nav-number">11.</span> <span class="nav-text">API Availability</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Processing-Command-Line-Arguments"><span class="nav-number">12.</span> <span class="nav-text">Processing Command-Line Arguments</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">13.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄嘉伟</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"huangjiawei"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
