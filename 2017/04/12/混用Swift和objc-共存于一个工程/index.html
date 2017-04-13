@@ -1,0 +1,654 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,objc,Swift," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Importing Code from Within the Same App Target将 objc 导入 Swift要在同一个 app 中将 objc 文件导入 Swift 代码，需要依赖于Objective-C bridging header将那些文件暴露给 Swift。当你在 objc 项目中新建 Swift 文件或在 Swift 项目中新建 oc 文件时，Xcode 会询问你是否要创建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="混用Swift和objc - 共存于一个工程">
+<meta property="og:url" content="http://rhetty.github.io/2017/04/12/混用Swift和objc-共存于一个工程/index.html">
+<meta property="og:site_name" content="正宫阁">
+<meta property="og:description" content="Importing Code from Within the Same App Target将 objc 导入 Swift要在同一个 app 中将 objc 文件导入 Swift 代码，需要依赖于Objective-C bridging header将那些文件暴露给 Swift。当你在 objc 项目中新建 Swift 文件或在 Swift 项目中新建 oc 文件时，Xcode 会询问你是否要创建">
+<meta property="og:updated_time" content="2017-04-13T07:55:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="混用Swift和objc - 共存于一个工程">
+<meta name="twitter:description" content="Importing Code from Within the Same App Target将 objc 导入 Swift要在同一个 app 中将 objc 文件导入 Swift 代码，需要依赖于Objective-C bridging header将那些文件暴露给 Swift。当你在 objc 项目中新建 Swift 文件或在 Swift 项目中新建 oc 文件时，Xcode 会询问你是否要创建">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://rhetty.github.io/2017/04/12/混用Swift和objc-共存于一个工程/"/>
+
+  <title> 混用Swift和objc - 共存于一个工程 | 正宫阁 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">正宫阁</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">扯</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                混用Swift和objc - 共存于一个工程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-12T20:43:54+08:00" content="2017-04-12">
+              2017-04-12
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/12/混用Swift和objc-共存于一个工程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/12/混用Swift和objc-共存于一个工程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Importing-Code-from-Within-the-Same-App-Target"><a href="#Importing-Code-from-Within-the-Same-App-Target" class="headerlink" title="Importing Code from Within the Same App Target"></a>Importing Code from Within the Same App Target</h1><h2 id="将-objc-导入-Swift"><a href="#将-objc-导入-Swift" class="headerlink" title="将 objc 导入 Swift"></a>将 objc 导入 Swift</h2><p>要在同一个 app 中将 objc 文件导入 Swift 代码，需要依赖于<code>Objective-C bridging header</code>将那些文件暴露给 Swift。当你在 objc 项目中新建 Swift 文件或在 Swift 项目中新建 oc 文件时，Xcode 会询问你是否要创建这类头文件。</p>
+<p>如果选择接受，Xcode 会自动创建桥接头文件，名称为你的产品模块名加上<code>&quot;-Bridging-Header.h&quot;</code>。当然你也可以自己手动创建桥接头文件。</p>
+<p>需要编辑桥接头文件来将 objc 代码暴露给 Swift。</p>
+<h3 id="从同一个-target-中将-objc-代码导入-Swift"><a href="#从同一个-target-中将-objc-代码导入-Swift" class="headerlink" title="从同一个 target 中将 objc 代码导入 Swift"></a>从同一个 target 中将 objc 代码导入 Swift</h3><ol>
+<li>在 objc 桥接头文件中，导入每个你想要暴露给 Swift 的 objc 头文件：</li>
+</ol>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"XYZCustomCell.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"XYZCustomView.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"XYZCustomViewController.h"</span></span></div></pre></td></tr></table></figure>
+<ol>
+<li>在 Build Setting 中，在 Swift Compiler - Code Generation，保证 Objective-C Bridging Header 设置项有访问桥接头文件的路径。这个路径是相对于工程的路径，一般情况下不需要修改。</li>
+</ol>
+<p>所有写在桥接头文件中的公共 objc 头文件都对 Swift 可见。不用 import 语句，在这个 target 中，任何 Swift 文件都能使用这些可见的 objc。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> myCell = <span class="type">XYZCustomCell</span>()</div><div class="line">myCell.subtitle = <span class="string">"A custom cell"</span></div></pre></td></tr></table></figure>
+<h2 id="将-Swift-导入-objc"><a href="#将-Swift-导入-objc" class="headerlink" title="将 Swift 导入 objc"></a>将 Swift 导入 objc</h2><p>将 Swift 导入 objc 也需要一个头文件，这个文件是自动生成的——产品模块名加上<code>&quot;-Swift.h&quot;</code>。</p>
+<p>默认的，这个文件包含 Swift 中被标记为<code>public</code>和<code>open</code>的接口。如果你的 app target 有 objc 桥接文件，它也包含标记为<code>internal</code>的接口。这个文件不包含<code>private</code>和<code>fileprivate</code>接口。私有声明不会暴露给 objc 除非它们显示标记为<code>@IBAction</code>、<code>@IBOutlet</code>、<code>@objc</code>。为了让测试 target 访问<code>interval</code>的声明，可以在产品模块导入前加上<code>@testable</code>。</p>
+<p>生成的头文件只要在 objc 文件中导入就行了，其他不用做什么。Note that the Swift interfaces in the generated header include references to all of the Objective-C types used in them. If you use your own Objective-C types in your Swift code, make sure to import the Objective-C headers for those types before importing the Swift generated header into the Objective-C .m file you want to access the Swift code from.</p>
+<h3 id="从同一个-target-中将-Swift-代码导入-objc"><a href="#从同一个-target-中将-Swift-代码导入-objc" class="headerlink" title="从同一个 target 中将 Swift 代码导入 objc"></a>从同一个 target 中将 Swift 代码导入 objc</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"ProductModuleName-Swift.h"</span></span></div></pre></td></tr></table></figure>
+<p>包含这条导入语句的 objc 文件都能访问 target 中的 Swift 代码。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Import into Swift</th>
+<th>Import into Objective-C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Swift code</td>
+<td>No import statement</td>
+<td>#import “ProductModuleName-Swift.h”</td>
+</tr>
+<tr>
+<td>Objective-C code</td>
+<td>No import statement; Objective-C bridging header required</td>
+<td>#import “Header.h”</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Importing-Code-from-Within-the-Same-Framework-Target"><a href="#Importing-Code-from-Within-the-Same-Framework-Target" class="headerlink" title="Importing Code from Within the Same Framework Target"></a>Importing Code from Within the Same Framework Target</h1><p>方法与上一节基本相同。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Import into Swift</th>
+<th>Import into Objective-C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Swift code</td>
+<td>No import statement</td>
+<td>#import <productname productmodulename-swift.h=""></productname></td>
+</tr>
+<tr>
+<td>Objective-C code</td>
+<td>No import statement; Objective-C umbrella header required</td>
+<td>#import “Header.h”</td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216-CH2-ID0" target="_blank" rel="external">Using Swift with Cocoa and Objective-C (Swift 3.1)</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+            <a href="/tags/objc/" rel="tag">#objc</a>
+          
+            <a href="/tags/Swift/" rel="tag">#Swift</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/11/混用Swift和objc-使用Cocoa设计模式/" rel="next" title="混用Swift和objc - 使用Cocoa设计模式">
+                <i class="fa fa-chevron-left"></i> 混用Swift和objc - 使用Cocoa设计模式
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/12/混用Swift和objc-共存于一个工程/"
+           data-title="混用Swift和objc - 共存于一个工程" data-url="http://rhetty.github.io/2017/04/12/混用Swift和objc-共存于一个工程/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="黄嘉伟" />
+          <p class="site-author-name" itemprop="name">黄嘉伟</p>
+          <p class="site-description motion-element" itemprop="description">https://github.com/rhetty</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Importing-Code-from-Within-the-Same-App-Target"><span class="nav-number">1.</span> <span class="nav-text">Importing Code from Within the Same App Target</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#将-objc-导入-Swift"><span class="nav-number">1.1.</span> <span class="nav-text">将 objc 导入 Swift</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从同一个-target-中将-objc-代码导入-Swift"><span class="nav-number">1.1.1.</span> <span class="nav-text">从同一个 target 中将 objc 代码导入 Swift</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将-Swift-导入-objc"><span class="nav-number">1.2.</span> <span class="nav-text">将 Swift 导入 objc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从同一个-target-中将-Swift-代码导入-objc"><span class="nav-number">1.2.1.</span> <span class="nav-text">从同一个 target 中将 Swift 代码导入 objc</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Importing-Code-from-Within-the-Same-Framework-Target"><span class="nav-number">2.</span> <span class="nav-text">Importing Code from Within the Same Framework Target</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄嘉伟</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"huangjiawei"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
