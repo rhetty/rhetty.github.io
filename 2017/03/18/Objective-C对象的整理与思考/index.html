@@ -7,7 +7,7 @@
 
 <html class="theme-next pisces use-motion">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS," />
+  <meta name="keywords" content="objc," />
 
 
 
@@ -89,10 +89,10 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Objective-C对象的整理与思考">
 <meta property="og:url" content="http://rhetty.github.io/2017/03/18/Objective-C对象的整理与思考/index.html">
-<meta property="og:site_name" content="正宫阁">
+<meta property="og:site_name" content="H">
 <meta property="og:description" content="内存模型对象本质是 c 中的结构体，Objective-C 中对对象的定义为struct objc_object，其中isa是它唯一的私有成员变量。在内存模型中，每个对象除了isa指针，还包括从顶级父类到直接父类，以及自己的所有成员变量。
 类对象isa指针指向的是对象的类，对象的类本质上也是对象，称为类对象。类对象描述了对象的数据：对象占用的内存大小、成员变量的类型和布局等，而且也描述了对象的行为">
-<meta property="og:updated_time" content="2017-03-18T08:20:44.000Z">
+<meta property="og:updated_time" content="2018-02-23T13:00:44.446Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Objective-C对象的整理与思考">
 <meta name="twitter:description" content="内存模型对象本质是 c 中的结构体，Objective-C 中对对象的定义为struct objc_object，其中isa是它唯一的私有成员变量。在内存模型中，每个对象除了isa指针，还包括从顶级父类到直接父类，以及自己的所有成员变量。
@@ -119,7 +119,7 @@
 
   <link rel="canonical" href="http://rhetty.github.io/2017/03/18/Objective-C对象的整理与思考/"/>
 
-  <title> Objective-C对象的整理与思考 | 正宫阁 </title>
+  <title> Objective-C对象的整理与思考 | H </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -140,21 +140,21 @@
     
   
 
-  <div class="container one-collumn sidebar-position-right page-post-detail ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-right page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
+      <div class="header-inner"><div class="site-meta custom-logo">
   
 
   <div class="custom-logo-site-title">
     <a href="/"  class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <span class="site-title">正宫阁</span>
+      <span class="site-title">H</span>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle">扯</p>
+  <p class="site-subtitle"></p>
 </div>
 
 <div class="site-nav-toggle">
@@ -347,7 +347,7 @@
 <li>手动实现了 getter 和 setter 方法（或实现了 readonly 属性的 getter），这时编译器会认为你想自己管理实例变量，所以不会帮你生成</li>
 <li>通过<code>@dynamic</code>指定了属性的动态性，详见下节</li>
 </ul>
-<h2 id="dynamic"><a href="#dynamic" class="headerlink" title="@dynamic"></a>@dynamic</h2><p><code>@dynamic</code>告诉编译器：属性的 setter 和 getter 方法由用户自己实现，不用自动生成。假如一个属性被声明为<code>@dynamic var</code>，然后你没有提供 setter 方法和 getter 方法，编译的时候没问题，但是当程序运行到<code>`instance.var = someVar</code>，由于缺 setter 方法会导致程序崩溃；或者当运行到 someVar = var 时，由于缺 getter 方法同样会导致崩溃。编译时没问题，运行时才执行相应的方法，这就是所谓的动态绑定。</p>
+<h2 id="dynamic"><a href="#dynamic" class="headerlink" title="@dynamic"></a>@dynamic</h2><p><code>@dynamic</code>告诉编译器：属性的 setter 和 getter 方法由用户自己实现，不用自动生成。假如一个属性被声明为<code>@dynamic var</code>，然后你没有提供 setter 方法和 getter 方法，编译的时候没问题，但是当程序运行到<code></code>instance.var = someVar`，由于缺 setter 方法会导致程序崩溃；或者当运行到 someVar = var 时，由于缺 getter 方法同样会导致崩溃。编译时没问题，运行时才执行相应的方法，这就是所谓的动态绑定。</p>
 <h1 id="拷贝"><a href="#拷贝" class="headerlink" title="拷贝"></a>拷贝</h1><h2 id="系统对象"><a href="#系统对象" class="headerlink" title="系统对象"></a>系统对象</h2><p>一般在定义<code>NSString</code>、<code>NSArray</code>、<code>NSDictionary</code>这些对象时，通常会使用<code>copy</code>关键字，因为它们有对应的可变类型：<code>NSMutableString</code>、<code>NSMutableArray</code>、<code>NSMutableDictionary</code>。用<code>copy</code>修饰的对象在被赋值时会自动调用它的 copy 方法，即被赋值的指针会指向拷贝对象。</p>
 <p>对于上述具有可变和不可变两种形式的对象而言，调用 copy 方法产生的都是不可变的拷贝对象，对应的可变拷贝方法为<code>mutableCopy</code>。拷贝还存在深拷贝和浅拷贝两种形式，对应如下：</p>
 <ul>
@@ -480,7 +480,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
+            <a href="/tags/objc/" rel="tag">#objc</a>
           
         </div>
       
@@ -564,9 +564,9 @@
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
-               alt="黄嘉伟" />
-          <p class="site-author-name" itemprop="name">黄嘉伟</p>
-          <p class="site-description motion-element" itemprop="description">https://github.com/rhetty</p>
+               alt="Jiawei Huang" />
+          <p class="site-author-name" itemprop="name">Jiawei Huang</p>
+          <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
@@ -581,7 +581,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -592,6 +592,17 @@
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/rhetty" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
           
         </div>
 
@@ -629,11 +640,11 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">黄嘉伟</span>
+  <span class="author" itemprop="copyrightHolder">Jiawei Huang</span>
 </div>
 
 <div class="powered-by">
@@ -763,6 +774,26 @@
   
 
   
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
 
   
 

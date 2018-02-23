@@ -7,7 +7,7 @@
 
 <html class="theme-next pisces use-motion">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Algorithm," />
+  <meta name="keywords" content="算法," />
 
 
 
@@ -90,11 +90,11 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="复习一下排序算法">
 <meta property="og:url" content="http://rhetty.github.io/2017/01/21/复习一下排序算法/index.html">
-<meta property="og:site_name" content="正宫阁">
+<meta property="og:site_name" content="H">
 <meta property="og:description" content="桶排序简化版假如有一个考试，满分10分。有5个同学分别考了5分、3分、5分、2分和8分，需要将分数进行排序。
 首先需要申请一个大小为11的数组int a[11]，将a[0]~a[10]都初始化为0，表示这些分数还都没有人得过。例如，a[0]等于0就表示目前还没有人得过0分……
 第一个人的分数是5分，就将相对应的a[5]的值在原来的基础上增加1，即a[5]=1，表示5分出现过了一次。第二个人的分数是">
-<meta property="og:updated_time" content="2017-02-23T10:08:05.000Z">
+<meta property="og:updated_time" content="2018-02-23T12:59:42.807Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="复习一下排序算法">
 <meta name="twitter:description" content="桶排序简化版假如有一个考试，满分10分。有5个同学分别考了5分、3分、5分、2分和8分，需要将分数进行排序。
@@ -122,7 +122,7 @@
 
   <link rel="canonical" href="http://rhetty.github.io/2017/01/21/复习一下排序算法/"/>
 
-  <title> 复习一下排序算法 | 正宫阁 </title>
+  <title> 复习一下排序算法 | H </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -143,21 +143,21 @@
     
   
 
-  <div class="container one-collumn sidebar-position-right page-post-detail ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-right page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
+      <div class="header-inner"><div class="site-meta custom-logo">
   
 
   <div class="custom-logo-site-title">
     <a href="/"  class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <span class="site-title">正宫阁</span>
+      <span class="site-title">H</span>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle">扯</p>
+  <p class="site-subtitle"></p>
 </div>
 
 <div class="site-nav-toggle">
@@ -313,9 +313,9 @@
 <p>插入排序的平均时间复杂度为O(N^2)。如果输入数据已预先排序，那么时间花费为O(N)，或者数据几乎被排序过，那插入排序也很快。插入排序是一种稳定的排序算法。</p>
 <h1 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h1><p>希尔排序通过比较相距一定间隔的元素来工作，各趟比较所用的距离随着算法的进行而减小，直到只比较相邻的元素的最后一趟排序为止。因此，希尔排序有时也叫<strong>缩减增量排序</strong>。</p>
 <p>希尔排序使用一个序列$h_1, h_2,\dots,h_t$，叫做<strong>增量序列</strong>。只要$h_1=1$，任何增量序列都是可行的，但是不同的增量序列对排序效率有所影响。每一趟对间隔为$h_k$的元素进行一次插入排序。</p>
-<p>增量序列的一个流行（但是不好）的选择是使用Shell建议的序列：$h_t=\lfloor N/2\rfloor$和$h<em>k=\lfloor h</em>{k+1}/2\rfloor$。</p>
+<p>增量序列的一个流行（但是不好）的选择是使用Shell建议的序列：$h_t=\lfloor N/2\rfloor$和$h_k=\lfloor h_{k+1}/2\rfloor$。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">shellSort</span><span class="params">(AnyType[] a)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">int</span> j;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> gap = a.length/<span class="number">2</span>; gap &gt; <span class="number">0</span>; gap /= <span class="number">2</span>)</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = gap; i &lt; a.length; ++i)</div><div class="line">    &#123;</div><div class="line">      AnyType tmp = a[i];</div><div class="line">      <span class="keyword">for</span> (j = i; j &gt;= gap &amp;&amp; tmp.compareTo(a[j - gap]) &lt; <span class="number">0</span>; j -= gap)</div><div class="line">        a[j] = a[j - gap];</div><div class="line">      a[j] = tmp;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>希尔排序的运行时间依赖于增量序列的选择，证明起来非常复杂。希尔排序的平均情形分析，除最平凡的一些增量序列外，是一个长期未解决的问题。使用希尔增量时希尔排序的最坏情形运行时间为O(N^2)。使用Hibbard增量的希尔排序的最坏情形运行时间为$O(N^{3/2})$。</p>
+<p>希尔排序的运行时间依赖于增量序列的选择，证明起来非常复杂。希尔排序的平均情形分析，除最平凡的一些增量序列外，是一个长期未解决的问题。使用希尔增量时希尔排序的最坏情形运行时间为$O(N^2)$。使用Hibbard增量的希尔排序的最坏情形运行时间为$O(N^{3/2})$。</p>
 <h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><p>快速排序应该是最常用的排序算法了，它的基本思想是：<strong>待排序数据中选择一个基准数（有的书上称为枢纽元（pivot）），将比它小的数放到它的左边，比它大的数放到它的右边，再递归处理两边的数据，直到排序结束</strong>。</p>
 <h2 id="选取枢纽元"><a href="#选取枢纽元" class="headerlink" title="选取枢纽元"></a>选取枢纽元</h2><p>选择合适的枢纽元直接影响排序的效率。</p>
 <h3 id="错误做法"><a href="#错误做法" class="headerlink" title="错误做法"></a>错误做法</h3><p>一种通常的做法是选择第一个元素作为枢纽元。如果输入是随机的，那么这是可以接受的。但是如果输入是预排序或是反序的，那就可能导致所有的元素都被划入枢纽元的左边或右边，而且这在所有的递归中都会发生，这样排序的时间花费将是二次的。另一种想法是选取前两个互异的元素中的较大者作为枢纽元，不过这与只选取第一个元素作为枢纽元具有相同的害处。</p>
@@ -389,7 +389,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Algorithm/" rel="tag">#Algorithm</a>
+            <a href="/tags/算法/" rel="tag">#算法</a>
           
         </div>
       
@@ -473,9 +473,9 @@
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
-               alt="黄嘉伟" />
-          <p class="site-author-name" itemprop="name">黄嘉伟</p>
-          <p class="site-description motion-element" itemprop="description">https://github.com/rhetty</p>
+               alt="Jiawei Huang" />
+          <p class="site-author-name" itemprop="name">Jiawei Huang</p>
+          <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
@@ -490,7 +490,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -501,6 +501,17 @@
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/rhetty" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
           
         </div>
 
@@ -538,11 +549,11 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">黄嘉伟</span>
+  <span class="author" itemprop="copyrightHolder">Jiawei Huang</span>
 </div>
 
 <div class="powered-by">
@@ -672,6 +683,26 @@
   
 
   
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
 
   
 
