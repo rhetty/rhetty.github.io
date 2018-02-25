@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="算法," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,22 +84,12 @@
 
 
 
-<meta name="description" content="上周去面试时被问到，如何实现一个无锁的消息队列？可惜没有答出来。。
-回去找了一下，这篇博客讲的很清楚，不再赘述。
-好好学习，天天向上。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="实现无锁队列">
-<meta property="og:url" content="http://rhetty.github.io/2017/08/27/实现无锁队列/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="H">
+<meta property="og:url" content="http://rhetty.github.io/tags/游戏/index.html">
 <meta property="og:site_name" content="H">
-<meta property="og:description" content="上周去面试时被问到，如何实现一个无锁的消息队列？可惜没有答出来。。
-回去找了一下，这篇博客讲的很清楚，不再赘述。
-好好学习，天天向上。">
-<meta property="og:updated_time" content="2018-02-23T13:01:58.355Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="实现无锁队列">
-<meta name="twitter:description" content="上周去面试时被问到，如何实现一个无锁的消息队列？可惜没有答出来。。
-回去找了一下，这篇博客讲的很清楚，不再赘述。
-好好学习，天天向上。">
+<meta name="twitter:title" content="H">
 
 
 
@@ -120,9 +110,9 @@
 
 
 
-  <link rel="canonical" href="http://rhetty.github.io/2017/08/27/实现无锁队列/"/>
+  <link rel="canonical" href="http://rhetty.github.io/tags/游戏/"/>
 
-  <title> 实现无锁队列 | H </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 标签: 游戏 | H </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -143,7 +133,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-right page-post-detail ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-right  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -215,135 +205,46 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <div id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2 >
+        游戏
+        <small>标签</small>
+      </h2>
+    </div>
 
     
-      <header class="post-header">
+      
 
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
+            <a class="post-title-link" href="/2018/02/25/寻路算法——Jump-Point-Search/" itemprop="url">
               
-                实现无锁队列
+                <span itemprop="name">寻路算法——Jump Point Search</span>
               
-            
-          </h1>
+            </a>
         
+      </h1>
 
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-08-27T12:37:28+08:00" content="2017-08-27">
-              2017-08-27
-            </time>
-          </span>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-02-25T12:58:04+08:00"
+              content="2018-02-25" >
+          02-25
+        </time>
+      </div>
 
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/08/27/实现无锁队列/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/27/实现无锁队列/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>上周去面试时被问到，如何实现一个无锁的消息队列？可惜没有答出来。。</p>
-<p>回去找了一下，<a href="https://coolshell.cn/articles/8239.html" target="_blank" rel="external">这篇博客</a>讲的很清楚，不再赘述。</p>
-<p>好好学习，天天向上。</p>
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/算法/" rel="tag">#算法</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/04/12/混用Swift和objc-共存于一个工程/" rel="next" title="混用Swift和objc - 共存于一个工程">
-                <i class="fa fa-chevron-left"></i> 混用Swift和objc - 共存于一个工程
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/02/25/寻路算法——Jump-Point-Search/" rel="prev" title="寻路算法——Jump Point Search">
-                寻路算法——Jump Point Search <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
-      
-    </div>
+    
   </div>
+
+  
 
 
           </div>
@@ -351,14 +252,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2017/08/27/实现无锁队列/"
-           data-title="实现无锁队列" data-url="http://rhetty.github.io/2017/08/27/实现无锁队列/">
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -378,17 +271,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -442,17 +326,6 @@
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <p class="post-toc-empty">此文章未包含目录</p>
-            
-          </div>
-        </section>
       
 
     </div>
@@ -556,10 +429,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
 
   
 

@@ -1,0 +1,695 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法,游戏," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="很多游戏中需要实现自动寻路功能，在连续的地图坐标中搜索路径，需要分为两步，首先是离散化，再进行路径搜索。本文主要讨论路径搜索算法 Jump Point Search，以下简称 JPS。
+在不考虑地图预处理的情况下，JPS 是基于格点的八方向寻路的最佳选择。为了理解 JPS，首先需要了解 A* 算法。
+A* 搜索算法A* 搜索算法，俗称A星算法，是很多寻路算法（包括JPS）的基础。该算法综合了 Be">
+<meta property="og:type" content="article">
+<meta property="og:title" content="寻路算法——Jump Point Search">
+<meta property="og:url" content="http://rhetty.github.io/2018/02/25/寻路算法——Jump-Point-Search/index.html">
+<meta property="og:site_name" content="H">
+<meta property="og:description" content="很多游戏中需要实现自动寻路功能，在连续的地图坐标中搜索路径，需要分为两步，首先是离散化，再进行路径搜索。本文主要讨论路径搜索算法 Jump Point Search，以下简称 JPS。
+在不考虑地图预处理的情况下，JPS 是基于格点的八方向寻路的最佳选择。为了理解 JPS，首先需要了解 A* 算法。
+A* 搜索算法A* 搜索算法，俗称A星算法，是很多寻路算法（包括JPS）的基础。该算法综合了 Be">
+<meta property="og:image" content="http://rhetty.github.io/imgs/2018-2-1.png">
+<meta property="og:image" content="http://rhetty.github.io/imgs/2018-2-2.png">
+<meta property="og:image" content="http://rhetty.github.io/imgs/2018-2-3.png">
+<meta property="og:updated_time" content="2018-02-25T06:33:15.861Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="寻路算法——Jump Point Search">
+<meta name="twitter:description" content="很多游戏中需要实现自动寻路功能，在连续的地图坐标中搜索路径，需要分为两步，首先是离散化，再进行路径搜索。本文主要讨论路径搜索算法 Jump Point Search，以下简称 JPS。
+在不考虑地图预处理的情况下，JPS 是基于格点的八方向寻路的最佳选择。为了理解 JPS，首先需要了解 A* 算法。
+A* 搜索算法A* 搜索算法，俗称A星算法，是很多寻路算法（包括JPS）的基础。该算法综合了 Be">
+<meta name="twitter:image" content="http://rhetty.github.io/imgs/2018-2-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://rhetty.github.io/2018/02/25/寻路算法——Jump-Point-Search/"/>
+
+  <title> 寻路算法——Jump Point Search | H </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">H</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                寻路算法——Jump Point Search
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-02-25T12:58:04+08:00" content="2018-02-25">
+              2018-02-25
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/02/25/寻路算法——Jump-Point-Search/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/02/25/寻路算法——Jump-Point-Search/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>很多游戏中需要实现自动寻路功能，在连续的地图坐标中搜索路径，需要分为两步，首先是离散化，再进行路径搜索。本文主要讨论路径搜索算法 Jump Point Search，以下简称 JPS。</p>
+<p>在不考虑地图预处理的情况下，JPS 是基于格点的八方向寻路的最佳选择。为了理解 JPS，首先需要了解 A* 算法。</p>
+<h1 id="A-搜索算法"><a href="#A-搜索算法" class="headerlink" title="A* 搜索算法"></a>A* 搜索算法</h1><p>A* 搜索算法，俗称A星算法，是很多寻路算法（包括JPS）的基础。该算法综合了 Best-First Search 和 Dijkstra 算法的优点：在进行启发式搜索提高算法效率的同时，可以保证找到一条最优路径。</p>
+<p>Dijkstra 算法使用广度优先搜索解决赋权有向图的单源最短路径问题，可以找到两个顶点之间的最短路径。对于任一顶点 v，d[v] 表示从起点 s 到 v 的最短距离，显然 d[s] = 0，用 w[u, v]表示u到v的直达距离。该算法从原点s开始扩展，每一次针对顶点u，遍历其所有出边[u, v]，若d[v]&gt;d[u]+w[u, v]，则将d[v]赋值为d[u]+w[u, v]。算法直至所有顶点都扩展过为止。下面的伪代码计算图G中原点s到每一顶点v的最短距离d[v]，并且保留v在此最短路径上的前趋顶点，以回溯出最短路径。算法维护两个顶点集合S和Q，集合S保留所有已知最小d[v]值的顶点v，集合Q则保留其他所有顶点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">function Dijkstra(G, w, s)</div><div class="line">   for each vertex v in V[G]        // 初始化</div><div class="line">         d[v] := infinity           // 将各点的已知最短距离先设成无穷大</div><div class="line">         previous[v] := undefined   // 各点的已知最短路径上的前趋都未知</div><div class="line">   d[s] := 0                        // 因为出发点到出发点间不需移动任何距离，所以可以直接将s到s的最小距离设为0</div><div class="line">   S := empty set</div><div class="line">   Q := set of all vertices</div><div class="line">   while Q is not an empty set      // Dijkstra算法主体</div><div class="line">         u := Extract_Min(Q)      // 将Q中有最小d[u]值的顶点u从Q中删除并返回u</div><div class="line">          S.append(u)</div><div class="line">          for each edge outgoing from u as (u,v)</div><div class="line">                 if d[v] &gt; d[u] + w(u,v)             // 拓展边（u,v）。w(u,v)为从u到v的路径长度。</div><div class="line">                       d[v] := d[u] + w(u,v)         // 更新路径长度到更小的那个和值。</div><div class="line">                       previous[v] := u              // 记录前趋顶点</div></pre></td></tr></table></figure>
+<p>如果只需在s和t之间查找一条最短路径的话，可以在第9行添加条件，如果满足u=t，则终止程序。下面的伪代码通过回溯，找出s到t的最短路径。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">s := empty sequence </div><div class="line">u := t</div><div class="line">while defined u                                        </div><div class="line">      insert u to the beginning of S</div><div class="line">      u := previous[u]      //previous数组即为上文中的p</div></pre></td></tr></table></figure>
+<p>可以看出，Dijkstra 算法在搜索时并不考虑终点的位置，而是盲目的搜索，因此效率并不高。贪婪最佳优先搜索解决了该痛点：在Dijkstra算法中，优先队列（即上面的Q）采用的是每个顶点到起点的距离排序，而贪婪最佳优先搜索中采用每个顶点到目标顶点的距离（一般可以用曼哈顿距离描述）进行排序。这里运用启发式思想，从搜索开始就向目标点方向优先搜索，在障碍物较少的情况下速度足够快，但路径不是最优。</p>
+<p>如果用g(n)表示从起点到任意顶点n的实际距离，h(n)表示任意顶点n到目标顶点的估算距离，那么g(n)和h(n)就是Dijkstra算法与贪婪最佳优先搜索算法在顶点排序时分别使用的评估函数。而A*算法使用的评估函数为：</p>
+<blockquote>
+<p>f(n) = g(n) + h(n)</p>
+</blockquote>
+<p>这个公式具有以下特性：</p>
+<ul>
+<li>如果g(n)为0，即只计算任意顶点n到目标的评估函数h(n)，而不计算起点到顶点n的距离，则算法转化为贪婪最佳优先搜索算法；</li>
+<li>如果h(n)不高于实际到目标顶点的距离，则一定可以求出最优解，而且h(n)越小，需要计算的节点越多，算法效率越低，常见的评估函数有——欧几里得距离、曼哈顿距离、切比雪夫距离；</li>
+<li>如果h(n)为0，即只需计算起点到任意顶点n的最短距离g(n)，则转化为Dijkstra算法。</li>
+</ul>
+<h1 id="优化-A"><a href="#优化-A" class="headerlink" title="优化 A*"></a>优化 A*</h1><p>在两点之间的最短路径中，可能存在多条走法不同但长度相同的路径，这样的路径被称为是“对称”（symmetry）的，如下图所示。盲目搜索这类对称路径将严重影响搜索效率，而A*无法识别对称路径。作为目前最常用的寻路算法之一——JPS能够有效识别对称路径，并跳过它们。在40*40大小的格点地图上，A*算法找到一条最短路径大约需要180.05ns，而JPS只需15.04ns[1]。</p>
+<p><img src="/imgs/2018-2-1.png" alt="对称路径"></p>
+<p>在基于格点的八方向寻路地图中，用$\vec{d}$表示八个方向之一（上、下、左、右等）。当从x开始沿着$\vec{d}$移动k个单元可以到达y时，可以表示为$y=x+k\vec{d}$。当$\vec{d}$为对角线移动时，将与$\vec{d}$ 45度的两个直线移动表示为$\vec{d_1}$和$\vec{d_2}$。路径$\pi=&lt;n_1,n_2,…,n_k&gt;$表示从$n_1$到$n_k$的无环顺序移动，$\pi$\x表示节点x不在路径中。len函数和dist函数分别表示路径的长度与两个节点之间的距离，如$len(\pi)$或$dist(n_0,n_k)$。</p>
+<p><img src="/imgs/2018-2-2.png" alt="跳跃点示例"></p>
+<p>如上图所示，节点x的父节点为p(x)，当扩展x时，去考虑灰色的节点是没有意义的，因为从p(x)到达这些节点的路径在不包含x时更短，称这些灰色节点是劣性的。这时只有x右侧的邻居需要评估，但与A*算法直接将它加入开放列表不同，由于y拥有至少一个非劣节点（z），JPS算法会继续向右推进直到y。当找到一个y这样的节点（跳跃点），将它作为x的后继者，并赋于它g值，g(y)=g(x)+dist(x,y)。如果在前进过程中遇到障碍物，则当前方向的搜索失败。由此可见，JPS主要有两个优化策略：裁剪与跳跃。</p>
+<p>针对节点x的邻居，裁剪的目的是识别其中的劣性节点，可以通过比较两条路径的长度来判断是否需要裁剪：从p(x)开始访问x到n结束的路径$\pi$，和从p(x)不经过x到n结束的路径$\pi’$。此外，$\pi$和$\pi’$中的节点都属于neighbours(x)。从p(x)到x是直线移动和对角线移动的两种情况需要不同的处理，如果x是起点，则不进行裁剪。</p>
+<ol>
+<li>直线移动：对满足以下条件的任意结点$n\in neighbour(x)$进行裁剪，如下图(a)所示，需要裁剪除了n=5之外其他x的邻居。</li>
+</ol>
+<blockquote>
+<p>len(&lt;p(x),…,n&gt;\x) &lt;= len(&lt;p(x),x,n&gt;)</p>
+</blockquote>
+<ol>
+<li>对角线移动：与直线移动唯一的区别在于这里需要严格的不等关系，如下图(c)所示，需要裁剪除了n=2、n=3与n=5之外的邻居。</li>
+</ol>
+<blockquote>
+<p>len(&lt;p(x),…n&gt;\x) &lt; len(&lt;p(x),x,n&gt;)</p>
+</blockquote>
+<p><img src="/imgs/2018-2-3.png" alt="裁剪示例"></p>
+<p>如果neighbours(x)不包含障碍，裁剪过后的结点被成为x的自然邻居（natural neighbours），如上图(a)和上图(c)中的非灰结点。当neighbours(s)包含障碍时，非自然邻居可能不都能被裁剪，这时，需要强制（forced）评估这类节点。</p>
+<blockquote>
+<p><strong><em>定义1</em></strong>   满足以下情况，则称节点$n\in neighbour(x)$是强制的：</p>
+<ol>
+<li>n不是x的自然邻居</li>
+<li>len(&lt;p(x),x,n&gt;) &lt; len(&lt;p(x),…,n&gt;\x)</li>
+</ol>
+</blockquote>
+<p>如上图(b)，直线移动的例子中n=3是强制的。而上图(d)中，n=1是强制的。</p>
+<blockquote>
+<p><strong><em>定义2</em></strong> 对于$y=x+k\vec{d}$，如果使得k最小，并且满足以下条件之一，则称节点y是从x出发，沿着方向$\vec{d}$的跳跃点。</p>
+<ol>
+<li>y是终点</li>
+<li>根据定义1，y有至少一个强迫评估的邻居</li>
+<li>$\vec{d}$是对角线移动并且存在一个节点$z=y+k_i\vec{d_i}$（其中$k_i\in N$、$ \vec{d_i}\in {\vec{d_1},\vec{d_2}} $），使得在条件1和条件2下z是y的跳跃点。</li>
+</ol>
+</blockquote>
+<p>上上图(b)中是条件3定义的跳跃点的例子，从x出发对角线移动至y，从y开始进行2次水平移动可以到达z，因此z是y的后继跳跃点，继而y是x的后继跳跃点。</p>
+<p>计算单个节点的后继者的算法伪代码如下。首先，对当前节点x的邻居进行裁剪，接着对每个邻居n沿着x到n的方向尝试跳跃，将获得的跳跃点加入x的后继者中。</p>
+<blockquote>
+<p>Require: x: current node, s: start, g: goal<br>successor(x)$\leftarrow\emptyset$<br>neighbours(x)$\leftarrow$ prune(x,neighbours(x))<br>for all n $\in$ neighbours(x) do<br>n $\leftarrow$ jump(x,direction(x,n),s,g)<br>….add n to successors(x)<br>return successors(x)</p>
+</blockquote>
+<p>其中跳跃的算法伪代码如下。算法将初始节点沿着既定的方向移动，并检查移动后的节点是否满足定义2。满足时返回该节点（第5、7、11行），否则继续前进（第12行）。当遇到障碍或无法前进时递归结束（第3行）。</p>
+<blockquote>
+<p>Require: x: initial node, $\vec{d}$: direction, s: start, g: goal<br>$n\leftarrow step(x,\vec{d})$<br>if n is an obstacle or is outside the grid then<br>….return null<br>if n = g then<br>….return n<br>if $\exists n’\in neighbours(n) s.t. n’$ is forced then<br>….return n<br>if $\vec{d}$ is diagonal then<br>….for all i $\in$ {1,2} do<br>……..if jump(n,$\vec{d_i}$,s,g) is not null then<br>…………return null<br>return jump(n,$\vec{d}$,s,g)</p>
+</blockquote>
+<p>最后附上一个可以动态演示 JPS 寻路过程的<a href="https://zerowidth.com/2013/05/05/jump-point-search-explained.html" target="_blank" rel="external">网站</a>。</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>[1] S. Rabin, Game AI Pro 2: Collected Wisdom of Game AI Professionals, A K Peters/CRC Press, 2015.<br>[2] D. Harabor and A. Grastien, Online Graph Pruning for Pathfinding On Grid Maps, AAAI Conference on Artificial Intelligence, AAAI 2011, San Francisco, California, Usa, August DBLP, 2011.<br>[3] A<em> search algorithm, <a href="https://en.wikipedia.org/wiki/A" target="_blank" rel="external">https://en.wikipedia.org/wiki/A</a></em>_search_algorithm.<br>[4] Amit, Pathfinding, <a href="http://theory.stanford.edu/~amitp/GameProgramming/" target="_blank" rel="external">http://theory.stanford.edu/~amitp/GameProgramming/</a>.<br>[5] Dijkstra’s algorithm, <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm" target="_blank" rel="external">https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm</a>.<br>[6] 游资网, 如何快速找到最优路线？深入理解游戏中寻路算法, <a href="http://www.gameres.com/777251.html" target="_blank" rel="external">http://www.gameres.com/777251.html</a>, 2017.<br>[7] 萤火之森, 寻路算法-贪婪最佳优先算法, <a href="http://frankorz.com/2017/12/16/greedy-best-find-search/" target="_blank" rel="external">http://frankorz.com/2017/12/16/greedy-best-find-search/</a>, 2017.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag">#算法</a>
+          
+            <a href="/tags/游戏/" rel="tag">#游戏</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/27/实现无锁队列/" rel="next" title="实现无锁队列">
+                <i class="fa fa-chevron-left"></i> 实现无锁队列
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/02/25/寻路算法——Jump-Point-Search/"
+           data-title="寻路算法——Jump Point Search" data-url="http://rhetty.github.io/2018/02/25/寻路算法——Jump-Point-Search/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Jiawei Huang" />
+          <p class="site-author-name" itemprop="name">Jiawei Huang</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/rhetty" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#A-搜索算法"><span class="nav-number">1.</span> <span class="nav-text">A* 搜索算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优化-A"><span class="nav-number">2.</span> <span class="nav-text">优化 A*</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文献"><span class="nav-number">3.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jiawei Huang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"huangjiawei"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+
+</body>
+</html>

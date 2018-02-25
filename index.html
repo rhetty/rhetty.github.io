@@ -229,6 +229,113 @@
             
               
                 
+                <a class="post-title-link" href="/2018/02/25/寻路算法——Jump-Point-Search/" itemprop="url">
+                  寻路算法——Jump Point Search
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-02-25T12:58:04+08:00" content="2018-02-25">
+              2018-02-25
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/02/25/寻路算法——Jump-Point-Search/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/02/25/寻路算法——Jump-Point-Search/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          很多游戏中需要实现自动寻路功能，在连续的地图坐标中搜索路径，需要分为两步，首先是离散化，再进行路径搜索。本文主要讨论路径搜索算法 Jump Point Search，以下简称 JPS。
+在不考虑地图预处理的情况下，JPS 是基于格点的八方向寻路的最佳选择。为了理解 JPS，首先需要了解 A* 算法。
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2018/02/25/寻路算法——Jump-Point-Search/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/08/27/实现无锁队列/" itemprop="url">
                   实现无锁队列
                 </a>
@@ -1183,113 +1290,6 @@ p
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/18/Objective-C对象的整理与思考/" itemprop="url">
-                  Objective-C对象的整理与思考
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-18T16:13:53+08:00" content="2017-03-18">
-              2017-03-18
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/03/18/Objective-C对象的整理与思考/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/18/Objective-C对象的整理与思考/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          内存模型对象本质是 c 中的结构体，Objective-C 中对对象的定义为struct objc_object，其中isa是它唯一的私有成员变量。在内存模型中，每个对象除了isa指针，还包括从顶级父类到直接父类，以及自己的所有成员变量。
-类对象isa指针指向的是对象的类，对象的类本质上也是对象，称
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/03/18/Objective-C对象的整理与思考/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1335,7 +1335,7 @@ p
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1345,7 +1345,7 @@ p
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
