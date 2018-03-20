@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="算法," />
+  <meta name="keywords" content="数学,游戏," />
 
 
 
@@ -84,22 +84,26 @@
 
 
 
-<meta name="description" content="最近想在LeetCode上刷题，又想学习一下Swift，就干脆用Swift来写算法。
-GitHub地址
-不断更新中。">
+<meta name="description" content="去年去网易面试，一个问题的大意是：一个三角形三个顶点分别是红、绿、蓝，即RGB值分别为(1,0,0)、(0,1,0)、（0,0,1）（或255表示，whatever），如何用RGB值表示三角形内任意一个点，即作线性插值。当时没有学过相关内容，临时想到用面积法做。最近才知道重心坐标（Barycentric Coordinates）的概念，可以方便的解决这个问题。
+用重心坐标解决问题图 1
+可以把重心">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode--Swift">
-<meta property="og:url" content="http://rhetty.github.io/2017/02/16/LeetCode-Swift/index.html">
+<meta property="og:title" content="三角形线性插值——重心坐标">
+<meta property="og:url" content="http://rhetty.github.io/2018/03/20/三角形线性插值——重心坐标/index.html">
 <meta property="og:site_name" content="H">
-<meta property="og:description" content="最近想在LeetCode上刷题，又想学习一下Swift，就干脆用Swift来写算法。
-GitHub地址
-不断更新中。">
-<meta property="og:updated_time" content="2018-02-23T13:01:27.698Z">
+<meta property="og:description" content="去年去网易面试，一个问题的大意是：一个三角形三个顶点分别是红、绿、蓝，即RGB值分别为(1,0,0)、(0,1,0)、（0,0,1）（或255表示，whatever），如何用RGB值表示三角形内任意一个点，即作线性插值。当时没有学过相关内容，临时想到用面积法做。最近才知道重心坐标（Barycentric Coordinates）的概念，可以方便的解决这个问题。
+用重心坐标解决问题图 1
+可以把重心">
+<meta property="og:image" content="http://rhetty.github.io/imgs/2018-3-20-1.png">
+<meta property="og:image" content="http://rhetty.github.io/imgs/2018-3-20-3.png">
+<meta property="og:image" content="http://rhetty.github.io/imgs/2018-3-20-2.png">
+<meta property="og:updated_time" content="2018-03-20T09:43:37.905Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode--Swift">
-<meta name="twitter:description" content="最近想在LeetCode上刷题，又想学习一下Swift，就干脆用Swift来写算法。
-GitHub地址
-不断更新中。">
+<meta name="twitter:title" content="三角形线性插值——重心坐标">
+<meta name="twitter:description" content="去年去网易面试，一个问题的大意是：一个三角形三个顶点分别是红、绿、蓝，即RGB值分别为(1,0,0)、(0,1,0)、（0,0,1）（或255表示，whatever），如何用RGB值表示三角形内任意一个点，即作线性插值。当时没有学过相关内容，临时想到用面积法做。最近才知道重心坐标（Barycentric Coordinates）的概念，可以方便的解决这个问题。
+用重心坐标解决问题图 1
+可以把重心">
+<meta name="twitter:image" content="http://rhetty.github.io/imgs/2018-3-20-1.png">
 
 
 
@@ -120,9 +124,9 @@ GitHub地址
 
 
 
-  <link rel="canonical" href="http://rhetty.github.io/2017/02/16/LeetCode-Swift/"/>
+  <link rel="canonical" href="http://rhetty.github.io/2018/03/20/三角形线性插值——重心坐标/"/>
 
-  <title> LeetCode--Swift | H </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 三角形线性插值——重心坐标 | H </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -236,7 +240,7 @@ GitHub地址
             
             
               
-                LeetCode--Swift
+                三角形线性插值——重心坐标
               
             
           </h1>
@@ -248,8 +252,8 @@ GitHub地址
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-16T23:25:00+08:00" content="2017-02-16">
-              2017-02-16
+            <time itemprop="dateCreated" datetime="2018-03-20T16:14:31+08:00" content="2018-03-20">
+              2018-03-20
             </time>
           </span>
 
@@ -259,8 +263,8 @@ GitHub地址
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/16/LeetCode-Swift/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/16/LeetCode-Swift/" itemprop="commentsCount"></span>
+                <a href="/2018/03/20/三角形线性插值——重心坐标/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/20/三角形线性插值——重心坐标/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -283,9 +287,26 @@ GitHub地址
       
 
       
-        <p>最近想在LeetCode上刷题，又想学习一下Swift，就干脆用Swift来写算法。</p>
-<p><a href="https://github.com/rhetty/LeetCode" target="_blank" rel="external">GitHub地址</a></p>
-<p>不断更新中。</p>
+        <p>去年去网易面试，一个问题的大意是：一个三角形三个顶点分别是红、绿、蓝，即RGB值分别为(1,0,0)、(0,1,0)、（0,0,1）（或255表示，whatever），如何用RGB值表示三角形内任意一个点，即作线性插值。当时没有学过相关内容，临时想到用面积法做。最近才知道<strong>重心坐标（Barycentric Coordinates）</strong>的概念，可以方便的解决这个问题。</p>
+<h1 id="用重心坐标解决问题"><a href="#用重心坐标解决问题" class="headerlink" title="用重心坐标解决问题"></a>用重心坐标解决问题</h1><p><img src="/imgs/2018-3-20-1.png" alt="重心坐标系"><br>图 1</p>
+<p>可以把重心坐标看作非直角坐标系，如图1所示。三角形的顶点分别为a、b、c，将 a 看作坐标系原点，a 到 b 和 c 的向量分别是基向量。那么任意点 p 可以表示成：<br>$$<br>p = a+\beta(b-a)+\gamma(c-a)<br>$$</p>
+<p>移项得到：<br>$$<br>p = (1-\beta-\gamma)a+\beta{b}+\gamma{c}<br>$$</p>
+<p>定义一个新变量$\alpha$，使得：<br>$$<br>\alpha \equiv 1-\beta-\gamma<br>$$</p>
+<p>得出：<br>$$<br>p(\alpha,\beta,\gamma) = \alpha{a}+\beta{b}+\gamma{c}, 其中 \alpha+\beta+\gamma = 1<br>$$</p>
+<p>所以，点p的重心坐标就是$(\alpha,\beta,\gamma)$。</p>
+<p>重心坐标不仅可以表示三角形abc内的点，也可以表示平面内的任意点。任意点p在三角形abc内部，当且仅当<br>$$<br>0&lt;\alpha&lt;1,<br>0&lt;\beta&lt;1,<br>0&lt;\gamma&lt;1,<br>$$</p>
+<p>当一个坐标为0，其余两个在(0,1)区间时，点落在三角边上；如果两个坐标为0，另一个为1时，点落在三角顶点上。</p>
+<p>这时，回到面试题上，任一点p的RGB值可以表示为$(255 \times \alpha, 255 \times \beta, 255 \times \gamma)$。</p>
+<h1 id="求解重心坐标"><a href="#求解重心坐标" class="headerlink" title="求解重心坐标"></a>求解重心坐标</h1><p>可以看出，重心坐标是齐次坐标的一种。如果给定点p，如何计算它的重心坐标呢。</p>
+<h2 id="定义法"><a href="#定义法" class="headerlink" title="定义法"></a>定义法</h2><p>最直接方法是将点代入定义，解出$\beta,\gamma$。还有两种根据重心坐标的特性的解决方法。</p>
+<h2 id="几何法"><a href="#几何法" class="headerlink" title="几何法"></a>几何法</h2><p>重心坐标的一个几何特性是，坐标值是点到三角边距离的缩放有符号表示（scaled signed distance）。如下图。</p>
+<p><img src="/imgs/2018-3-20-3.png" alt="重心坐标几何意义"><br>图 2</p>
+<p>比如，对于直线 f(x,y)=0，f(x,y)表示点到该直线的缩放有符号距离。如果f(x,y)=0表示一条直线，那么kf(x,y)=0也一样。改变k可以控制点到该直线的距离和直线两边的符号。我们选择k，使得$kf(x,y)=\beta$，其中，在b点处$\beta=1$，以此确定k。因此，如果$f_{ac}(x,y)=0$经过a、c点，可以计算某一点(x,y)的$\beta$值：<br>$$<br>\beta = \frac{f_{ac}(x,y)}{f_{ac}(x_b,y_b)}<br>$$</p>
+<h2 id="面积法"><a href="#面积法" class="headerlink" title="面积法"></a>面积法</h2><p>连接三角形重心与定点，将三角形分为三份，如下图。重心坐标为<br>$$<br>\alpha = A_a/A,<br>\beta = A_b/A,<br>\gamma = A_c/A,<br>$$</p>
+<p>其中，$A = A_a+A_b+A_c$，</p>
+<p><img src="/imgs/2018-3-20-2.png" alt="三角形重心分割"><br>图 3</p>
+<p>当时面试时答的用这种方法确定系数，但并不知道重心坐标的概念。。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] Mathematics for 3D Game Programming and Computer Graphics, 3rd Edition <a href="https://book.douban.com/subject/6675562/" target="_blank" rel="external">https://book.douban.com/subject/6675562/</a><br>[2] <a href="https://zh.wikipedia.org/wiki/%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87" target="_blank" rel="external">https://zh.wikipedia.org/wiki/%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87</a></p>
 
       
     </div>
@@ -308,7 +329,9 @@ GitHub地址
       
         <div class="post-tags">
           
-            <a href="/tags/算法/" rel="tag">#算法</a>
+            <a href="/tags/数学/" rel="tag">#数学</a>
+          
+            <a href="/tags/游戏/" rel="tag">#游戏</a>
           
         </div>
       
@@ -317,17 +340,13 @@ GitHub地址
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/21/复习一下排序算法/" rel="next" title="复习一下排序算法">
-                <i class="fa fa-chevron-left"></i> 复习一下排序算法
+              <a href="/2018/02/25/寻路算法——Jump-Point-Search/" rel="next" title="寻路算法——Jump Point Search">
+                <i class="fa fa-chevron-left"></i> 寻路算法——Jump Point Search
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/17/objc中的修饰符/" rel="prev" title="objc中的修饰符">
-                objc中的修饰符 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -353,8 +372,8 @@ GitHub地址
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/16/LeetCode-Swift/"
-           data-title="LeetCode--Swift" data-url="http://rhetty.github.io/2017/02/16/LeetCode-Swift/">
+      <div class="ds-thread" data-thread-key="2018/03/20/三角形线性插值——重心坐标/"
+           data-title="三角形线性插值——重心坐标" data-url="http://rhetty.github.io/2018/03/20/三角形线性插值——重心坐标/">
       </div>
     
   </div>
@@ -449,7 +468,7 @@ GitHub地址
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#用重心坐标解决问题"><span class="nav-number">1.</span> <span class="nav-text">用重心坐标解决问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#求解重心坐标"><span class="nav-number">2.</span> <span class="nav-text">求解重心坐标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义法"><span class="nav-number">2.1.</span> <span class="nav-text">定义法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几何法"><span class="nav-number">2.2.</span> <span class="nav-text">几何法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面积法"><span class="nav-number">2.3.</span> <span class="nav-text">面积法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
         </section>
